@@ -247,5 +247,9 @@ if [ -d "$HOME/.kde" ]; then
   export KDEDIRS="$HOME/.kde:$HOME/.local:$KDEDIRS"
 fi
 
-source "$HOME/.homesick/repos/homeshick/homeshick.sh"
-source "$HOME/.homesick/repos/homeshick/completions/homeshick-completion.bash"
+if [ -d "$HOME/.homesick" ]; then
+    source "$HOME/.homesick/repos/homeshick/homeshick.sh"
+    source "$HOME/.homesick/repos/homeshick/completions/homeshick-completion.bash"
+    alias hs='homeshick'
+fi
+
