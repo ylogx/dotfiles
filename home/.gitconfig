@@ -5,7 +5,7 @@
 	logallrefupdates=true
 [core]
 	editor = vi
-	pager=most
+    #pager=most
 	excludesfile = ~/.gitignore_global
 	attributesfile = ~/.gitattributes
 [credential]
@@ -31,8 +31,7 @@
 [status]
 	relativePaths=true
 [github]
-	user = chaudhary
-    #user = jalcine
+	user = shubhamchaudhary
 [i18n]
 	commitencoding = utf-8
 

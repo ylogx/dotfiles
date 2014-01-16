@@ -8,6 +8,7 @@ alias dfh='df -h'
 alias ack='ack-grep'
 alias cd..='cd ..'
 alias aria2cm='aria2c -c -x 16'
+alias a='aria2c -c -x 16'
 #alias cmk='mkdir $1 && cd ./$1'
 alias mymakehere='cp /home/chaudhary/Makefile ./'
 

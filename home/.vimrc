@@ -18,8 +18,11 @@
 
 " General {
     set tags=./tags,tags,./TAGS,TAGS,~/tags,~/.tags     " Exuberent ctags
-    " Move to a given tag
-    map <C-y> g<C-]>
+    " Move to a given tag " Note: C-t is for moving back in tagstack
+    map <C-y> g<C-]>        
+
+    set undofile
+    set undodir=~/.vimundo
     " set background=dark         " Assume a dark background
     " if !has('win32') && !has('win64')
     "     set term=$TERM       " Make arrow and other keys work
