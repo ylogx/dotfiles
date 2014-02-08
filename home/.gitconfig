@@ -18,6 +18,10 @@
 	st = status -s
 	unstage = reset HEAD --
 	last = log -1 HEAD
+#[https]
+#	proxy = https://ishubhamch:chaudhary@192.168.60.10:3128
+#[http]
+#	proxy = http://ishubhamch:chaudhary@192.168.60.10:3128
 [color]
 	ui = true
 	diff = true
@@ -64,4 +68,3 @@
 	currentbranch = rev-parse --abbrev-ref HEAD
 	wdiff = diff
 	undo-commit = reset --soft HEAD^
-

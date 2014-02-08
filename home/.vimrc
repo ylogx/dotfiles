@@ -1,3 +1,4 @@
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Formatting {
     set number  " Alternative: set nu!
     set hlsearch    " Highlight searched item
@@ -16,6 +17,8 @@
 
 
 
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " General {
     set tags=./tags,tags,./TAGS,TAGS,~/tags,~/.tags     " Exuberent ctags
     " Move to a given tag " Note: C-t is for moving back in tagstack
@@ -61,17 +64,22 @@
     " }
 " }
 
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Commenting blocks of code.
-autocmd FileType c,cpp,java,scala let b:comment_leader = '// '
-autocmd FileType sh,ruby,python   let b:comment_leader = '# '
-autocmd FileType conf,fstab       let b:comment_leader = '# '
-autocmd FileType tex              let b:comment_leader = '% '
-autocmd FileType mail             let b:comment_leader = '> '
-autocmd FileType vim              let b:comment_leader = '" '
+autocmd FileType c,cpp,java,scala       let b:comment_leader = '// '
+autocmd FileType sh,ruby,python,perl    let b:comment_leader = '# '
+autocmd FileType conf,fstab             let b:comment_leader = '# '
+autocmd FileType tex                    let b:comment_leader = '% '
+autocmd FileType mail                   let b:comment_leader = '> '
+autocmd FileType vim                    let b:comment_leader = '" '
 noremap <silent> ,cc :<C-B>silent <C-E>s/^/<C-R>=escape(b:comment_leader,'\/')<CR>/<CR>:nohlsearch<CR>
 noremap <silent> ,cx :<C-B>silent <C-E>s/^\V<C-R>=escape(b:comment_leader,'\/')<CR>//e<CR>:nohlsearch<CR>
 
 
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Key (re)Mappings {
 
     "The default leader is '\', but many people prefer ',' as it's in a standard
@@ -109,82 +117,180 @@ noremap <silent> ,cx :<C-B>silent <C-E>s/^\V<C-R>=escape(b:comment_leader,'\/')<
     "cmap cd. lcd %:p:h
 " }
 
-"{{{2 Visual Cues
-" A problem that plagued me for months, having visual cues for white spacing
-" solves formatting problems a lot quicker. Also, we're using modern shells
-" (right?) so using UTF-8 characters for symbols should be a given.
-set fillchars=diff:⣿,vert:│
-set guifont=monoOne\ 9
 
-" A visual cue for line-wrapping.
-set showbreak=↪
 
-" Visual cues when in 'list' model.
-"set listchars=tab:▸\ ,eol:¬,extends:❯,precedes:❮,trail:·,nbsp:×
-set listchars=tab:▸\ ,extends:❯,precedes:❮,trail:·,nbsp:×
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"{
+    "{{{2 Visual Cues
+    " A problem that plagued me for months, having visual cues for white spacing
+    " solves formatting problems a lot quicker. Also, we're using modern shells
+    " (right?) so using UTF-8 characters for symbols should be a given.
+    set fillchars=diff:⣿,vert:│
+    set guifont=monoOne\ 9
 
-" Show me these markings.
-set list
+    " A visual cue for line-wrapping.
+    set showbreak=↪
 
-" Update by redraw and not INS/DEL
-set ttyscroll=3
-set nottyfast
+    " Visual cues when in 'list' model.
+    "set listchars=tab:▸\ ,eol:¬,extends:❯,precedes:❮,trail:·,nbsp:×
+    set listchars=tab:▸\ ,extends:❯,precedes:❮,trail:·,nbsp:×
 
-" Show me what I was doing.
-set showcmd
-set showfulltag
+    " Show me these markings.
+    set list
 
-" Ensures that local tags are loaded into the mix.
-function! s:load_local_tags()
-  setl tags+=$PWD/.tags
-  setl tags+=$PWD/TAGS,
-  setl tags+=$PWD/tags
-  setl tags+=$PWD/.bzr/tags
-  setl tags+=$PWD/.git/tags
-  setl tags+=$PWD/.svn/tags
-  setl tags+=$PWD/.hg/tags
-  setl tags+=$PWD/build/tags
-endfunction
+    " Update by redraw and not INS/DEL
+    set ttyscroll=3
+    set nottyfast
 
-let g:tagbar_type_markdown = {
-      \ 'ctagstype' : 'markdown',
-      \ 'kinds' : [
-      \ 'h:Heading_L1',
-      \ 'i:Heading_L2',
-      \ 'k:Heading_L3'
-      \ ]
-      \ }
+    " Show me what I was doing.
+    set showcmd
+    set showfulltag
 
-" Improve C++ matching.
-let g:tagbar_type_cpp = {
-      \ 'kinds' : [
-      \ 'd:macros:1:0',
-      \ 'p:prototypes:1:0',
-      \ 'g:enums',
-      \ 'e:enumerators:0:0',
-      \ 't:typedefs:0:0',
-      \ 'n:namespaces',
-      \ 'c:classes',
-      \ 's:structs',
-      \ 'u:unions',
-      \ 'f:functions',
-      \ 'm:members:0:0',
-      \ 'v:variables:0:0',
-      \ ],
-      \ }
+    " Ensures that local tags are loaded into the mix.
+    function! s:load_local_tags()
+      setl tags+=$PWD/.tags
+      setl tags+=$PWD/TAGS,
+      setl tags+=$PWD/tags
+      setl tags+=$PWD/.bzr/tags
+      setl tags+=$PWD/.git/tags
+      setl tags+=$PWD/.svn/tags
+      setl tags+=$PWD/.hg/tags
+      setl tags+=$PWD/build/tags
+    endfunction
 
-" Make sure we use CoffeTags, shun.
-let g:tagbar_type_coffee = {
-      \ 'ctagsbin' : 'coffeetags',
-      \ 'ctagsargs' : '',
-      \ 'kinds' : [
-      \ 'f:functions',
-      \ 'o:object',
-      \ ],
-      \ 'sro' : ".",
-      \ 'kind2scope' : {
-      \ 'f' : 'object',
-      \ 'o' : 'object',
-      \ }
-      \ }
+    let g:tagbar_type_markdown = {
+          \ 'ctagstype' : 'markdown',
+          \ 'kinds' : [
+          \ 'h:Heading_L1',
+          \ 'i:Heading_L2',
+          \ 'k:Heading_L3'
+          \ ]
+          \ }
 
+    " Improve C++ matching.
+    let g:tagbar_type_cpp = {
+          \ 'kinds' : [
+          \ 'd:macros:1:0',
+          \ 'p:prototypes:1:0',
+          \ 'g:enums',
+          \ 'e:enumerators:0:0',
+          \ 't:typedefs:0:0',
+          \ 'n:namespaces',
+          \ 'c:classes',
+          \ 's:structs',
+          \ 'u:unions',
+          \ 'f:functions',
+          \ 'm:members:0:0',
+          \ 'v:variables:0:0',
+          \ ],
+          \ }
+
+    " Make sure we use CoffeTags, shun.
+    let g:tagbar_type_coffee = {
+          \ 'ctagsbin' : 'coffeetags',
+          \ 'ctagsargs' : '',
+          \ 'kinds' : [
+          \ 'f:functions',
+          \ 'o:object',
+          \ ],
+          \ 'sro' : ".",
+          \ 'kind2scope' : {
+          \ 'f' : 'object',
+          \ 'o' : 'object',
+          \ }
+          \ }
+
+    "Note: This option must set it in .vimrc(_vimrc).  NOT IN .gvimrc(_gvimrc)!
+    " Disable AutoComplPop.
+    let g:acp_enableAtStartup = 0
+    " Use neocomplcache.
+    let g:neocomplcache_enable_at_startup = 1
+    " Use smartcase.
+    let g:neocomplcache_enable_smart_case = 1
+    " Set minimum syntax keyword length.
+    let g:neocomplcache_min_syntax_length = 3
+    let g:neocomplcache_lock_buffer_name_pattern = '\*ku\*'
+
+    " Enable heavy features.
+    " Use camel case completion.
+    "let g:neocomplcache_enable_camel_case_completion = 1
+    " Use underbar completion.
+    "let g:neocomplcache_enable_underbar_completion = 1
+
+    " Define dictionary.
+    let g:neocomplcache_dictionary_filetype_lists = {
+        \ 'default' : '',
+        \ 'vimshell' : $HOME.'/.vimshell_hist',
+        \ 'scheme' : $HOME.'/.gosh_completions'
+            \ }
+
+    " Define keyword.
+    if !exists('g:neocomplcache_keyword_patterns')
+        let g:neocomplcache_keyword_patterns = {}
+    endif
+    let g:neocomplcache_keyword_patterns['default'] = '\h\w*'
+
+    " Plugin key-mappings.
+    inoremap <expr><C-g>     neocomplcache#undo_completion()
+    inoremap <expr><C-l>     neocomplcache#complete_common_string()
+" }
+
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" NeoCompleteCache Recommended key-mappings {
+    " <CR>: close popup and save indent.
+    inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+    function! s:my_cr_function()
+      return neocomplcache#smart_close_popup() . "\<CR>"
+      " For no inserting <CR> key.
+      "return pumvisible() ? neocomplcache#close_popup() : "\<CR>"
+    endfunction
+    " <TAB>: completion.
+    inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+    " <C-h>, <BS>: close popup and delete backword char.
+    inoremap <expr><C-h> neocomplcache#smart_close_popup()."\<C-h>"
+    inoremap <expr><BS> neocomplcache#smart_close_popup()."\<C-h>"
+    inoremap <expr><C-y>  neocomplcache#close_popup()
+    inoremap <expr><C-e>  neocomplcache#cancel_popup()
+    " Close popup by <Space>.
+    "inoremap <expr><Space> pumvisible() ? neocomplcache#close_popup() : "\<Space>"
+
+    " For cursor moving in insert mode(Not recommended)
+    "inoremap <expr><Left>  neocomplcache#close_popup() . "\<Left>"
+    "inoremap <expr><Right> neocomplcache#close_popup() . "\<Right>"
+    "inoremap <expr><Up>    neocomplcache#close_popup() . "\<Up>"
+    "inoremap <expr><Down>  neocomplcache#close_popup() . "\<Down>"
+    " Or set this.
+    "let g:neocomplcache_enable_cursor_hold_i = 1
+    " Or set this.
+    "let g:neocomplcache_enable_insert_char_pre = 1
+
+    " AutoComplPop like behavior.
+    "let g:neocomplcache_enable_auto_select = 1
+
+    " Shell like behavior(not recommended).
+    "set completeopt+=longest
+    "let g:neocomplcache_enable_auto_select = 1
+    "let g:neocomplcache_disable_auto_complete = 1
+    "inoremap <expr><TAB>  pumvisible() ? "\<Down>" : "\<C-x>\<C-u>"
+
+    " Enable omni completion.
+    autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+    autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+    autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+    autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+    autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+
+    " Enable heavy omni completion.
+    if !exists('g:neocomplcache_omni_patterns')
+      let g:neocomplcache_omni_patterns = {}
+    endif
+    let g:neocomplcache_omni_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
+    let g:neocomplcache_omni_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
+    let g:neocomplcache_omni_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
+
+    " For perlomni.vim setting.
+    " https://github.com/c9s/perlomni.vim
+    let g:neocomplcache_omni_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
+"}

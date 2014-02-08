@@ -112,6 +112,7 @@ if ! shopt -oq posix; then
 fi
 
 export http_proxy= #"http://ishubhamch:chaudhary@192.168.60.10:3128/"
+export https_proxy= #"http://ishubhamch:chaudhary@192.168.60.10:3128/"
 
 DEBFULLNAME="Shubham Chaudhary"
 DEBEMAIL="shubham.chaudhary@kdemail.net"
@@ -243,7 +244,7 @@ alias top-commands='history | awk "{print $2}" | awk "{print $1}" |sort|uniq -c 
 
 # Since I <3 KDE, we'd use KDE to manage my keychain.
 if [ -d "$HOME/.kde" ]; then
-  export SSH_ASKPASS=kwalletaskpass
+  #export SSH_ASKPASS=kwalletaskpass
   export KDEDIRS="$HOME/.kde:$HOME/.local:$KDEDIRS"
 fi
 
@@ -252,4 +253,5 @@ if [ -d "$HOME/.homesick" ]; then
     source "$HOME/.homesick/repos/homeshick/completions/homeshick-completion.bash"
     alias hs='homeshick'
 fi
+
 
