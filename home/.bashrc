@@ -2,6 +2,8 @@
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
 
+export PATH=$PATH:$HOME/kde/bin
+
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
 
@@ -84,7 +86,7 @@ fi
 
 # some more ls aliases
 alias ll='ls -alF'
-alias la='ls -a'
+alias lla='ls -a'
 #alias l='ls -CF'
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
@@ -163,8 +165,9 @@ welcome() {
     elif [[ `date +"%d%m"` == 2603 ]]; then
         figlet "Happy Birthday"    
     fi;
-    echo -e ""
-    echo -ne "Up time:"; uptime | awk /'up/'
+    #echo -e ""
+    #echo -ne "Up time:"; uptime | awk /'up/'
+    echo "The system has been up for `uptime | awk {'print $3 $4'}`";
     echo -en "Local IP Address :"; /sbin/ifconfig wlan0 | awk /'inet addr/ {print $2}' | sed -e s/addr:/' '/  || /sbin/ifconfig wlan1 #dubious, gotta test
     df -h | grep /dev/sda7
     echo "";

@@ -13,6 +13,7 @@
 [push]
 	default = matching
 [alias]
+#	l   = log -18 --graph --color=always --all --topo-order --pretty='format:%Cgreen%h%Creset %s%Cred%d%Creset %C(black bold)(by %an)%Creset'
 	lol = log --oneline --graph --decorate
 	lof = log --pretty=fuller
 	st = status -s
@@ -39,6 +40,15 @@
 [i18n]
 	commitencoding = utf-8
 
+[sendemail]
+	from = Shubham Chaudhary <shubhamchaudhary92@gmail.com>
+	smtpserver = smtp.gmail.com
+	smtpuser = shubhamchaudhary92@gmail.com
+	smtpencryption = tls
+	smtppass =
+	chainreplyto = false
+	smtpserverport = 587
+
 [alias]
 	changes = log --pretty=format:\"%h %cr %cn %Cgreen%s%Creset\" --name-status
 	short = log --pretty=format:\"%h %cr %cn %Cgreen%s%Creset\"
@@ -48,7 +58,7 @@
 	d = diff                          # diff unstaged changes
 	dc = diff --cached                # diff staged changes
 	last = diff HEAD^                 # diff last committed change
-	unstage = reset HEAD              # remove files from index (tracking)
+#	unstage = reset HEAD              # remove files from index (tracking)
 	uncommit = reset --soft HEAD^     # go back before last commit, with files in uncommitted state
 	filelog = log -u                  # show changes to a file
 	mt = mergetool                    # fire up the merge tool
@@ -56,7 +66,7 @@
 	sl = stash list                   # list stashes
 	sa = stash apply                  # apply stash (restore changes)
 	sd = stash drop                   # drop stashes (destory changes)
-	l   = log -18 --color=always --all --topo-order --pretty='format:%Cgreen%h%Creset %s%Cred%d%Creset %C(black bold)(by %an)%Creset'
+	l   = log -18 --graph --color=always --all --topo-order --pretty='format:%Cgreen%h%Creset %s%Cred%d%Creset %C(black bold)(by %an)%Creset'
 	ll  = log     --color=always --all --topo-order --pretty='format:%Cgreen%h%Creset %s%Cred%d%Creset %C(black bold)(by %an)%Creset'
 	gl  = log -12 --color=always --all --graph --topo-order --pretty='format:%Cgreen%h%Creset %s %C(black bold)(by %an)%Creset%C(yellow bold)%d%Creset%n'
 	gll = log     --color=always --all --graph --topo-order --pretty='format:%Cgreen%h%Creset %s %C(black bold)(%cr by %an)%Creset%C(yellow bold)%d%Creset%n'

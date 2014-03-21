@@ -1,6 +1,54 @@
+" command! -complete=shellcmd -nargs=+ Shell call s:RunShellCommand(<q-args>)
+" function! s:RunShellCommand(cmdline)
+"   let isfirst = 1
+"   let words = []
+"   for word in split(a:cmdline)
+"     if isfirst
+"       let isfirst = 0  " don't change first word (shell command)
+"     else
+"       if word[0] =~ '\v[%#<]'
+"         let word = expand(word)
+"       endif
+"       let word = shellescape(word, 1)
+"     endif
+"     call add(words, word)
+"   endfor
+"   let expanded_cmdline = join(words)
+"   botright new
+"   setlocal buftype=nofile bufhidden=wipe nobuflisted noswapfile nowrap
+"   call setline(1, 'You entered:  ' . a:cmdline)
+"   call setline(2, 'Expanded to:  ' . expanded_cmdline)
+"   call append(line('$'), substitute(getline(2), '.', '=', 'g'))
+"   silent execute '$read !'. expanded_cmdline
+"   1
+" endfunction
+
+
+" function! s:ExecuteInShell(command)
+"   let command = join(map(split(a:command), 'expand(v:val)'))
+"   let winnr = bufwinnr('^' . command . '$')
+"   silent! execute  winnr < 0 ? 'botright new ' . fnameescape(command) : winnr . 'wincmd w'
+"   setlocal buftype=nowrite bufhidden=wipe nobuflisted noswapfile nowrap number
+"   echo 'Execute ' . command . '...'
+"   silent! execute 'silent %!'. command
+"   silent! execute 'resize ' . line('$')
+"   silent! redraw
+"   silent! execute 'au BufUnload <buffer> execute bufwinnr(' . bufnr('#') . ') . ''wincmd w'''
+"   silent! execute 'nnoremap <silent> <buffer> <LocalLeader>r :call <SID>ExecuteInShell(''' . command . ''')<CR>'
+"   echo 'Shell command ' . command . ' executed.'
+" endfunction
+" command! -complete=shellcmd -nargs=+ Shell call s:ExecuteInShell(<q-args>)
+
+"""""""""""""""""""""""""""""""""""""""""""
+"
+" call pathogen#runtime_append_all_bundles()
+call pathogen#incubate()
+call pathogen#helptags()
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Formatting {
     set number  " Alternative: set nu!
+    set relativenumber " Show line numbers relative to cursor line
     set hlsearch    " Highlight searched item
     set nowrap                      " wrap long lines
     set autoindent                  " indent at the same level of the previous line
@@ -20,6 +68,9 @@
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " General {
+    " allow saving as sudo if opened not as sudo
+    cmap w!! w !sudo tee > /dev/null %     
+
     set tags=./tags,tags,./TAGS,TAGS,~/tags,~/.tags     " Exuberent ctags
     " Move to a given tag " Note: C-t is for moving back in tagstack
     map <C-y> g<C-]>        
@@ -236,6 +287,11 @@ noremap <silent> ,cx :<C-B>silent <C-E>s/^\V<C-R>=escape(b:comment_leader,'\/')<
 " }
 
 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" NERDtree Plugin {
+    nmap <F9> :NERDTree<CR>
+"}
+
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " NeoCompleteCache Recommended key-mappings {
@@ -275,12 +331,14 @@ noremap <silent> ,cx :<C-B>silent <C-E>s/^\V<C-R>=escape(b:comment_leader,'\/')<
     "let g:neocomplcache_disable_auto_complete = 1
     "inoremap <expr><TAB>  pumvisible() ? "\<Down>" : "\<C-x>\<C-u>"
 
+    autocmd vimenter * if !argc() | NERDTree | endif
+
     " Enable omni completion.
-    autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-    autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-    autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-    autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-    autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+    " autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+    " autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+    " autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+    " autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+    " autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 
     " Enable heavy omni completion.
     if !exists('g:neocomplcache_omni_patterns')
@@ -293,4 +351,88 @@ noremap <silent> ,cx :<C-B>silent <C-E>s/^\V<C-R>=escape(b:comment_leader,'\/')<
     " For perlomni.vim setting.
     " https://github.com/c9s/perlomni.vim
     let g:neocomplcache_omni_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
+"}
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Tagbar Plugin {
+    nmap <F8> :TagbarToggle<CR>
+"}
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Relative line numbers {
+    function! NumberToggle()
+      if(&relativenumber == 1)
+        set number
+      else
+        set relativenumber
+      endif
+    endfunc
+
+    nnoremap <C-l> :call NumberToggle()<cr>
+    " autocmd InsertEnter * :set number
+    " autocmd InsertLeave * :set relativenumber
+"}
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Lightline plugin {
+"    let g:lightline = {
+"          \ 'colorscheme': 'landscape',
+"          \ 'mode_map': { 'c': 'NORMAL' },
+"          \ 'active': {
+"          \   'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'filename' ] ]
+"          \ },
+"          \ 'component_function': {
+"          \   'modified': 'MyModified',
+"          \   'readonly': 'MyReadonly',
+"          \   'fugitive': 'MyFugitive',
+"          \   'filename': 'MyFilename',
+"          \   'fileformat': 'MyFileformat',
+"          \   'filetype': 'MyFiletype',
+"          \   'fileencoding': 'MyFileencoding',
+"          \   'mode': 'MyMode',
+"          \ },
+"          \ 'separator': { 'left': '⮀', 'right': '⮂' },
+"          \ 'subseparator': { 'left': '⮁', 'right': '⮃' }
+"          \ }
+"
+"    function! MyModified()
+"      return &ft =~ 'help\|vimfiler\|gundo' ? '' : &modified ? '+' : &modifiable ? '' : '-'
+"    endfunction
+"
+"    function! MyReadonly()
+"      return &ft !~? 'help\|vimfiler\|gundo' && &readonly ? '⭤' : ''
+"    endfunction
+"
+"    function! MyFilename()
+"      return ('' != MyReadonly() ? MyReadonly() . ' ' : '') .
+"            \ (&ft == 'vimfiler' ? vimfiler#get_status_string() : 
+"            \  &ft == 'unite' ? unite#get_status_string() : 
+"            \  &ft == 'vimshell' ? vimshell#get_status_string() :
+"            \ '' != expand('%:t') ? expand('%:t') : '[No Name]') .
+"            \ ('' != MyModified() ? ' ' . MyModified() : '')
+"    endfunction
+"
+"    function! MyFugitive()
+"      if &ft !~? 'vimfiler\|gundo' && exists("*fugitive#head")
+"        let _ = fugitive#head()
+"        return strlen(_) ? '⭠ '._ : ''
+"      endif
+"      return ''
+"    endfunction
+"
+"    function! MyFileformat()
+"      return winwidth(0) > 70 ? &fileformat : ''
+"    endfunction
+"
+"    function! MyFiletype()
+"      return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype : 'no ft') : ''
+"    endfunction
+"
+"    function! MyFileencoding()
+"      return winwidth(0) > 70 ? (strlen(&fenc) ? &fenc : &enc) : ''
+"    endfunction
+"
+"    function! MyMode()
+"      return winwidth(0) > 60 ? lightline#mode() : ''
+"    endfunction
 "}
