@@ -8,3 +8,23 @@ alias cdqm='cd /home/chaudhary/code/linux/kmix/qmpris'
 alias cdjuk='cd /home/chaudhary/code/linux/juk'
 alias cdbuild='cd /home/chaudhary/code/linux/juk/build'
 alias mymakejuk='mkdir build; cd ./build && rm -rfv ./*; cmake -DCMAKE_BUILD_PREFIX=$HOME/kde -DCMAKE_BUILD_TYPE=debugfull -DCMAKE_INSTALL_PREFIX=$HOME/kde ../ ; make'
+
+diff-lines() {
+    local path=
+    local line=
+    while read; do
+        esc=$'\033'
+        if [[ $REPLY =~ ---\ (a/)?.* ]]; then
+            continue
+        elif [[ $REPLY =~ \+\+\+\ (b/)?([^[:blank:]$esc]+).* ]]; then
+            path=${BASH_REMATCH[2]}
+        elif [[ $REPLY =~ @@\ -[0-9]+(,[0-9]+)?\ \+([0-9]+)(,[0-9]+)?\ @@.* ]]; then
+            line=${BASH_REMATCH[2]}
+        elif [[ $REPLY =~ ^($esc\[[0-9;]+m)*([\ +-]) ]]; then
+            echo "$path:$line:$REPLY"
+            if [[ ${BASH_REMATCH[2]} != - ]]; then
+                ((line++))
+            fi
+        fi
+    done
+}
