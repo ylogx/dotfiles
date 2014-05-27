@@ -1,3 +1,4 @@
+
 " command! -complete=shellcmd -nargs=+ Shell call s:RunShellCommand(<q-args>)
 " function! s:RunShellCommand(cmdline)
 "   let isfirst = 1
@@ -60,9 +61,21 @@ call pathogen#helptags()
     set pastetoggle=<F10>           " pastetoggle (sane indentation on pastes)
     "set comments=sl:/*,mb:*,elx:*/  " auto format comment blocks
     " Remove trailing whitespaces and ^M chars
-    autocmd FileType c,cpp,java,php,js,python,twig,xml,yml autocmd BufWritePre <buffer> :call setline(1,map(getline(1,"$"),'substitute(v:val,"\\s\\+$","","")'))
+    autocmd FileType c,cpp,java,php,js,python,twig,xml,yml,matlab autocmd BufWritePre <buffer> :call setline(1,map(getline(1,"$"),'substitute(v:val,"\\s\\+$","","")'))
+    set modeline
+    set modelines=10
 " }
 
+" " Append modeline after last line in buffer.
+" " Use substitute() instead of printf() to handle '%%s' modeline in LaTeX
+" " files.
+" function! AppendModeline()
+"   let l:modeline = printf(" vim: set ts=%d sw=%d tw=%d %set :",
+"         \ &tabstop, &shiftwidth, &textwidth, &expandtab ? '' : 'no')
+"   let l:modeline = substitute(&commentstring, "%s", l:modeline, "")
+"   call append(line("$"), l:modeline)
+" endfunction
+" nnoremap <silent> <Leader>ml :call AppendModeline()<CR>
 
 
 
@@ -122,7 +135,7 @@ call pathogen#helptags()
 autocmd FileType c,cpp,java,scala       let b:comment_leader = '// '
 autocmd FileType sh,ruby,python,perl    let b:comment_leader = '# '
 autocmd FileType conf,fstab             let b:comment_leader = '# '
-autocmd FileType tex                    let b:comment_leader = '% '
+autocmd FileType tex,matlab             let b:comment_leader = '% '
 autocmd FileType mail                   let b:comment_leader = '> '
 autocmd FileType vim                    let b:comment_leader = '" '
 noremap <silent> ,cc :<C-B>silent <C-E>s/^/<C-R>=escape(b:comment_leader,'\/')<CR>/<CR>:nohlsearch<CR>
