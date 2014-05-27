@@ -16,6 +16,7 @@
 #	l   = log -18 --graph --color=always --all --topo-order --pretty='format:%Cgreen%h%Creset %s%Cred%d%Creset %C(black bold)(by %an)%Creset'
 	lol = log --oneline --graph --decorate
 	lof = log --pretty=fuller
+#	commitme = commit --author="Shubham Chaudhary <me@shubhamchaudhary.in>"
 	st = status -s
 	unstage = reset HEAD --
 	last = log -1 HEAD
@@ -78,3 +79,23 @@
 	currentbranch = rev-parse --abbrev-ref HEAD
 	wdiff = diff
 	undo-commit = reset --soft HEAD^
+#funny
+	lost = stash
+	found = stash pop
+	overit = stash clear
+	in = add
+	out = rm
+	find = grep
+	wasted = reset HEAD
+	fuckedup = reset --hard
+	with = merge
+	real = rebase
+	m = checkout master
+	this = checkout
+	that = checkout -
+	meow = status
+	wtf = status
+	what = diff
+	huh = diff
+	bah = blame
+	eh = config --get-regexp alias
