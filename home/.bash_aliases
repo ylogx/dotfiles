@@ -1,4 +1,4 @@
-# vim: set filetype=shell: # vim: set ft=shell:
+# vim: set filetype=shell
 # some more ls aliases
 alias ll='ls -alF'
 alias lla='ls -a'
@@ -22,7 +22,7 @@ alias top-commands='history | awk "{print $2}" | awk "{print $1}" |sort|uniq -c 
 
 ### Alphabatical
 alias a='aria2c -c -x 16'
-alias ack='ack-grep'
+# alias ack='ack-grep'
 alias aria2cm='aria2c -c -x 16'
 #alias acki='ack --ignore-dir=build'
 alias acki='ack --ignore-dir=build --ignore-dir=doc'
@@ -32,15 +32,20 @@ alias catlatest='cat `ls -t|head -1`'
 alias cd..='cd ..'
 alias cdai='cd ~/code/ai'
 alias cdal='cd ~/code/algo/'
+alias cdan='cd ~/code/android'
+alias cdanlog='cd ~/code/android/eclipseWorkspace/logmein/src/in/shubhamchaudhary/logmein'
 alias cdc='cd ~/code/c'
+alias cdco='cd ~/code/compiler'
 alias cdcpp='cd ~/code/cpp/'
 alias cdcdp='cd ~/code/codpro'
 alias cdcf='cd ~/code/codpro/chef'
+alias cdcu='cd ~/Dropbox/carts-uiet'
 alias cdfor='cd ~/code/codpro/forces'
 alias cdd='cd ~/code'
 alias cdds='cd ~/code/ds/dshome/dsadv'
 alias cddw='cd ~/Downloads'
 alias cdg='cd ~/code/linux/git'
+alias cde='cd ~/code/android/eclipseWorkspace'
 alias cdgre='cd ~/gre'
 alias cdk='cd ~/code/linux/kdevelop'
 alias cdkde='cd ~/kde/'
@@ -49,22 +54,25 @@ alias cdkc='cd ~/code/linux/kdev-clang'
 alias cdkp='cd ~/code/linux/kdevplatform'
 alias cdpi='cd ~/code/pi'
 alias cdre='cd ~/code/ds/dshome/revision'
+alias cdh='cd ~/code/hacking'
 alias cdht='cd ~/code/html'
 alias cdja='cd ~/code/java/'
 alias cdli='cd ~/code/linux'
+alias cdml='cd ~/code/ai/ml'
 alias cdo='cd ~/Videos/os_videos'
 alias cdop='cd ~/open'
 alias cdos='cd ~/code/os/'
 alias cdp='cd ~/Videos/Link\ to\ asdf_files'
 alias cdpy='cd ~/code/python'
 alias cdqt='cd ~/code/qt'
+alias cds='cd ~/code/android/studioWorkspace'
 alias cdsc='cd ~/code/scripts'
 alias cdsfd='cd ~/open/sfd'
 alias cdsok='cd ~/open/sok'
 alias cdsp='cd ~/code/codpro/spoj/'
-alias cdtor='cd /home/chaudhary/kernel/git_linux_repo/linux_torvalds'
+alias cdtor='cd /home/chaudhary/kernel/git_linux_repo/torvalds'
 alias cdu='cd ~/code/scripts/universal'
-alias cdv='cd ~/gre/vocab'
+alias cdv='cd ~/vocab'
 #alias cmk='mkdir $1 && cd ./$1'
 
 alias d='date'
@@ -73,12 +81,19 @@ alias df='df -h'
 alias du='du -h -c'
 alias dn='OPTIONS=$(\ls -F | grep /$); select s in $OPTIONS; do cd $PWD/$s; break;done'
 
+alias def='/home/chaudhary/code/python/vocab_definition.py'
 alias definition='/home/chaudhary/code/python/vocab_definition.py'
 alias enter='/home/chaudhary/code/python/vocab_enter_word.py'
+alias fdroid='~/code/android/fdroidserver/fdroid'
+alias foxit='wine ~/Documents/FoxitReaderPortable/FoxitReaderPortable.exe &'
 
+alias j='jobs'
 # alias logmein='~/code/python/auto_login_wifi.py ~/code/python/.login.txt'
 alias l='d; ls -ltrFhH'
 alias la='d; ls -lAtrFhH'
+alias li='logmein -i'
+alias lip='watch -n 1 logmein -i'
+alias lo='logmein -o'
 alias lsize='ls --sort=size -lhr' # list by size
 alias lx='ls -lXB'        # sort by extension
 alias lk='ls -lSr'        # sort by size
@@ -93,7 +108,7 @@ alias lsd='ls -l | grep "^d"'   #list only directories
 #alias ll='ls -l'        # long listing
 #alias l='ls -hF --color'    # quick listing
 
-alias masquerade='sudo iptables -t nat -A POSTROUTING -o wlan0 -s 192.168.1.0/24 -j MASQUERADE'
+alias masquerade='sudo iptables -t nat -A POSTROUTING -o wlp3s0 -s 192.168.1.0/24 -j MASQUERADE'
 alias mymakehere='cp /home/chaudhary/Makefile ./'
 alias myhistory='cat ~/bashbackup.txt'
 
@@ -101,8 +116,10 @@ alias proxy='cat -n /etc/apt/apt.conf'
 #alias proxyNone='sudo sh -c \'echo -n "" > /etc/apt/apt.conf\''
 alias proxyUiet='sudo cp /etc/apt/aptUiet.conf /etc/apt/apt.conf'
 alias wcall='wc `ls -tr`'
+alias webdownloader='~/code/python/webpage_links_downloader.py'
 #alias tree='tree -Csh'        # nice alternative to 'ls'
 alias today='/home/chaudhary/code/scripts/show_message.sh'
+alias tarbackup='~/code/python/tar_backup.py'
 
 #some variations
 #alias vp='vi `ls -t *.@(pl|cgi)| head -1 `'

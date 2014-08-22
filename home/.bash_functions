@@ -1,30 +1,48 @@
-# vim: set filetype=shell: # vim: set ft=shell:
+# vim: set filetype=shell
 ## FUNCTIONS
+check_and_run() {
+    if hash $1 2>/dev/null; then
+        "$@"
+    fi
+}
+check_and_run_bg() {
+    if hash $1 2>/dev/null; then
+        ( "$@" & )  #parens help it run in subshell so that "Done" msg is not printed
+    fi
+}
 welcome() {
     #------------------------------------------
     #------WELCOME MESSAGE---------------------
     # customize this first message with a message of your choice.
     # this will display the username, date, time, a calendar, the amount of users, and the up time.
-    #clear
+    # clear
     # Gotta love ASCII art with figlet
-    figlet "Welcome, " $USER;
-    #toilet "Welcome, " $USER;
+    check_and_run figlet "Welcome, " $USER;     #toilet "Welcome, " $USER;
     echo -e ""; cal ;
     echo -ne "Today is "; date #date +"Today is %A %D, and it is now %R"
-    #if [[ `date +"%D"` =~ 01/01* ]];
-    if [[ `date +"%d%m"` == 0101 ]]; then 
-        echo "Hey man, I forgot"; figlet "Happy New Year"; echo "$USER"; 
+    if [[ `date +"%d%m"` == 0101 ]]; then       #if [[ `date +"%D"` =~ 01/01* ]];
+        echo "Hey man, I forgot"; figlet "Happy New Year"; echo "$USER";
     elif [[ `date +"%d%m"` == 2603 ]]; then
-        figlet "Happy Birthday"    
+        figlet "Happy Birthday"
     fi;
-    #echo -e ""
-    #echo -ne "Up time:"; uptime | awk /'up/'
-    echo "The system has been up for `uptime | awk {'print $3 $4'}`";
-    echo -en "Local IP Address :"; /sbin/ifconfig wlan0 | awk /'inet addr/ {print $2}' | sed -e s/addr:/' '/  || /sbin/ifconfig wlan1 #dubious, gotta test
-    df -h | grep /dev/sda7
+    echo -e "Status of $HOSTNAME: " 
+
+    echo -en "\t";
+    free -ht | head -3 | tail -n 1 | awk '{printf "Main Memory\t:\t" $3 " used & " $4 " free"}'
+    free --old -ht | head -2 | tail -n 1 | awk '{printf " out of " $2}'; echo "";
+
+    echo -en "\t"; df -h / | tail -n 1 | awk '{print "Root " $1 "\t:\t" $5 " full & " $4 " still available."}' ; 
+
+    echo -en "\tIP Address \t:\t"; /sbin/ifconfig wlp3s0 | awk /'inet / {print $2}' | sed -e s/addr:/''/  || /sbin/ifconfig wlan0 || echo "" #dubious, gotta test
+
+    echo -en "\tThe system has been up for ";
+    perl -e 'my $uptime = `uptime`; if ($uptime =~ /^\s+\S+\s+up\s+(\S+\s+\S+,\s+\S+),/) { printf $1; } else { print "uptime gave me a weird format!"; }'
+#     echo -e "" #echo -ne "Up time:"; uptime | awk /'up/' #`uptime | awk {'print $3 $4'}`
     echo "";
+#     check_and_run_bg ansiweather;
 }
 welcome;
+
 # get IP adresses
 #function my_ip() # get IP adresses
 my_ip () { 
@@ -97,4 +115,5 @@ function stopwatch(){
     echo -ne "$(date -u --date @$((`date +%s` - $date1)) +%H:%M:%S)\r"; 
    done
 }
+# vim: set ft=shell:
 

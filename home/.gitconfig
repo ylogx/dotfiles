@@ -1,10 +1,11 @@
 [user]
 	name = Shubham Chaudhary
-	email = shubham.chaudhary@kdemail.net
+	email = me@shubhamchaudhary.in
+#	email = shubham.chaudhary@kdemail.net
 	signingkey = "CD8F88B6"
 	logallrefupdates=true
 [core]
-	editor = vi
+	editor = vim
     #pager=most
 	excludesfile = ~/.gitignore_global
 	attributesfile = ~/.gitattributes

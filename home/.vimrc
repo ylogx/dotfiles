@@ -1,52 +1,59 @@
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Vundle {
+    " This must be first, because it changes other options as a side effect.
+    set nocompatible               " be iMproved
+    filetype off                   " required!
 
-" command! -complete=shellcmd -nargs=+ Shell call s:RunShellCommand(<q-args>)
-" function! s:RunShellCommand(cmdline)
-"   let isfirst = 1
-"   let words = []
-"   for word in split(a:cmdline)
-"     if isfirst
-"       let isfirst = 0  " don't change first word (shell command)
-"     else
-"       if word[0] =~ '\v[%#<]'
-"         let word = expand(word)
-"       endif
-"       let word = shellescape(word, 1)
-"     endif
-"     call add(words, word)
-"   endfor
-"   let expanded_cmdline = join(words)
-"   botright new
-"   setlocal buftype=nofile bufhidden=wipe nobuflisted noswapfile nowrap
-"   call setline(1, 'You entered:  ' . a:cmdline)
-"   call setline(2, 'Expanded to:  ' . expanded_cmdline)
-"   call append(line('$'), substitute(getline(2), '.', '=', 'g'))
-"   silent execute '$read !'. expanded_cmdline
-"   1
-" endfunction
+    set rtp+=~/.vim/bundle/vundle/  " set runtimepath
+    call vundle#rc()
 
+    " let Vundle manage Vundle
+    " required!
+    Plugin 'gmarik/vundle'
 
-" function! s:ExecuteInShell(command)
-"   let command = join(map(split(a:command), 'expand(v:val)'))
-"   let winnr = bufwinnr('^' . command . '$')
-"   silent! execute  winnr < 0 ? 'botright new ' . fnameescape(command) : winnr . 'wincmd w'
-"   setlocal buftype=nowrite bufhidden=wipe nobuflisted noswapfile nowrap number
-"   echo 'Execute ' . command . '...'
-"   silent! execute 'silent %!'. command
-"   silent! execute 'resize ' . line('$')
-"   silent! redraw
-"   silent! execute 'au BufUnload <buffer> execute bufwinnr(' . bufnr('#') . ') . ''wincmd w'''
-"   silent! execute 'nnoremap <silent> <buffer> <LocalLeader>r :call <SID>ExecuteInShell(''' . command . ''')<CR>'
-"   echo 'Shell command ' . command . ' executed.'
-" endfunction
-" command! -complete=shellcmd -nargs=+ Shell call s:ExecuteInShell(<q-args>)
+    " My Bundles here:
+    " Original repos on github
+    "
+    " Git wrapper
+    Plugin 'tpope/vim-fugitive'
+    Plugin 'Lokaltog/vim-easymotion'
+    " Compile and find error
+    Plugin 'scrooloose/syntastic'
+    " Auto complete
+    Plugin 'Shougo/neocomplcache.vim'
+    " Tree mapped below at <F9>
+    Plugin 'scrooloose/nerdtree'
+    " ys, cs, ds surround with brackets and shit
+    Plugin 'tpope/vim-surround'
+    " Read tags and highlighten them
+    " Plugin 'skroll/vim-taghighlight'
+    " Plugin 'vim-scripts/TagHighlight'
+    Plugin 'abudden/taghighlight-automirror'
+    " Abreviate :Abolish {despa,sepe}rat{e,es,ed,ing,ely,ion,ions,or} {despe,sepa}rat{},
+    " Substitute :%Subvert/child{,ren}/adult{,s}/g,
+    " Coercion crs, crm
+    Plugin 'tpope/vim-abolish'
+    " gcc, gc, gcmotion, gcvisual, :g/TODO/Commentary
+    Plugin 'scrooloose/nerdcommenter'
+    " Plugin 'tpope/vim-commentary'
+    " Plugin ''
+    " <F5> to show undo/redo tree
+    Plugin 'sjl/gundo.vim'
+    " <F9> to show tagbar
+    Plugin 'majutsushi/tagbar'
+    " Better Status line
+    Plugin 'bling/vim-airline'
 
-"""""""""""""""""""""""""""""""""""""""""""
-"
-" call pathogen#runtime_append_all_bundles()
-call pathogen#incubate()
-call pathogen#helptags()
+    " Enable file type detection. Do this after Vundle calls.
+" }
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Pathogen {
+    " call pathogen#runtime_append_all_bundles()
+    " call pathogen#incubate()
+    " call pathogen#helptags()
+" }
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Formatting {
     set number  " Alternative: set nu!
     set relativenumber " Show line numbers relative to cursor line
@@ -57,36 +64,32 @@ call pathogen#helptags()
     set expandtab                   " tabs are spaces, not tabs
     set tabstop=4                   " an indentation every four columns
     set softtabstop=4               " let backspace delete indent
-    "set matchpairs+=<:>                " match, to be used with % 
+    "set matchpairs+=<:>                " match, to be used with %
     set pastetoggle=<F10>           " pastetoggle (sane indentation on pastes)
     "set comments=sl:/*,mb:*,elx:*/  " auto format comment blocks
     " Remove trailing whitespaces and ^M chars
-    autocmd FileType c,cpp,java,php,js,python,twig,xml,yml,matlab autocmd BufWritePre <buffer> :call setline(1,map(getline(1,"$"),'substitute(v:val,"\\s\\+$","","")'))
+    autocmd FileType c,cpp,java,php,js,python,twig,vim,xml,yml,matlab autocmd BufWritePre <buffer> :call setline(1,map(getline(1,"$"),'substitute(v:val,"\\s\\+$","","")'))
+
     set modeline
     set modelines=10
+"     set textwidth=80
+"     set colorcolumn=+1  " i.e textwidth+1
+
+    " use 256 colors in Console mode if we think the terminal supports it
+    if &term =~? 'mlterm\|xterm'
+        set t_Co=256
+    endif
 " }
 
-" " Append modeline after last line in buffer.
-" " Use substitute() instead of printf() to handle '%%s' modeline in LaTeX
-" " files.
-" function! AppendModeline()
-"   let l:modeline = printf(" vim: set ts=%d sw=%d tw=%d %set :",
-"         \ &tabstop, &shiftwidth, &textwidth, &expandtab ? '' : 'no')
-"   let l:modeline = substitute(&commentstring, "%s", l:modeline, "")
-"   call append(line("$"), l:modeline)
-" endfunction
-" nnoremap <silent> <Leader>ml :call AppendModeline()<CR>
 
-
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " General {
     " allow saving as sudo if opened not as sudo
-    cmap w!! w !sudo tee > /dev/null %     
+    cmap w!! w !sudo tee > /dev/null %
 
     set tags=./tags,tags,./TAGS,TAGS,~/tags,~/.tags     " Exuberent ctags
     " Move to a given tag " Note: C-t is for moving back in tagstack
-    map <C-y> g<C-]>        
+    map <C-y> g<C-]>
 
     set undofile
     set undodir=~/.vimundo
@@ -109,16 +112,22 @@ call pathogen#helptags()
     "set shortmess+=filmnrxoOtT      " abbrev. of messages (avoids 'hit enter')
     "set viewoptions=folds,options,cursor,unix,slash " better unix / windows compatibility
     set virtualedit=onemore         " allow for cursor beyond last character
-    "set history=1000                " Store a ton of history (default is 20)
+    set history=10000                " Store a ton of history (default is 20)
     "set spell                       " spell checking on
-    
+
     " Setting up the directories {
-        "set backup                      " backups are nice ...
+        set backup                      " backups are nice ...
         " Moved to function at bottom of the file
         "set backupdir=$HOME/.vimbackup//  " but not when they clog .
         "set directory=$HOME/.vimswap//     " Same for swap files
         "set viewdir=$HOME/.vimviews//  " same for view files
-        
+
+        " backup to ~/.tmp
+        set backupdir=~/.vimbackup,~/.tmp,~/tmp,/var/tmp,/tmp
+        set backupskip=/tmp/*,/private/tmp/*
+        set directory=~/.vimswap,~/.tmp,~/tmp,/var/tmp,/tmp
+        set writebackup
+
         "" Creating directories if they don't exist
         "silent execute '!mkdir -p $HVOME/.vimbackup'
         "silent execute '!mkdir -p $HOME/.vimswap'
@@ -130,27 +139,28 @@ call pathogen#helptags()
 
 
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Commenting blocks of code.
-autocmd FileType c,cpp,java,scala       let b:comment_leader = '// '
-autocmd FileType sh,ruby,python,perl    let b:comment_leader = '# '
-autocmd FileType conf,fstab             let b:comment_leader = '# '
-autocmd FileType tex,matlab             let b:comment_leader = '% '
-autocmd FileType mail                   let b:comment_leader = '> '
-autocmd FileType vim                    let b:comment_leader = '" '
-noremap <silent> ,cc :<C-B>silent <C-E>s/^/<C-R>=escape(b:comment_leader,'\/')<CR>/<CR>:nohlsearch<CR>
-noremap <silent> ,cx :<C-B>silent <C-E>s/^\V<C-R>=escape(b:comment_leader,'\/')<CR>//e<CR>:nohlsearch<CR>
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Commenting blocks of code {
+    autocmd FileType c,cpp,java,scala       let b:comment_leader = '// '
+    autocmd FileType sh,ruby,python,perl    let b:comment_leader = '# '
+    autocmd FileType conf,fstab             let b:comment_leader = '# '
+    autocmd FileType tex,matlab             let b:comment_leader = '% '
+    autocmd FileType mail                   let b:comment_leader = '> '
+    autocmd FileType vim                    let b:comment_leader = '" '
+    " noremap <silent> ,cc :<C-B>silent <C-E>s/^/<C-R>=escape(b:comment_leader,'\/')<CR>/<CR>:nohlsearch<CR>
+    " noremap <silent> ,cx :<C-B>silent <C-E>s/^\V<C-R>=escape(b:comment_leader,'\/')<CR>//e<CR>:nohlsearch<CR>
+" }
 
 
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Key (re)Mappings {
 
     "The default leader is '\', but many people prefer ',' as it's in a standard
     "location
     "let mapleader = ','
-    
-" Making it so ; works like : for commands. Saves typing and eliminates :W style typos due to lazy holding shift.
+
+    " Making it so ; works like : for commands. Saves typing and eliminates :W style typos due to lazy holding shift.
     "nnoremap ; :
 
 
@@ -160,7 +170,7 @@ noremap <silent> ,cx :<C-B>silent <C-E>s/^\V<C-R>=escape(b:comment_leader,'\/')<
     "map <C-L> <C-W>l<C-W>_
     "map <C-H> <C-W>h<C-W>_
     "map <C-K> <C-W>k<C-W>_
-    
+
     " Wrapped lines goes down/up to next row, rather than next line in file.
     "nnoremap j gj
     "nnoremap k gk
@@ -168,7 +178,7 @@ noremap <silent> ,cx :<C-B>silent <C-E>s/^\V<C-R>=escape(b:comment_leader,'\/')<
     " The following two lines conflict with moving to top and bottom of the
     " screen
     " If you prefer that functionality, comment them out.
-    "map <S-H> gT          
+    "map <S-H> gT
     "map <S-L> gt
 
     " Stupid shift key fixes
@@ -183,9 +193,8 @@ noremap <silent> ,cx :<C-B>silent <C-E>s/^\V<C-R>=escape(b:comment_leader,'\/')<
 
 
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"{
-    "{{{2 Visual Cues
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Visual Cues {
     " A problem that plagued me for months, having visual cues for white spacing
     " solves formatting problems a lot quicker. Also, we're using modern shells
     " (right?) so using UTF-8 characters for symbols should be a given.
@@ -209,61 +218,43 @@ noremap <silent> ,cx :<C-B>silent <C-E>s/^\V<C-R>=escape(b:comment_leader,'\/')<
     " Show me what I was doing.
     set showcmd
     set showfulltag
+"}
 
-    " Ensures that local tags are loaded into the mix.
-    function! s:load_local_tags()
-      setl tags+=$PWD/.tags
-      setl tags+=$PWD/TAGS,
-      setl tags+=$PWD/tags
-      setl tags+=$PWD/.bzr/tags
-      setl tags+=$PWD/.git/tags
-      setl tags+=$PWD/.svn/tags
-      setl tags+=$PWD/.hg/tags
-      setl tags+=$PWD/build/tags
-    endfunction
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Airline plugin {
+    "set t_Co=256 "set t_AB=[[48;5;%dm "set t_AF=[[38;5;%dm
+    set laststatus=2
+    let g:airline_powerline_fonts = 1
+"}
 
-    let g:tagbar_type_markdown = {
-          \ 'ctagstype' : 'markdown',
-          \ 'kinds' : [
-          \ 'h:Heading_L1',
-          \ 'i:Heading_L2',
-          \ 'k:Heading_L3'
-          \ ]
-          \ }
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Syntastic Plugin {
+    let g:syntastic_python_python_exec = 'python3'
+" }
 
-    " Improve C++ matching.
-    let g:tagbar_type_cpp = {
-          \ 'kinds' : [
-          \ 'd:macros:1:0',
-          \ 'p:prototypes:1:0',
-          \ 'g:enums',
-          \ 'e:enumerators:0:0',
-          \ 't:typedefs:0:0',
-          \ 'n:namespaces',
-          \ 'c:classes',
-          \ 's:structs',
-          \ 'u:unions',
-          \ 'f:functions',
-          \ 'm:members:0:0',
-          \ 'v:variables:0:0',
-          \ ],
-          \ }
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" NERDtree Plugin {
+    nmap <F9> :NERDTreeToggle<CR>
+"}
 
-    " Make sure we use CoffeTags, shun.
-    let g:tagbar_type_coffee = {
-          \ 'ctagsbin' : 'coffeetags',
-          \ 'ctagsargs' : '',
-          \ 'kinds' : [
-          \ 'f:functions',
-          \ 'o:object',
-          \ ],
-          \ 'sro' : ".",
-          \ 'kind2scope' : {
-          \ 'f' : 'object',
-          \ 'o' : 'object',
-          \ }
-          \ }
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" NERDcommenter Plugin {
+    let NERD_cpp_alt_style=1
+    let NERD_c_alt_style=1
+    let g:NERDCustomDelimiters = {
+        \ 'c': { 'leftAlt': '//','rightAlt': '', 'left': '/*', 'right': '*/' },
+        \ 'cpp': { 'leftAlt': '//','rightAlt': '', 'left': '/*', 'right': '*/' },
+        \ }
+"}
 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Gundo Plugin {
+    nnoremap <F5> :GundoToggle<CR>
+"}
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" NeoComplCache Plugin {
     "Note: This option must set it in .vimrc(_vimrc).  NOT IN .gvimrc(_gvimrc)!
     " Disable AutoComplPop.
     let g:acp_enableAtStartup = 0
@@ -300,13 +291,7 @@ noremap <silent> ,cx :<C-B>silent <C-E>s/^\V<C-R>=escape(b:comment_leader,'\/')<
 " }
 
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" NERDtree Plugin {
-    nmap <F9> :NERDTree<CR>
-"}
-
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " NeoCompleteCache Recommended key-mappings {
     " <CR>: close popup and save indent.
     inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
@@ -366,12 +351,12 @@ noremap <silent> ,cx :<C-B>silent <C-E>s/^\V<C-R>=escape(b:comment_leader,'\/')<
     let g:neocomplcache_omni_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
 "}
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Tagbar Plugin {
     nmap <F8> :TagbarToggle<CR>
 "}
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Relative line numbers {
     function! NumberToggle()
       if(&relativenumber == 1)
@@ -386,66 +371,76 @@ noremap <silent> ,cx :<C-B>silent <C-E>s/^\V<C-R>=escape(b:comment_leader,'\/')<
     " autocmd InsertLeave * :set relativenumber
 "}
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Lightline plugin {
-"    let g:lightline = {
-"          \ 'colorscheme': 'landscape',
-"          \ 'mode_map': { 'c': 'NORMAL' },
-"          \ 'active': {
-"          \   'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'filename' ] ]
-"          \ },
-"          \ 'component_function': {
-"          \   'modified': 'MyModified',
-"          \   'readonly': 'MyReadonly',
-"          \   'fugitive': 'MyFugitive',
-"          \   'filename': 'MyFilename',
-"          \   'fileformat': 'MyFileformat',
-"          \   'filetype': 'MyFiletype',
-"          \   'fileencoding': 'MyFileencoding',
-"          \   'mode': 'MyMode',
-"          \ },
-"          \ 'separator': { 'left': '⮀', 'right': '⮂' },
-"          \ 'subseparator': { 'left': '⮁', 'right': '⮃' }
-"          \ }
-"
-"    function! MyModified()
-"      return &ft =~ 'help\|vimfiler\|gundo' ? '' : &modified ? '+' : &modifiable ? '' : '-'
-"    endfunction
-"
-"    function! MyReadonly()
-"      return &ft !~? 'help\|vimfiler\|gundo' && &readonly ? '⭤' : ''
-"    endfunction
-"
-"    function! MyFilename()
-"      return ('' != MyReadonly() ? MyReadonly() . ' ' : '') .
-"            \ (&ft == 'vimfiler' ? vimfiler#get_status_string() : 
-"            \  &ft == 'unite' ? unite#get_status_string() : 
-"            \  &ft == 'vimshell' ? vimshell#get_status_string() :
-"            \ '' != expand('%:t') ? expand('%:t') : '[No Name]') .
-"            \ ('' != MyModified() ? ' ' . MyModified() : '')
-"    endfunction
-"
-"    function! MyFugitive()
-"      if &ft !~? 'vimfiler\|gundo' && exists("*fugitive#head")
-"        let _ = fugitive#head()
-"        return strlen(_) ? '⭠ '._ : ''
-"      endif
-"      return ''
-"    endfunction
-"
-"    function! MyFileformat()
-"      return winwidth(0) > 70 ? &fileformat : ''
-"    endfunction
-"
-"    function! MyFiletype()
-"      return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype : 'no ft') : ''
-"    endfunction
-"
-"    function! MyFileencoding()
-"      return winwidth(0) > 70 ? (strlen(&fenc) ? &fenc : &enc) : ''
-"    endfunction
-"
-"    function! MyMode()
-"      return winwidth(0) > 60 ? lightline#mode() : ''
-"    endfunction
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" FUNCTIONS
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" " Append modeline after last line in buffer.
+" " Use substitute() instead of printf() to handle '%%s' modeline in LaTeX
+" " files.
+function! AppendModeline()
+  let l:modeline = printf(" vim: set ts=%d sw=%d tw=%d %set :",
+        \ &tabstop, &shiftwidth, &textwidth, &expandtab ? '' : 'no')
+  let l:modeline = substitute(&commentstring, "%s", l:modeline, "")
+  call append(line("$"), l:modeline)
+endfunction
+nnoremap <silent> <Leader>ml :call AppendModeline()<CR>
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Tagbar Plugin {
+    " Ensures that local tags are loaded into the mix.
+    function! s:load_local_tags()
+      setl tags+=$PWD/.tags
+      setl tags+=$PWD/TAGS,
+      setl tags+=$PWD/tags
+      setl tags+=$PWD/.bzr/tags
+      setl tags+=$PWD/.git/tags
+      setl tags+=$PWD/.svn/tags
+      setl tags+=$PWD/.hg/tags
+      setl tags+=$PWD/build/tags
+    endfunction
+
+    let g:tagbar_type_markdown = {
+          \ 'ctagstype' : 'markdown',
+          \ 'kinds' : [
+          \ 'h:Heading_L1',
+          \ 'i:Heading_L2',
+          \ 'k:Heading_L3'
+          \ ]
+          \ }
+
+    " Improve C++ matching.
+    let g:tagbar_type_cpp = {
+          \ 'kinds' : [
+          \ 'd:macros:1:0',
+          \ 'p:prototypes:1:0',
+          \ 'g:enums',
+          \ 'e:enumerators:0:0',
+          \ 't:typedefs:0:0',
+          \ 'n:namespaces',
+          \ 'c:classes',
+          \ 's:structs',
+          \ 'u:unions',
+          \ 'f:functions',
+          \ 'm:members:0:0',
+          \ 'v:variables:0:0',
+          \ ],
+          \ }
+
+    " Make sure we use CoffeTags, shun.
+    let g:tagbar_type_coffee = {
+          \ 'ctagsbin' : 'coffeetags',
+          \ 'ctagsargs' : '',
+          \ 'kinds' : [
+          \ 'f:functions',
+          \ 'o:object',
+          \ ],
+          \ 'sro' : ".",
+          \ 'kind2scope' : {
+          \ 'f' : 'object',
+          \ 'o' : 'object',
+          \ }
+          \ }
 "}
+

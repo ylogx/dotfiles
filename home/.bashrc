@@ -3,6 +3,8 @@
 # for examples
 
 export PATH=$PATH:$HOME/kde/bin
+export JAVA_HOME=/etc/alternatives/java_sdk
+export PATH=$JAVA_HOME/bin:$PATH
 
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
@@ -116,6 +118,7 @@ DEBFULLNAME="Shubham Chaudhary"
 DEBEMAIL="shubham.chaudhary@kdemail.net"
 EMAIL="me@shubhamchaudhary.in"
 EDITOR=vim
+SUDO_EDITOR=vim
 
 if [ -f ~/.kde-bashrc ]; then
     . ~/.kde-bashrc
