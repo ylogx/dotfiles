@@ -33,16 +33,17 @@
     " Substitute :%Subvert/child{,ren}/adult{,s}/g,
     " Coercion crs, crm
     Plugin 'tpope/vim-abolish'
-    " gcc, gc, gcmotion, gcvisual, :g/TODO/Commentary
+    " <Leader>cc <Leader>c<space>
     Plugin 'scrooloose/nerdcommenter'
+    " gcc, gc, gcmotion, gcvisual, :g/TODO/Commentary
     " Plugin 'tpope/vim-commentary'
-    " Plugin ''
     " <F5> to show undo/redo tree
     Plugin 'sjl/gundo.vim'
     " <F9> to show tagbar
     Plugin 'majutsushi/tagbar'
     " Better Status line
     Plugin 'bling/vim-airline'
+    "Plugin ''
 
     " Enable file type detection. Do this after Vundle calls.
 " }
@@ -72,8 +73,8 @@
 
     set modeline
     set modelines=10
-"     set textwidth=80
-"     set colorcolumn=+1  " i.e textwidth+1
+    set textwidth=79
+    set colorcolumn=+1  " i.e textwidth+1
 
     " use 256 colors in Console mode if we think the terminal supports it
     if &term =~? 'mlterm\|xterm'
@@ -87,16 +88,17 @@
     " allow saving as sudo if opened not as sudo
     cmap w!! w !sudo tee > /dev/null %
 
-    set tags=./tags,tags,./TAGS,TAGS,~/tags,~/.tags     " Exuberent ctags
+    "set tags=./tags,tags,./TAGS,TAGS,~/tags,~/.tags     " Exuberent ctags
+    set tags=./tags;/,./TAGS;/,./.tags;/,./.TAGS;/     " Exuberent ctags
     " Move to a given tag " Note: C-t is for moving back in tagstack
     map <C-y> g<C-]>
 
     set undofile
     set undodir=~/.vimundo
-    " set background=dark         " Assume a dark background
-    " if !has('win32') && !has('win64')
-    "     set term=$TERM       " Make arrow and other keys work
-    " endif
+    "set background=dark         " Assume a dark background
+    "if !has('win32') && !has('win64')
+    "    set term=$TERM       " Make arrow and other keys work
+    "endif
     let c_space_errors=1    " Show error if space left at end of line
     filetype plugin indent on   " Automatically detect file types.
     syntax on                   " syntax highlighting
@@ -108,7 +110,7 @@
     "scriptencoding utf-8
     set ic " Ignore case in search
 
-    " set autowrite                  " automatically write a file when leaving a modified buffer
+    "set autowrite                  " automatically write a file when leaving a modified buffer
     "set shortmess+=filmnrxoOtT      " abbrev. of messages (avoids 'hit enter')
     "set viewoptions=folds,options,cursor,unix,slash " better unix / windows compatibility
     set virtualedit=onemore         " allow for cursor beyond last character
@@ -229,12 +231,23 @@
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Syntastic Plugin {
+    map <leader>r :SyntasticReset<CR>
+    "map <leader>sr :SyntasticReset<CR>
     let g:syntastic_python_python_exec = 'python3'
 " }
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Tagbar Plugin {
+    " Some more down below
+    nmap <F8> :TagbarToggle<CR>
+    map <leader>t :TagbarToggle<CR>
+"}
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " NERDtree Plugin {
     nmap <F9> :NERDTreeToggle<CR>
+    map <leader>n :NERDTreeToggle<CR>
+    "let g:NERDTreeWinPos = "right"
 "}
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -250,6 +263,7 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Gundo Plugin {
     nnoremap <F5> :GundoToggle<CR>
+    map <Leader>u :GundoToggle<CR>
 "}
 
 
@@ -352,11 +366,6 @@
 "}
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Tagbar Plugin {
-    nmap <F8> :TagbarToggle<CR>
-"}
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Relative line numbers {
     function! NumberToggle()
       if(&relativenumber == 1)
@@ -444,3 +453,37 @@ nnoremap <silent> <Leader>ml :call AppendModeline()<CR>
           \ }
 "}
 
+function! ToggleNERDTreeAndTagbar()
+    let w:jumpbacktohere = 1
+
+    " Detect which plugins are open
+    if exists('t:NERDTreeBufName')
+        let nerdtree_open = bufwinnr(t:NERDTreeBufName) != -1
+    else
+        let nerdtree_open = 0
+    endif
+    let tagbar_open = bufwinnr('__Tagbar__') != -1
+
+    " Perform the appropriate action
+    if nerdtree_open && tagbar_open
+        NERDTreeClose
+        TagbarClose
+    elseif nerdtree_open
+        TagbarOpen
+    elseif tagbar_open
+        NERDTree
+    else
+        NERDTree
+        TagbarOpen
+    endif
+
+    " Jump back to the original window
+    for window in range(1, winnr('$'))
+        execute window . 'wincmd w'
+        if exists('w:jumpbacktohere')
+            unlet w:jumpbacktohere
+            break
+        endif
+    endfor
+endfunction
+nnoremap <leader>\ :call ToggleNERDTreeAndTagbar()<CR>
