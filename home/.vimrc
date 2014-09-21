@@ -72,10 +72,18 @@
     autocmd FileType c,cpp,java,php,js,python,twig,vim,xml,yml,matlab autocmd BufWritePre <buffer> :call setline(1,map(getline(1,"$"),'substitute(v:val,"\\s\\+$","","")'))
 
     set modeline
-    set modelines=10
+    set modelines=10    " Search 10 lines from top and bottom for modelines
     set textwidth=79
     set colorcolumn=+1  " i.e textwidth+1
+    " Change column color from red to greyish
+    highlight ColorColumn ctermbg=233
 
+    " Don't lose selection when indenting with visual selection
+    vnoremap < <gv
+    vnoremap > >gv
+
+    " Reformatt the entire file and return back to mark (z) here
+    map <F7> mzgg=G`z<CR>
     " use 256 colors in Console mode if we think the terminal supports it
     if &term =~? 'mlterm\|xterm'
         set t_Co=256
@@ -158,20 +166,32 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Key (re)Mappings {
 
+    " Easily move between splits
+    nnoremap <C-h> <C-w>h
+    nnoremap <C-j> <C-w>j
+    nnoremap <C-k> <C-w>k
+    nnoremap <C-l> <C-w>l
+
+    " Clear search highlights
+    "noremap <silent><Leader>h :nohls<CR> " Done below map <leader>r :SyntasticReset<CR> :nohls<CR>
+
+    " Sane regex
+    "nnoremap / /\v
+    "vnoremap / /\v
+
     "The default leader is '\', but many people prefer ',' as it's in a standard
     "location
-    "let mapleader = ','
+    let mapleader = ','
 
     " Making it so ; works like : for commands. Saves typing and eliminates :W style typos due to lazy holding shift.
     "nnoremap ; :
 
 
     " Easier moving in tabs and windows
-    "map <C-J> <C-W>j<C-W>_
-    "map <C-K> <C-W>k<C-W>_
-    "map <C-L> <C-W>l<C-W>_
-    "map <C-H> <C-W>h<C-W>_
-    "map <C-K> <C-W>k<C-W>_
+    map <C-J> <C-W>j<C-W>_
+    map <C-K> <C-W>k<C-W>_
+    map <C-L> <C-W>l<C-W>_
+    map <C-H> <C-W>h<C-W>_
 
     " Wrapped lines goes down/up to next row, rather than next line in file.
     "nnoremap j gj
@@ -184,10 +204,10 @@
     "map <S-L> gt
 
     " Stupid shift key fixes
-"    cmap W w
+    "cmap W w
     cmap WQ wq
     cmap wQ wq
-"    cmap Q q
+    "cmap Q q
     " Change Working Directory to that of the current file
     "cmap cwd lcd %:p:h
     "cmap cd. lcd %:p:h
@@ -231,9 +251,11 @@
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Syntastic Plugin {
-    map <leader>r :SyntasticReset<CR>
+    map <leader>r :SyntasticReset<CR> :nohls<CR>
     "map <leader>sr :SyntasticReset<CR>
-    let g:syntastic_python_python_exec = 'python3'
+    "let g:syntastic_python_python_exec = 'python3'
+    "let g:syntastic_python_checkers = ['python3-pylint', 'pylint', 'python']
+    "let g:syntastic_python_pylint_exec = '/usr/bin/python3-pylint'
 " }
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -301,7 +323,7 @@
 
     " Plugin key-mappings.
     inoremap <expr><C-g>     neocomplcache#undo_completion()
-    inoremap <expr><C-l>     neocomplcache#complete_common_string()
+    inoremap <expr><C-o>     neocomplcache#complete_common_string()
 " }
 
 
@@ -319,7 +341,7 @@
     " <C-h>, <BS>: close popup and delete backword char.
     inoremap <expr><C-h> neocomplcache#smart_close_popup()."\<C-h>"
     inoremap <expr><BS> neocomplcache#smart_close_popup()."\<C-h>"
-    inoremap <expr><C-y>  neocomplcache#close_popup()
+    inoremap <expr><C-p>  neocomplcache#close_popup()
     inoremap <expr><C-e>  neocomplcache#cancel_popup()
     " Close popup by <Space>.
     "inoremap <expr><Space> pumvisible() ? neocomplcache#close_popup() : "\<Space>"
@@ -375,7 +397,7 @@
       endif
     endfunc
 
-    nnoremap <C-l> :call NumberToggle()<cr>
+    nnoremap <C-n> :call NumberToggle()<cr>
     " autocmd InsertEnter * :set number
     " autocmd InsertLeave * :set relativenumber
 "}
