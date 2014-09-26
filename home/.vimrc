@@ -253,9 +253,13 @@
 " Syntastic Plugin {
     map <leader>r :SyntasticReset<CR> :nohls<CR>
     "map <leader>sr :SyntasticReset<CR>
-    "let g:syntastic_python_python_exec = 'python3'
-    "let g:syntastic_python_checkers = ['python3-pylint', 'pylint', 'python']
-    "let g:syntastic_python_pylint_exec = '/usr/bin/python3-pylint'
+    " Make python3 work
+    let g:syntastic_python_python_exec = 'python3'
+    let g:syntastic_python_checkers = ['python3-pylint', 'pylint', 'python']
+    let g:syntastic_python_pylint_exec = '/usr/bin/python3-pylint'
+    " Make C++11 work
+    let g:syntastic_cpp_compiler = 'clang++'
+    let g:syntastic_cpp_compiler_options = ' -std=c++11'
 " }
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
