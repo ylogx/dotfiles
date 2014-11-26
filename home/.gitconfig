@@ -13,14 +13,6 @@
 	helper = cache --timeout=360000
 [push]
 	default = matching
-[alias]
-#	l   = log -18 --graph --color=always --all --topo-order --pretty='format:%Cgreen%h%Creset %s%Cred%d%Creset %C(black bold)(by %an)%Creset'
-	lol = log --oneline --graph --decorate
-	lof = log --pretty=fuller
-#	commitme = commit --author="Shubham Chaudhary <me@shubhamchaudhary.in>"
-	st = status -s
-	unstage = reset HEAD --
-	last = log -1 HEAD
 #[https]
 #	proxy = https://ishubhamch:chaudhary@192.168.60.10:3128
 #[http]
@@ -52,52 +44,59 @@
 	smtpserverport = 587
 
 [alias]
-	changes = log --pretty=format:\"%h %cr %cn %Cgreen%s%Creset\" --name-status
-	short = log --pretty=format:\"%h %cr %cn %Cgreen%s%Creset\"
 	changelog = log --pretty=format:\" * %s\"
-	shortnocolor = log --pretty=format:\"%h %cr %cn %s\"
-	diverges = !bash -c 'diff -u <(git rev-list --first-parent "${1}") <(git rev-list --first-parent "${2:-HEAD}") | sed -ne \"s/^ //p\" | head -1' -
-	d = diff                          # diff unstaged changes
-	dc = diff --cached                # diff staged changes
-	last = diff HEAD^                 # diff last committed change
-#	unstage = reset HEAD              # remove files from index (tracking)
-	uncommit = reset --soft HEAD^     # go back before last commit, with files in uncommitted state
-	filelog = log -u                  # show changes to a file
-	mt = mergetool                    # fire up the merge tool
-	ss = stash                        # stash changes
-	sl = stash list                   # list stashes
-	sa = stash apply                  # apply stash (restore changes)
-	sd = stash drop                   # drop stashes (destory changes)
-#	l   = log -18 --graph --color=always --all --topo-order --pretty='format:%Cgreen%h%Creset %s%Cred%d%Creset %C(black bold)(by %an)%Creset'
-	l   = log --oneline --graph --decorate --color=always --topo-order --pretty='format:%Cgreen%h%Creset %s%Cred%d%Creset %C(black bold)(by %an)%Creset'
-	ll  = log     --color=always --all --topo-order --pretty='format:%Cgreen%h%Creset %s%Cred%d%Creset %C(black bold)(by %an)%Creset'
-	gl  = log -12 --color=always --all --graph --topo-order --pretty='format:%Cgreen%h%Creset %s %C(black bold)(by %an)%Creset%C(yellow bold)%d%Creset%n'
-	gll = log     --color=always --all --graph --topo-order --pretty='format:%Cgreen%h%Creset %s %C(black bold)(%cr by %an)%Creset%C(yellow bold)%d%Creset%n'
-	pull = pull --ff-only
-	up = merge --ff-only
-	join = merge --no-ff
+	changes = log --pretty=format:\"%h %cr %cn %Cgreen%s%Creset\" --name-status
 	ci = commit
 	cm = commit -m
+#	commitme = commit --author="Shubham Chaudhary <me@shubhamchaudhary.in>"
 	currentbranch = rev-parse --abbrev-ref HEAD
-	wdiff = diff
+	d = diff                          # diff unstaged changes
+	dc = diff --cached                # diff staged changes
+	diverges = !bash -c 'diff -u <(git rev-list --first-parent "${1}") <(git rev-list --first-parent "${2:-HEAD}") | sed -ne \"s/^ //p\" | head -1' -
+	filelog = log -u                  # show changes to a file
+	gl  = log -12 --color=always --all --graph --topo-order --pretty='format:%Cgreen%h%Creset %s %C(black bold)(by %an)%Creset%C(yellow bold)%d%Creset%n'
+	gll = log     --color=always --all --graph --topo-order --pretty='format:%Cgreen%h%Creset %s %C(black bold)(%cr by %an)%Creset%C(yellow bold)%d%Creset%n'
+	join = merge --no-ff
+#	l   = log -18 --graph --color=always --all --topo-order --pretty='format:%Cgreen%h%Creset %s%Cred%d%Creset %C(black bold)(by %an)%Creset'
+#	l   = log -18 --graph --color=always --all --topo-order --pretty='format:%Cgreen%h%Creset %s%Cred%d%Creset %C(black bold)(by %an)%Creset'
+	l   = log --oneline --graph --decorate --color=always --topo-order --pretty='format:%Cgreen%h%Creset %s%Cred%d%Creset %C(black bold)(by %an)%Creset'
+	last = diff HEAD^                 # diff last committed change
+	last = log -1 HEAD
+	ll  = log     --color=always --all --topo-order --pretty='format:%Cgreen%h%Creset %s%Cred%d%Creset %C(black bold)(by %an)%Creset'
+	lof = log --pretty=fuller
+	lol = log --oneline --graph --decorate
+	mt = mergetool                    # fire up the merge tool
+	pull = pull --ff-only
+	sa = stash apply                  # apply stash (restore changes)
+	sd = stash drop                   # drop stashes (destory changes)
+	short = log --pretty=format:\"%h %cr %cn %Cgreen%s%Creset\"
+	shortnocolor = log --pretty=format:\"%h %cr %cn %s\"
+	sl = stash list                   # list stashes
+	ss = stash                        # stash changes
+	st = status -s
+	uncommit = reset --soft HEAD^     # go back before last commit, with files in uncommitted state
 	undo-commit = reset --soft HEAD^
+	unstage = reset HEAD --
+#	unstage = reset HEAD              # remove files from index (tracking)
+	up = merge --ff-only
+	wdiff = diff
 #funny
-	lost = stash
-	found = stash pop
-	overit = stash clear
-	in = add
-	out = rm
-	find = grep
-	wasted = reset HEAD
-	fuckedup = reset --hard
-	with = merge
-	real = rebase
-	m = checkout master
-	this = checkout
-	that = checkout -
-	meow = status
-	wtf = status
-	what = diff
-	huh = diff
 	bah = blame
 	eh = config --get-regexp alias
+	find = grep
+	found = stash pop
+	fuckedup = reset --hard
+	huh = diff
+	in = add
+	lost = stash
+	m = checkout master
+	meow = status
+	out = rm
+	overit = stash clear
+	real = rebase
+	that = checkout -
+	this = checkout
+	wasted = reset HEAD
+	what = diff
+	with = merge
+	wtf = status
