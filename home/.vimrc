@@ -43,6 +43,8 @@
     Plugin 'majutsushi/tagbar'
     " Better Status line
     Plugin 'bling/vim-airline'
+    " Ruby on Rails plugin
+    Plugin 'tpope/vim-rails'
     "Plugin ''
 
     " Enable file type detection. Do this after Vundle calls.
@@ -93,6 +95,8 @@
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " General {
+" Automatic reloading of .vimrc file
+    autocmd! BufWritePost .vimrc source %
     " allow saving as sudo if opened not as sudo
     cmap w!! w !sudo tee > /dev/null %
 
@@ -253,13 +257,14 @@
 " Syntastic Plugin {
     map <leader>r :SyntasticReset<CR> :nohls<CR>
     "map <leader>sr :SyntasticReset<CR>
-    " Make python3 work
-    let g:syntastic_python_python_exec = 'python3'
-    let g:syntastic_python_checkers = ['python3-pylint', 'pylint', 'python']
-    let g:syntastic_python_pylint_exec = '/usr/bin/python3-pylint'
     " Make C++11 work
     let g:syntastic_cpp_compiler = 'clang++'
     let g:syntastic_cpp_compiler_options = ' -std=c++11'
+    " Make python3 work " TODO: Make it toggle
+    let g:syntastic_python_python_exec = 'python3'
+    let g:syntastic_python_checkers = ['python3-pylint', 'pylint', 'python']
+    let g:syntastic_python_pylint_exec = '/usr/bin/python3-pylint'
+
 " }
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
