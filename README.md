@@ -2,7 +2,9 @@
 
 Add all files in ./home/ folder to your local home directory (~/).  
 
-##VIM
+## Tools/Configurations provided
+
+#### Vim
 To update vim:  
  * Open Vim (obviously not Vi)
  * Type ':PluginUpdate'.
@@ -10,24 +12,24 @@ To update vim:
  in ~/.vim/bundle/ directory. Then repeat ':PluginUpdate' to get all
  other plugins. :)
 
-## Bash
+#### Bash
 Bash should work right outta the box.  
 Boy oh boy it looks amazing. Enjoy :)
 
-## Lynx
+#### Lynx
 No configuration needed.
 
-## Top
+#### Top
 Awesome interface to top command without any hassle.
 
-## Mutt
+#### Mutt
 You'll have to add your username and password to make it work.
 
-## Ack
+#### Ack
 Some small custom configurations to the mighty ack tool.
 
 ### Recommendation
 I'd recommend you to use tool like homeshick to clone this repo:
 ```sh
-    homeshick clone https://github.com/shubhamchaudhary/dotfiles.git
+homeshick clone https://github.com/shubhamchaudhary/dotfiles.git
 ```
