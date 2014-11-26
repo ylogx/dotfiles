@@ -9,8 +9,10 @@ alias cdjuk='cd /home/chaudhary/code/linux/juk'
 alias cdbuild='cd /home/chaudhary/code/linux/juk/build'
 alias mymakejuk='mkdir build; cd ./build && rm -rfv ./*; cmake -DCMAKE_BUILD_PREFIX=$HOME/kde -DCMAKE_BUILD_TYPE=debugfull -DCMAKE_INSTALL_PREFIX=$HOME/kde ../ ; make'
 alias cdlm='cd ~/code/android/studioWorkspace/LazyMusic'
-alias cdlms='cd ~/code/android/studioWorkspace/LazyMusic/app/src/main/java/com/easymusic/lazymusic'
+alias cdlms='cd ~/code/android/studioWorkspace/LazyMusic/app/src/main/java/com/peplet/lazymusic'
 alias cdlmr='cd ~/code/android/studioWorkspace/LazyMusic/app/src/main/res'
+alias cdlo='cd ~/code/android/studioWorkspace/LogMeIn'
+alias cdlos='cd ~/code/android/studioWorkspace/LogMeIn/app/src/main/java/in/shubhamchaudhary/logmein'
 
 diff-lines() {
     local path=

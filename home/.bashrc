@@ -111,8 +111,8 @@ if ! shopt -oq posix; then
   fi
 fi
 
-export http_proxy= #"http://ishubhamch:chaudhary@192.168.60.10:3128/"
-export https_proxy= #"http://ishubhamch:chaudhary@192.168.60.10:3128/"
+#export http_proxy= #"http://ishubhamch:chaudhary@192.168.60.10:3128/"
+#export https_proxy= #"http://ishubhamch:chaudhary@192.168.60.10:3128/"
 
 DEBFULLNAME="Shubham Chaudhary"
 DEBEMAIL="shubham.chaudhary@kdemail.net"
@@ -157,3 +157,5 @@ if [ -d "$HOME/.homesick" ]; then
     alias hs='homeshick'
 fi
 
+# Heroku setup
+PATH="/usr/local/heroku/bin:$PATH"

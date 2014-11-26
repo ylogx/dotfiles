@@ -66,6 +66,7 @@ alias cdp='cd ~/Videos/Link\ to\ asdf_files'
 alias cdpi='cd ~/code/pi'
 alias cdpy='cd ~/code/python'
 alias cdqt='cd ~/code/qt'
+alias cdra='cd ~/code/work/rails'
 alias cdre='cd ~/code/ds/dshome/revision'
 alias cds='cd ~/code/android/studioWorkspace'
 alias cdsc='cd ~/code/scripts'
@@ -84,11 +85,12 @@ alias df='df -h'
 alias du='du -h -c'
 alias dn='OPTIONS=$(\ls -F | grep /$); select s in $OPTIONS; do cd $PWD/$s; break;done'
 
-alias def='/home/chaudhary/code/python/vocab_definition.py'
-alias definition='/home/chaudhary/code/python/vocab_definition.py'
+alias def='/home/chaudhary/code/python/definition/vocab_definition.py'
+alias definition='/home/chaudhary/code/python/definition/vocab_definition.py'
 alias enter='/home/chaudhary/code/python/vocab_enter_word.py'
 alias fdroid='~/code/android/fdroidserver/fdroid'
 alias foxit='wine ~/Documents/FoxitReaderPortable/FoxitReaderPortable.exe &'
+alias getbase='cp -pv ~/code/codpro/base.c ~/code/codpro/base.cpp ./'
 
 alias j='jobs'
 # alias logmein='~/code/python/auto_login_wifi.py ~/code/python/.login.txt'
@@ -136,7 +138,8 @@ alias vew='vim `ls -t * | head -1 `'
 alias vtest='/home/chaudhary/code/python/vocab_test.py'
 
 #execute the most recent script (I call this from within VIM with a mapped button)
-alias xew='`ls -t *.pl | head -1 `'
+#alias xew='`ls -t *.pl | head -1 `'
+alias xew='xdg-open `ls -t * | head -1 `'
 alias x='xdg-open'
 
 
