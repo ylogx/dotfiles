@@ -59,13 +59,14 @@
 	join = merge --no-ff
 #	l   = log -18 --graph --color=always --all --topo-order --pretty='format:%Cgreen%h%Creset %s%Cred%d%Creset %C(black bold)(by %an)%Creset'
 #	l   = log -18 --graph --color=always --all --topo-order --pretty='format:%Cgreen%h%Creset %s%Cred%d%Creset %C(black bold)(by %an)%Creset'
-	l   = log --oneline --graph --decorate --color=always --topo-order --pretty='format:%Cgreen%h%Creset %s%Cred%d%Creset %C(black bold)(by %an)%Creset'
+	l   = log --oneline --graph --decorate --topo-order --pretty='format:%C(yellow)%h%Creset %s%C(auto)%d%Creset %C(black bold)(by %an)%Creset'
 	last = diff HEAD^                 # diff last committed change
 	last = log -1 HEAD
 	ll  = log     --color=always --all --topo-order --pretty='format:%Cgreen%h%Creset %s%Cred%d%Creset %C(black bold)(by %an)%Creset'
 	lof = log --pretty=fuller
 	lol = log --oneline --graph --decorate
 	mt = mergetool                    # fire up the merge tool
+	p = push --verbose
 	pull = pull --ff-only
 	sa = stash apply                  # apply stash (restore changes)
 	sd = stash drop                   # drop stashes (destory changes)

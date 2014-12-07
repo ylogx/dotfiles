@@ -5,6 +5,7 @@
 export PATH=$PATH:$HOME/kde/bin
 export JAVA_HOME=/etc/alternatives/java_sdk
 export PATH=$JAVA_HOME/bin:$PATH
+#export ANDROID_HOME=$HOME/android-sdk
 
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
