@@ -6,11 +6,14 @@ Add all files in ./home/ folder to your local home directory (~/).
 
 #### Vim
 To update vim:  
+ * Install Vundle  
+    ```sh
+       git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle
+   ```
  * Open Vim (obviously not Vi)
- * Type ':PluginUpdate'.
- * NOTE: If that doesn't work, you'll probably have to clone vundle
- in ~/.vim/bundle/ directory. Then repeat ':PluginUpdate' to get all
- other plugins. :)
+ * Type ':PluginInstall'.
+ * Bam! You get all awesome plugins in one shot.
+ * Enjoy your life :)
 
 #### Bash
 Bash should work right outta the box.  
