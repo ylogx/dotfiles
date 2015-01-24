@@ -29,7 +29,7 @@ welcome() {
 
     echo -en "\t";
     free -ht | head -3 | tail -n 1 | awk '{printf "Main Memory\t:\t" $3 " used & " $4 " free"}'
-    free --old -ht | head -2 | tail -n 1 | awk '{printf " out of " $2}'; echo "";
+    #free --old -ht | head -2 | tail -n 1 | awk '{printf " out of " $2}'; echo "";
 
     echo -en "\t"; df -h / | tail -n 1 | awk '{print "Root " $1 "\t:\t" $5 " full & " $4 " still available."}' ; 
 

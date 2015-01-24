@@ -28,6 +28,8 @@ alias aria2cm='aria2c -c -x 16'
 alias acki='ack --ignore-dir=build --ignore-dir=doc'
 
 #alias c='chaudhary.sh'    #the c c++ compilation script in /usr/games
+alias c='pygmentize -g'
+alias ccat='pygmentize -g'
 #alias cdw ^defined above
 alias catlatest='cat `ls -t|head -1`'
 alias cd..='cd ..'
@@ -36,6 +38,7 @@ alias cdal='cd ~/code/algo/'
 alias cdan='cd ~/code/android'
 alias cdanlog='cd ~/code/android/eclipseWorkspace/logmein/src/in/shubhamchaudhary/logmein'
 alias cdc='cd ~/code/c'
+alias cdcbb='cd ~/Dropbox/carts-uiet/reports/bus_boarding_paper'
 alias cdcd='cd ~/code/compiler_design'
 alias cdcdp='cd ~/code/codpro'
 alias cdcf='cd ~/code/codpro/chef'
@@ -43,6 +46,7 @@ alias cdco='cd ~/code/compiler'
 alias cdcpp='cd ~/code/cpp/'
 alias cdcu='cd ~/Dropbox/carts-uiet'
 alias cdd='cd ~/code'
+alias cddb='cd ~/Dropbox'
 alias cdds='cd ~/code/ds/dshome/dsadv'
 alias cddw='cd ~/Downloads'
 alias cde='cd ~/code/android/eclipseWorkspace'
@@ -85,8 +89,8 @@ alias df='df -h'
 alias du='du -h -c'
 alias dn='OPTIONS=$(\ls -F | grep /$); select s in $OPTIONS; do cd $PWD/$s; break;done'
 
-alias def='/home/chaudhary/code/python/definition/vocab_definition.py'
-alias definition='/home/chaudhary/code/python/definition/vocab_definition.py'
+#alias def='/home/chaudhary/code/python/definition/vocab_definition.py'
+#alias definition='/home/chaudhary/code/python/definition/vocab_definition.py'
 alias enter='/home/chaudhary/code/python/vocab_enter_word.py'
 alias fdroid='~/code/android/fdroidserver/fdroid'
 alias foxit='wine ~/Documents/FoxitReaderPortable/FoxitReaderPortable.exe &'
@@ -126,10 +130,11 @@ alias py3='python3'
 alias rm='rm -v'
 alias studio='~/code/android/android-studio/bin/studio.sh &'
 #alias sublime='~/Documents/sublime_text_3/sublime_text'
-alias sublime='/opt/sublime_text/sublime_text'
+#alias sublime='/opt/sublime_text/sublime_text'
 alias wcall='wc `ls -tr`'
 alias webdownloader='~/code/python/webpage_links_downloader.py'
 #alias tree='tree -Csh'        # nice alternative to 'ls'
+alias t='tree -Csh'        # nice alternative to 'ls'
 alias today='/home/chaudhary/code/scripts/show_message.sh'
 alias tarbackup='~/code/python/tar_backup.py'
 
@@ -164,5 +169,9 @@ alias x='xdg-open'
 
 if [ -f ~/.dev_aliases.sh ]; then
     . ~/.dev_aliases.sh
+fi
+
+if [ -f ~/.temp_aliases ]; then
+    . ~/.temp_aliases
 fi
 
