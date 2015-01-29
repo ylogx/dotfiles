@@ -58,6 +58,8 @@
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Formatting {
+    set backspace=2                " To make backspace work like all other apps
+    "set backspace=indent,eol,start
     set number  " Alternative: set nu!
     set relativenumber " Show line numbers relative to cursor line
     set hlsearch    " Highlight searched item
@@ -262,8 +264,8 @@
     let g:syntastic_cpp_compiler_options = ' -std=c++11'
     " Make python3 work " TODO: Make it toggle
     let g:syntastic_python_python_exec = 'python3'
-    let g:syntastic_python_checkers = ['python3-pylint', 'pylint', 'python']
-    let g:syntastic_python_pylint_exec = '/usr/bin/python3-pylint'
+    let g:syntastic_python_checkers = ['pylint', 'python3-pylint', 'python']
+    "let g:syntastic_python_pylint_exec = '/usr/local/bin/pylint'
 
 " }
 
