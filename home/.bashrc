@@ -158,5 +158,5 @@ if [ -d "$HOME/.homesick" ]; then
     alias hs='homeshick'
 fi
 
-# Heroku setup
-PATH="/usr/local/heroku/bin:$PATH"
+# Heroku setup - added by the Heroku Toolbelt
+export PATH="/usr/local/heroku/bin:$PATH"
