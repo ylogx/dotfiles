@@ -45,6 +45,8 @@
     Plugin 'bling/vim-airline'
     " Ruby on Rails plugin
     Plugin 'tpope/vim-rails'
+    " sleuth.vim: Heuristically set buffer options like shiftwidth, expandtab...
+    Plugin 'tpope/vim-sleuth'
     "Plugin ''
 
     " Enable file type detection. Do this after Vundle calls.
