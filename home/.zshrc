@@ -89,7 +89,7 @@ fi
 
 if [ -d "$HOME/.homesick" ]; then
     source "$HOME/.homesick/repos/homeshick/homeshick.sh"
-    source "$HOME/.homesick/repos/homeshick/completions/homeshick-completion.bash"
+    #source "$HOME/.homesick/repos/homeshick/completions/homeshick-completion.bash"
     alias hs='homeshick'
 fi
 
