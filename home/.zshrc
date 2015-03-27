@@ -6,6 +6,7 @@ export ZSH=/home/chaudhary/.oh-my-zsh
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
 ZSH_THEME="robbyrussell"
+ZSH_THEME="shubhamchaudhary"
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -26,7 +27,7 @@ ZSH_THEME="robbyrussell"
 # ENABLE_CORRECTION="true"
 
 # Uncomment the following line to display red dots whilst waiting for completion.
-# COMPLETION_WAITING_DOTS="true"
+COMPLETION_WAITING_DOTS="true"
 
 # Uncomment the following line if you want to disable marking untracked files
 # under VCS as dirty. This makes repository status check for large repositories
@@ -45,10 +46,32 @@ ZSH_THEME="robbyrussell"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git)
+plugins=(
+    brew
+    chucknorris
+    git
+    git-extras
+    github
+    #git-flow
+    #gradle
+    #heroku
+    history-substring-search
+    last-working-dir
+    #lol
+    osx
+    pip
+    pylint
+    python
+    sublime
+    sudo
+    web-search
+    yum
+    zsh-syntax-highlighting
+    )
 
 # User configuration
-# at bottom of file
+ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern cursor)
+# paths at bottom of file
 
 # export MANPATH="/usr/local/man:$MANPATH"
 
@@ -79,11 +102,15 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-if [ -f ~/.bash_aliases ]; then
+if [ -f ~/.zsh_aliases ]; then
+    . ~/.zsh_aliases
+elif [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
 fi
 
-if [ -f ~/.bash_functions ]; then
+if [ -f ~/.zsh_functions ]; then
+    . ~/.zsh_functions
+elif [ -f ~/.bash_functions ]; then
     . ~/.bash_functions
 fi
 

@@ -1,0 +1,12 @@
+if [ -f ~/.bash_aliases ]; then
+    . ~/.bash_aliases
+fi
+
+alias reload='source ~/.zshrc'
+alias -s java=vim
+alias -s c=vim
+alias -s cpp=vim
+alias -s py=vim
+
+
+
