@@ -151,7 +151,7 @@ alias vtest='/home/chaudhary/code/python/vocab_test.py'
 
 #execute the most recent script (I call this from within VIM with a mapped button)
 #alias xew='`ls -t *.pl | head -1 `'
-alias xew='xdg-open `ls -t * | head -1 `'
+alias xew='xdg-open "`ls -t * | head -1 `"'
 alias x='xdg-open'
 
 
