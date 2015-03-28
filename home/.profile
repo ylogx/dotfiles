@@ -1,3 +1,8 @@
+if [ -e /usr/share/terminfo/x/xterm-256color ]; then
+        export TERM='xterm-256color'
+else
+        export TERM='xterm-color'
+fi
 
 if [ -x /usr/libexec/path_helper ]; then
 	eval `/usr/libexec/path_helper -s`
@@ -10,5 +15,5 @@ fi
 # FIXME: add checks
 
 source ~/.bashrc
-export PATH=$PATH:~/android-sdk/platform-tools
-export PATH=$PATH:~/android-sdk/tools
+export PATH=$PATH:$HOME/android-sdk/platform-tools
+export PATH=$PATH:$HOME/android-sdk/tools
