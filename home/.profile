@@ -10,3 +10,5 @@ fi
 # FIXME: add checks
 
 source ~/.bashrc
+export PATH=$PATH:~/android-sdk/platform-tools
+export PATH=$PATH:~/android-sdk/tools

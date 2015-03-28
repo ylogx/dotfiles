@@ -2,10 +2,24 @@
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
 
-export PATH=$PATH:$HOME/kde/bin
-export JAVA_HOME=/etc/alternatives/java_sdk
-export PATH=$JAVA_HOME/bin:$PATH
-#export ANDROID_HOME=$HOME/android-sdk
+PLATFORM='Unknown'
+unamestr=`uname`
+if [[ "$unamestr" == 'Linux' ]]; then
+   PLATFORM='Linux'
+elif [[ "$unamestr" == 'Darwin' ]]; then
+   PLATFORM='Mac'
+elif [[ "$unamestr" == 'FreeBSD' ]]; then
+   PLATFORM='FreeBSD'
+fi
+
+if [[ $PLATFORM == 'Mac' ]]; then
+  export PATH=$PATH:$HOME/kde/bin
+  export JAVA_HOME=`/usr/libexec/java_home -v 1.8`
+  export STUDIO_JDK=/Library/Java/JavaVirtualMachines/jdk1.8.0_31.jdk
+  #export JAVA_HOME=/etc/alternatives/java_sdk
+  export PATH=$JAVA_HOME/bin:$PATH
+  export ANDROID_HOME=$HOME/android-sdk
+fi
 
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
@@ -160,3 +174,5 @@ fi
 
 # Heroku setup - added by the Heroku Toolbelt
 export PATH="/usr/local/heroku/bin:$PATH"
+export PATH=$PATH:$HOME/android-sdk/platform-tools
+export PATH=$PATH:$HOME/android-sdk/tools

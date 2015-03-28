@@ -1,5 +1,15 @@
 # Path to your oh-my-zsh installation.
-export ZSH=/home/chaudhary/.oh-my-zsh
+export ZSH=$HOME/.oh-my-zsh
+
+PLATFORM='Unknown'
+unamestr=`uname`
+if [[ "$unamestr" == 'Linux' ]]; then
+   PLATFORM='Linux'
+elif [[ "$unamestr" == 'Darwin' ]]; then
+   PLATFORM='Mac'
+elif [[ "$unamestr" == 'FreeBSD' ]]; then
+   PLATFORM='FreeBSD'
+fi
 
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
@@ -120,12 +130,17 @@ if [ -d "$HOME/.homesick" ]; then
     alias hs='homeshick'
 fi
 
-export PATH=$PATH:$HOME/kde/bin
-export JAVA_HOME=/etc/alternatives/java_sdk
-export PATH=$JAVA_HOME/bin:$PATH
-#export ANDROID_HOME=$HOME/android-sdk
+if [[ $PLATFORM == 'Linux' ]]; then
+    export PATH=$PATH:$HOME/kde/bin
+    export JAVA_HOME=/etc/alternatives/java_sdk
+    export PATH=$JAVA_HOME/bin:$PATH
+    #export ANDROID_HOME=$HOME/android-sdk
 
-# Heroku setup - added by the Heroku Toolbelt
-export PATH="/usr/local/heroku/bin:$PATH"
+    # Heroku setup - added by the Heroku Toolbelt
+    export PATH="/usr/local/heroku/bin:$PATH"
+    #export PATH="/usr/local/heroku/bin:/etc/alternatives/java_sdk/bin:/etc/alternatives/java_sdk/bin:/usr/local/heroku/bin:/usr/local/bin:/usr/bin:/bin:/usr/games:/usr/local/sbin:/usr/sbin:/home/chaudhary/kde/bin:/home/chaudhary/.local/bin:/home/chaudhary/bin:/home/chaudhary/kde/bin"
+elif [[ $PLATFORM == 'Mac' ]]; then
+    export PATH=$PATH:$HOME/android-sdk/platform-tools
+    export PATH=$PATH:$HOME/android-sdk/tools
+fi
 
-#export PATH="/usr/local/heroku/bin:/etc/alternatives/java_sdk/bin:/etc/alternatives/java_sdk/bin:/usr/local/heroku/bin:/usr/local/bin:/usr/bin:/bin:/usr/games:/usr/local/sbin:/usr/sbin:/home/chaudhary/kde/bin:/home/chaudhary/.local/bin:/home/chaudhary/bin:/home/chaudhary/kde/bin"
