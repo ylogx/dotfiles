@@ -96,6 +96,7 @@ alias enter='/home/chaudhary/code/python/vocab_enter_word.py'
 alias fdroid='~/code/android/fdroidserver/fdroid'
 alias foxit='wine ~/Documents/FoxitReaderPortable/FoxitReaderPortable.exe &'
 alias getbase='cp -pv ~/code/codpro/base.c ~/code/codpro/base.cpp ./'
+alias gw='./gradlew '
 
 alias j='jobs'
 # alias logmein='~/code/python/auto_login_wifi.py ~/code/python/.login.txt'
