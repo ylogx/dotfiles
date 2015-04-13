@@ -40,6 +40,8 @@ welcome() {
 #     echo -e "" #echo -ne "Up time:"; uptime | awk /'up/' #`uptime | awk {'print $3 $4'}`
     echo "";
 #     check_and_run_bg ansiweather;
+    echo "Fortune Cookies :";
+    check_and_run fortune;
 }
 welcome;
 
@@ -115,5 +117,12 @@ function stopwatch(){
     echo -ne "$(date -u --date @$((`date +%s` - $date1)) +%H:%M:%S)\r"; 
    done
 }
+
+function ooo(){
+  while :; do clear; echo O_o; sleep 1; clear; echo o_O; sleep 1; done
+}
+
+
 # vim: set ft=shell:
+
 
