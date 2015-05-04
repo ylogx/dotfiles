@@ -96,6 +96,7 @@ alias foxit='wine ~/Documents/FoxitReaderPortable/FoxitReaderPortable.exe &'
 alias getbase='cp -pv ~/code/codpro/base.c ~/code/codpro/base.cpp ./'
 alias gw='./gradlew '
 
+alias idea='~/Documents/idea-IC/bin/idea.sh &'
 alias j='jobs'
 alias l='d; ls -ltrFhH'
 alias la='d; ls -lAtrFhH'

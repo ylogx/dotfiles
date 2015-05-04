@@ -47,6 +47,8 @@
     Plugin 'tpope/vim-rails'
     " sleuth.vim: Heuristically set buffer options like shiftwidth, expandtab...
     Plugin 'tpope/vim-sleuth'
+    " Show python code coverage
+    Plugin 'alfredodeza/coveragepy.vim'
     "Plugin ''
 
     " Enable file type detection. Do this after Vundle calls.
