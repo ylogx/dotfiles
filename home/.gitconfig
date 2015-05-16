@@ -43,6 +43,11 @@
 	chainreplyto = false
 	smtpserverport = 587
 
+[url "git://anongit.kde.org/"]
+	insteadOf = kde:
+[url "ssh://git@git.kde.org/"]
+	pushInsteadOf = kde:
+
 [alias]
 	changelog = log --pretty=format:\" * %s\"
 	changes = log --pretty=format:\"%h %cr %cn %Cgreen%s%Creset\" --name-status

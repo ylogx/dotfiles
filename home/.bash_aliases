@@ -97,6 +97,9 @@ alias getbase='cp -pv ~/code/codpro/base.c ~/code/codpro/base.cpp ./'
 alias gw='./gradlew '
 
 alias idea='~/Documents/idea-IC/bin/idea.sh &'
+alias ipy='ipython3'
+alias ipy2='ipython2'
+alias ipy3='ipython3'
 alias j='jobs'
 alias l='d; ls -ltrFhH'
 alias la='d; ls -lAtrFhH'
@@ -121,6 +124,7 @@ alias masquerade='sudo iptables -t nat -A POSTROUTING -o wlp3s0 -s 192.168.1.0/2
 alias mymakehere='cp /home/chaudhary/Makefile ./'
 alias myhistory='cat ~/bashbackup.txt'
 
+alias p='pwd'
 alias proxy='cat -n /etc/apt/apt.conf'
 #alias proxyNone='sudo sh -c \'echo -n "" > /etc/apt/apt.conf\''
 alias proxyUiet='sudo cp /etc/apt/aptUiet.conf /etc/apt/apt.conf'

@@ -63,7 +63,7 @@ plugins=(
     git
     git-extras
     github
-    #git-flow
+    git-flow
     #gradle
     #heroku
     history-substring-search

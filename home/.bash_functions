@@ -1,5 +1,9 @@
 # vim: set filetype=shell
 ## FUNCTIONS
+command_exists() {
+    hash $1 2>/dev/null
+    return;
+}
 check_and_run() {
     if hash $1 2>/dev/null; then
         "$@"
@@ -40,8 +44,14 @@ welcome() {
 #     echo -e "" #echo -ne "Up time:"; uptime | awk /'up/' #`uptime | awk {'print $3 $4'}`
     echo "";
 #     check_and_run_bg ansiweather;
-    echo "Fortune Cookies :";
-    check_and_run fortune;
+    if command_exists fortune; then 
+        echo "Fortune Cookies :";
+        if command_exists cowsay; then 
+            fortune | cowsay
+        else
+            fortune
+        fi;
+    fi;
 }
 welcome;
 
