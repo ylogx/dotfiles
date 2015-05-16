@@ -5,45 +5,16 @@ command_exists() {
     return;
 }
 check_and_run() {
-    if hash $1 2>/dev/null; then
+    if command_exists $1; then
         "$@"
     fi
 }
 check_and_run_bg() {
-    if hash $1 2>/dev/null; then
+    if command_exists $1; then
         ( "$@" & )  #parens help it run in subshell so that "Done" msg is not printed
     fi
 }
-welcome() {
-    #------------------------------------------
-    #------WELCOME MESSAGE---------------------
-    # customize this first message with a message of your choice.
-    # this will display the username, date, time, a calendar, the amount of users, and the up time.
-    # clear
-    # Gotta love ASCII art with figlet
-    check_and_run figlet "Welcome, " $USER;     #toilet "Welcome, " $USER;
-    echo -e ""; cal ;
-    echo -ne "Today is "; date #date +"Today is %A %D, and it is now %R"
-    if [[ `date +"%d%m"` == 0101 ]]; then       #if [[ `date +"%D"` =~ 01/01* ]];
-        echo "Hey man, I forgot"; figlet "Happy New Year"; echo "$USER";
-    elif [[ `date +"%d%m"` == 2603 ]]; then
-        figlet "Happy Birthday"
-    fi;
-    echo -e "Status of $HOSTNAME: " 
-
-    echo -en "\t";
-    free -ht | head -3 | tail -n 1 | awk '{printf "Main Memory\t:\t" $3 " used & " $4 " free"}'
-    #free --old -ht | head -2 | tail -n 1 | awk '{printf " out of " $2}'; echo "";
-
-    echo -en "\t"; df -h / | tail -n 1 | awk '{print "Root " $1 "\t:\t" $5 " full & " $4 " still available."}' ; 
-
-    echo -en "\tIP Address \t:\t"; /sbin/ifconfig wlp3s0 | awk /'inet / {print $2}' | sed -e s/addr:/''/  || /sbin/ifconfig wlan0 || echo "" #dubious, gotta test
-
-    echo -en "\tThe system has been up for ";
-    perl -e 'my $uptime = `uptime`; if ($uptime =~ /^\s+\S+\s+up\s+(\S+\s+\S+,\s+\S+),/) { printf $1; } else { print "uptime gave me a weird format!"; }'
-#     echo -e "" #echo -ne "Up time:"; uptime | awk /'up/' #`uptime | awk {'print $3 $4'}`
-    echo "";
-#     check_and_run_bg ansiweather;
+get_fortune_cookies() {
     if command_exists fortune; then 
         echo "Fortune Cookies :";
         if command_exists cowsay; then 
@@ -53,7 +24,53 @@ welcome() {
         fi;
     fi;
 }
-welcome;
+
+print_date_cal() {
+    cal;
+    echo -ne "Today is "; date
+    if [[ `date +"%d%m"` == 0101 ]]; then       #if [[ `date +"%D"` =~ 01/01* ]];
+        echo "Hey man, I forgot"; figlet "Happy New Year"; echo "$USER";
+    elif [[ `date +"%d%m"` == 2603 ]]; then
+        figlet "Happy Birthday"
+    fi;
+}
+print_system_status() {
+    echo -e "Status of $HOSTNAME: " 
+
+    ##### Main Memory #####
+    echo -en "\t";
+    free -ht | head -3 | tail -n 1 | awk '{printf "Main Memory\t:\t" $3 " used & " $4 " free"}'
+    #free --old -ht | head -2 | tail -n 1 | awk '{printf " out of " $2}'; echo "";
+
+    ##### Storage #####
+    echo -e "";
+    echo -en "\t"; df -h / | tail -n 1 | awk '{print "Root " $1 "\t:\t" $5 " full & " $4 " still available."}' ; 
+
+    ##### IP #####
+    echo -en "\tIP Address \t:\t"; /sbin/ifconfig wlp3s0 | awk /'inet / {print $2}' | sed -e s/addr:/''/  || /sbin/ifconfig wlan0 || echo "" #dubious, gotta test
+
+    ##### Uptime #####
+    echo -en "\tThe system has been up for ";
+    perl -e 'my $uptime = `uptime`; if ($uptime =~ /^\s+\S+\s+up\s+(\S+\s+\S+,\s+\S+),/) { printf $1; } else { print "uptime gave me a weird format!"; }'
+    # echo -e "" #echo -ne "Up time:"; uptime | awk /'up/' #`uptime | awk {'print $3 $4'}`
+}
+
+welcome_message() {
+    # customize this first message with a message of your choice.
+    # this will display the username, date, time, a calendar, the amount of users, and the up time.
+    # Gotta love ASCII art with figlet
+    check_and_run figlet "Welcome, " $USER;
+    echo -e "";
+
+    print_date_cal
+
+    print_system_status
+
+    echo "";
+    # check_and_run_bg ansiweather;
+    get_fortune_cookies
+}
+welcome_message;
 
 # get IP adresses
 #function my_ip() # get IP adresses
