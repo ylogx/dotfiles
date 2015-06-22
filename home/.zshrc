@@ -64,8 +64,10 @@ plugins=(
     git-extras
     github
     git-flow
+    gnu-utils
+    gpg-agent
     #gradle
-    #heroku
+    heroku
     history-substring-search
     last-working-dir
     #lol
