@@ -12,7 +12,7 @@ function prompt_char_with_return {
 }
 
 function print_with_return {
-    echo "%(?:%{$fg_bold[green]%}$1 :%{$fg_bold[red]%}$1 %s)"
+    echo "%(?:%{$fg_bold[green]%}$1:%{$fg_bold[red]%}$1%s)"
 }
 
 
