@@ -150,3 +150,5 @@ elif [[ $PLATFORM == 'Mac' ]]; then
     export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
 fi
 
+EDITOR=vim
+VISUAL=vi

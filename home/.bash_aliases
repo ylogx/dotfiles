@@ -29,7 +29,7 @@ alias acki='ack --ignore-dir=build --ignore-dir=doc'
 
 #alias c='chaudhary.sh'    #the c c++ compilation script in /usr/games
 alias c='pygmentize -g'
-alias ccat='pygmentize -g'
+alias cats='highlight -O ansi'
 #alias cdw ^defined above
 alias catlatest='cat `ls -t|head -1`'
 alias cd..='cd ..'
@@ -83,6 +83,7 @@ alias cdu='cd ~/code/scripts/universal'
 alias cdv='cd ~/vocab'
 alias cdw='cd ./`ls -td * | head -1`'
 #alias cmk='mkdir $1 && cd ./$1'
+alias cl='clear'
 
 alias d='date'
 alias dfh='df -h'

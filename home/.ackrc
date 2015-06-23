@@ -1,4 +1,5 @@
 --ignore-ack-defaults
+--ignore-directory=is:.idea
 --ignore-directory=is:build
 --ignore-directory=is:.bzr
 --ignore-directory=is:.cdv
@@ -20,6 +21,7 @@
 --ignore-directory=is:blib
 --ignore-directory=is:_build
 --ignore-directory=is:cover_db
+--ignore-file=ext:iml
 --ignore-file=ext:bak
 --ignore-file=ext:taghl
 --ignore-file=is:tags

@@ -180,11 +180,11 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Key (re)Mappings {
 
-    " Easily move between splits
-    nnoremap <C-h> <C-w>h
-    nnoremap <C-j> <C-w>j
-    nnoremap <C-k> <C-w>k
-    nnoremap <C-l> <C-w>l
+    " Easily move between splits " NOTE: Commented in favor of tmux navigater
+    "nnoremap <C-h> <C-w>h
+    "nnoremap <C-j> <C-w>j
+    "nnoremap <C-k> <C-w>k
+    "nnoremap <C-l> <C-w>l
 
     " Clear search highlights
     "noremap <silent><Leader>h :nohls<CR> " Done below map <leader>r :SyntasticReset<CR> :nohls<CR>
@@ -419,6 +419,18 @@
     nnoremap <C-n> :call NumberToggle()<cr>
     " autocmd InsertEnter * :set number
     " autocmd InsertLeave * :set relativenumber
+"}
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Tmux Navigation {
+    let g:tmux_navigator_no_mappings = 1
+
+    "nnoremap <silent> {c-h} :TmuxNavigateLeft<cr>
+    "nnoremap <silent> {C-j} :TmuxNavigateDown<cr>
+    "nnoremap <silent> {C-k} :TmuxNavigateUp<cr>
+    "nnoremap <silent> {C-L} :TmuxNavigateRight<cr>
+    "nnoremap <silent> {C-\} :TmuxNavigatePrevious<cr>
 "}
 
 
