@@ -2,7 +2,7 @@
 	name = Shubham Chaudhary
 	;email = shubhamc@thoughtworks.com
 	email = me@shubhamchaudhary.in
-	signingkey = "CD8F88B6"
+	signingkey = "FAB52DCA"
 	logallrefupdates=true
 [core]
 	editor = vim
@@ -51,8 +51,8 @@
 [alias]
 	changelog = log --pretty=format:\" * %s\"
 	changes = log --pretty=format:\"%h %cr %cn %Cgreen%s%Creset\" --name-status
-	ci = commit
-	cm = commit -m
+	c = commit
+	ca = commit -a
 #	commitme = commit --author="Shubham Chaudhary <me@shubhamchaudhary.in>"
 	currentbranch = rev-parse --abbrev-ref HEAD
 	d = diff                          # diff unstaged changes
@@ -67,10 +67,10 @@
 #	l   = log -18 --graph --color=always --all --topo-order --pretty='format:%Cgreen%h%Creset %s%Cred%d%Creset %C(black bold)(by %an)%Creset'
 	;l   = log --oneline --graph --decorate --topo-order --pretty='format:%C(yellow)%h%Creset %s%C(auto)%d%Creset %C(cyan bold)(by %an)%Creset'
 	l   = log --oneline --graph --decorate --topo-order --pretty='format:%C(yellow)%h%Creset %s%C(auto)%d%Creset %C(cyan bold)(by %an)%Creset %cr'
-	last = diff HEAD^                 # diff last committed change
 	last = log -1 HEAD
+	last = diff HEAD^                 # diff last committed change
 	ll  = log     --color=always --all --topo-order --pretty='format:%Cgreen%h%Creset %s%Cred%d%Creset %C(black bold)(by %an)%Creset'
-	lof = log --pretty=fuller
+	lof = log --pretty=fuller --stat --decorate --graph
 	lol = log --oneline --graph --decorate
 	mt = mergetool                    # fire up the merge tool
 	p = push --verbose
@@ -80,7 +80,8 @@
 	short = log --pretty=format:\"%h %cr %cn %Cgreen%s%Creset\"
 	shortnocolor = log --pretty=format:\"%h %cr %cn %s\"
 	sl = stash list                   # list stashes
-	ss = stash                        # stash changes
+	sta = stash                       # stash changes
+	stp = stash pop
 	st = status -s
 	uncommit = reset --soft HEAD^     # go back before last commit, with files in uncommitted state
 	undo-commit = reset --soft HEAD^
@@ -108,7 +109,10 @@
 	what = diff
 	with = merge
 	wtf = status
+	yolo = !git add -A && git commit -m \"$(curl -s whatthecommit.com/index.txt)\"
 [filter "media"]
 	clean = git media clean %f
 	smudge = git media smudge %f
 	required = true
+[url "git@git.kde.org:"]
+	pushInsteadOf = kde:
