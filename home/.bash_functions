@@ -1,5 +1,8 @@
 # vim: set filetype=shell
 ## FUNCTIONS
+yolo() {
+    curl -s whatthecommit.com/index.txt
+}
 command_exists() {
     hash $1 2>/dev/null
     return;
