@@ -143,7 +143,10 @@ if [[ $PLATFORM == 'Linux' ]]; then
     export PATH="/usr/local/heroku/bin:$PATH"
     #export PATH="/usr/local/heroku/bin:/etc/alternatives/java_sdk/bin:/etc/alternatives/java_sdk/bin:/usr/local/heroku/bin:/usr/local/bin:/usr/bin:/bin:/usr/games:/usr/local/sbin:/usr/sbin:/home/chaudhary/kde/bin:/home/chaudhary/.local/bin:/home/chaudhary/bin:/home/chaudhary/kde/bin"
 elif [[ $PLATFORM == 'Mac' ]]; then
-    alias ls='ls --color=auto'
+    if [ "$TERM" != "dumb" ]; then
+        export LS_OPTIONS='--color=auto'
+    fi
+    alias ls="ls $LS_OPTIONS"
     export PATH=$PATH:$HOME/android-sdk/platform-tools
     export PATH=$PATH:$HOME/android-sdk/tools
     export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
