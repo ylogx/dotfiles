@@ -109,7 +109,7 @@
 	what = diff
 	with = merge
 	wtf = status
-	yolo = !git add -A && git commit -m \"$(curl -s whatthecommit.com/index.txt)\"
+	yolo = !git commit -m \"$(curl -s whatthecommit.com/index.txt)\"
 [filter "media"]
 	clean = git media clean %f
 	smudge = git media smudge %f
