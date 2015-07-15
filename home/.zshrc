@@ -151,6 +151,9 @@ elif [[ $PLATFORM == 'Mac' ]]; then
     export PATH=$PATH:$HOME/android-sdk/tools
     export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
     export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
+    #export JAVA_HOME=`/usr/libexec/java_home`
+    #export IDEA_HOME=$JAVA_HOME
+    #export PATH=$JAVA_HOME/bin:$PATH
 fi
 
 EDITOR=vim
