@@ -28,6 +28,10 @@ def backup_dupes(filelist):
             number_of_files_backed_up += 1
     return number_of_files_backed_up
 
+def setup_vim():
+    os.system('git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle')
+    os.system('vim +PluginInstall +qa')
+
 
 def main():
     filelist = get_file_list()
