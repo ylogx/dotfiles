@@ -149,7 +149,8 @@ elif [[ $PLATFORM == 'Mac' ]]; then
     alias ls="ls $LS_OPTIONS"
     export PATH=$PATH:$HOME/android-sdk/platform-tools
     export PATH=$PATH:$HOME/android-sdk/tools
-    export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
+    export PATH=/usr/local/opt/coreutils/libexec/gnubin:$PATH
+    export PATH=$PATH:/usr/local/opt/go/libexec/bin
     export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
     #export JAVA_HOME=`/usr/libexec/java_home`
     #export IDEA_HOME=$JAVA_HOME

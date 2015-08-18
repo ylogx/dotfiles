@@ -99,6 +99,7 @@ alias gbl='git blame -wMC'
 alias getbase='cp -pv ~/code/codpro/base.c ~/code/codpro/base.cpp ./'
 alias glof='git log --pretty=fuller --stat --decorate --graph'
 alias glm='git l --all'
+alias gtop='git rev-parse --show-toplevel'
 alias gw='./gradlew '
 
 alias idea='bash -c "~/Documents/idea-IC/bin/idea.sh &"'

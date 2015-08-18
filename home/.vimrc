@@ -10,6 +10,8 @@
     " let Vundle manage Vundle
     " required!
     Plugin 'gmarik/vundle'
+    " Use ssh to connect instead of 'https'
+    let g:vundle_default_git_proto = 'git'
 
     " My Bundles here:
     " Original repos on github
@@ -53,6 +55,8 @@
     Plugin 'wakatime/vim-wakatime'
     " Vim - TMux Navigation using Ctrl-h,j,k,l
     Plugin 'christoomey/vim-tmux-navigator'
+    " Android in Vim
+    Plugin 'hsanson/vim-android'
     "Plugin ''
 
     " Enable file type detection. Do this after Vundle calls.
