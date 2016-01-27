@@ -15,7 +15,7 @@ fi
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
-ZSH_THEME="robbyrussell"
+ZSH_THEME="agnoster"
 ZSH_THEME="shubhamchaudhary"
 
 # Uncomment the following line to use case-sensitive completion.
@@ -143,6 +143,8 @@ if [[ $PLATFORM == 'Linux' ]]; then
     export PATH="/usr/local/heroku/bin:$PATH"
     #export PATH="/usr/local/heroku/bin:/etc/alternatives/java_sdk/bin:/etc/alternatives/java_sdk/bin:/usr/local/heroku/bin:/usr/local/bin:/usr/bin:/bin:/usr/games:/usr/local/sbin:/usr/sbin:/home/chaudhary/kde/bin:/home/chaudhary/.local/bin:/home/chaudhary/bin:/home/chaudhary/kde/bin"
 elif [[ $PLATFORM == 'Mac' ]]; then
+    export LC_ALL=en_US.UTF-8
+    export LANG=en_US.UTF-8
     if [ "$TERM" != "dumb" ]; then
         export LS_OPTIONS='--color=auto'
     fi
@@ -151,14 +153,21 @@ elif [[ $PLATFORM == 'Mac' ]]; then
     export PATH=$PATH:$HOME/android-sdk/tools
     export PATH=/usr/local/opt/coreutils/libexec/gnubin:$PATH
     export PATH=$PATH:/usr/local/opt/go/libexec/bin
+    export PATH="/usr/local/share/npm/bin:$PATH"
     export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
     #export JAVA_HOME=`/usr/libexec/java_home`
     #export IDEA_HOME=$JAVA_HOME
     #export PATH=$JAVA_HOME/bin:$PATH
 fi
 
+#Hierarchy Viewer Variable 
+export ANDROID_HVPROTO=ddm
+
 EDITOR=vim
 VISUAL=vi
 
 ### Added by the Heroku Toolbelt
 export PATH="/usr/local/heroku/bin:$PATH"
+
+# added by travis gem
+[ -f /Users/chaudhary/.travis/travis.sh ] && source /Users/chaudhary/.travis/travis.sh

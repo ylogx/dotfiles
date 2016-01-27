@@ -1,3 +1,4 @@
+brew install reattach-to-user-namespace #For tmux copy paste
 brew install coreutils
 
 brew tap homebrew/dupes

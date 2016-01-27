@@ -13,7 +13,7 @@
 [credential]
 	helper = cache --timeout=360000
 [push]
-	default = matching
+	default = current
 #[https]
 #	proxy = https://ishubhamch:chaudhary@192.168.60.10:3128
 #[http]
@@ -26,8 +26,6 @@
 	status = true
 [grep]
 	linenumber = true
-[push]
-	default = tracking
 [status]
 	relativePaths=true
 [github]
