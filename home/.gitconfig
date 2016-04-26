@@ -1,23 +1,20 @@
 [user]
 	name = Shubham Chaudhary
-	;email = shubhamc@thoughtworks.com
 	email = me@shubhamchaudhary.in
-	signingkey = "FAB52DCA"
+	signingkey = FAB52DCA
 	logallrefupdates=true
 [core]
 	editor = vim
-    #pager=most
 	excludesfile = ~/.gitignore_global
 	attributesfile = ~/.gitattributes
 	autocrlf = input
+	;pager=most
+[commit]
+	gpgsign = true
 [credential]
 	helper = cache --timeout=360000
 [push]
 	default = current
-#[https]
-#	proxy = https://ishubhamch:chaudhary@192.168.60.10:3128
-#[http]
-#	proxy = http://ishubhamch:chaudhary@192.168.60.10:3128
 [color]
 	ui = true
 	diff = true
@@ -42,6 +39,8 @@
 	chainreplyto = false
 	smtpserverport = 587
 
+[url "git://github.com/"]
+	insteadOf = gh:
 [url "git://anongit.kde.org/"]
 	insteadOf = kde:
 [url "ssh://git@git.kde.org/"]
@@ -119,3 +118,7 @@
 	clean = git-lfs clean %f
 	smudge = git-lfs smudge %f
 	required = true
+#[https]
+#	proxy = https://ishubhamch:chaudhary@192.168.60.10:3128
+#[http]
+#	proxy = http://ishubhamch:chaudhary@192.168.60.10:3128
