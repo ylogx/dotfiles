@@ -15,8 +15,8 @@ fi
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
-ZSH_THEME="agnoster"
 ZSH_THEME="shubhamchaudhary"
+ZSH_THEME="agnoster-sc"
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -80,6 +80,7 @@ plugins=(
     web-search
     yum
     zsh-syntax-highlighting
+    zsh-wakatime
     )
 
 # User configuration
@@ -159,11 +160,13 @@ elif [[ $PLATFORM == 'Mac' ]]; then
     #export IDEA_HOME=$JAVA_HOME
     #export PATH=$JAVA_HOME/bin:$PATH
 fi
+export PATH=$PATH:$HOME/bin
+eval "$(ssh-agent)" > /dev/null
 
 #Hierarchy Viewer Variable 
 export ANDROID_HVPROTO=ddm
 
-EDITOR=vim
+EDITOR=vi
 VISUAL=vi
 
 ### Added by the Heroku Toolbelt

@@ -19,3 +19,4 @@ export PATH=$PATH:$HOME/android-sdk/platform-tools
 export PATH=$PATH:$HOME/android-sdk/tools
 #Hierarchy Viewer Variable 
 export ANDROID_HVPROTO=ddm
+export PATH=$PATH:$HOME/phabricator/arcanist/bin
