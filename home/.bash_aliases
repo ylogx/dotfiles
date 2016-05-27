@@ -8,7 +8,7 @@ alias lla='ls -a'
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 
 # Reload bashrc; best when editing .bashrc
-alias reload='source ~/.bashrc'
+alias reload='reset; source ~/.bashrc'
 alias biggest='BLOCKSIZE=1048576; du -x | sort -nr | head -10'
 
 ## App-specific aliases
