@@ -13,9 +13,11 @@ def get_file_list():
 
 
 def backup_file(filename):
-    BACKUP_LOCATION = os.path.join(os.path.expanduser('~'), 'home_backup')
+    #TODO: Make backup directory if not exist
+    #BACKUP_LOCATION = os.path.join(os.path.expanduser('~'), 'home_backup')
+    BACKUP_LOCATION = filename + '.install.bak'
     shutil.copy2(filename, BACKUP_LOCATION)
-    print(filename)
+    print(filename, '->', BACKUP_LOCATION)
 
 
 def backup_dupes(filelist):
@@ -28,6 +30,9 @@ def backup_dupes(filelist):
             number_of_files_backed_up += 1
     return number_of_files_backed_up
 
+def copy_files(filelist):
+    print('TODO: Copy Files')
+
 def setup_vim():
     os.system('git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle')
     os.system('vim +PluginInstall +qa')
@@ -37,6 +42,8 @@ def main():
     filelist = get_file_list()
     number_of_files_backed_up = backup_dupes(filelist)
     print(number_of_files_backed_up, 'files backed up')
+    copy_files(filelist)
+    setup_vim()
     return 0
 
 if __name__ == '__main__':

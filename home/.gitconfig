@@ -9,8 +9,8 @@
 	attributesfile = ~/.gitattributes
 	autocrlf = input
 	;pager=most
-[commit]
-	gpgsign = true
+;[commit]
+	;gpgsign = true
 [credential]
 	helper = cache --timeout=360000
 [push]
