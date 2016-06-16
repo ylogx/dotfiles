@@ -46,6 +46,25 @@
 [url "ssh://git@git.kde.org/"]
 	pushInsteadOf = kde:
 
+### Diff ###
+;[core]
+	;pager = /usr/local/share/git-core/contrib/diff-highlight/diff-highlight | less
+[color]
+	ui = always
+[color "diff-highlight"]
+	oldNormal = red bold
+	oldHighlight = red bold 52
+	newNormal = green bold
+	newHighlight = green bold 22
+[color "diff"]
+	;commit = green
+	meta = yellow
+	;frag = cyan
+	old = red
+	new = green
+	whitespace = red reverse
+
+
 [alias]
 	changelog = log --pretty=format:\" * %s\"
 	changes = log --pretty=format:\"%h %cr %cn %Cgreen%s%Creset\" --name-status
