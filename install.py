@@ -41,13 +41,31 @@ def setup_vim():
     execute('vim +PluginInstall +qa')
 
 
+def extra_stuff():
+    try_to_install('tmux')
+    try_to_install('pygments')
+    try_to_install('tree')
+    try_to_install('cloc')
+    try_to_install('watch')
+    try_to_install('python3')
+
+
+def try_to_install(software):
+    ''' Try very hard to install something '''
+    execute('brew install ' + software +
+            ' || sudo apt-get install ' + software +
+            ' || sudo yum install ' + software +
+            ' || pip install ' + software +
+            ' || sudo pip install ' + software)
+
+
 def execute(command):
     return os.system(command)
 
 
 def main():
     print('Installing zsh') #TODO: Check if exist
-    execute('sudo apt-get install zsh || brew install zsh || sudo yum install zsh')
+    try_to_install('zsh')
 
     print('Installing ohmyz.sh')
     execute('sh -c "$(wget https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)"')
@@ -59,7 +77,9 @@ def main():
 
     print('Linking all files from dotfiles/home')
     copy_files(filelist)
+
     setup_vim()
+    extra_stuff()
     return 0
 
 if __name__ == '__main__':
