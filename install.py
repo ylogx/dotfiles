@@ -30,18 +30,34 @@ def backup_dupes(filelist):
             number_of_files_backed_up += 1
     return number_of_files_backed_up
 
+
 def copy_files(filelist):
-    print('TODO: Copy Files')
+    exec('ln -fv home/.* ~/')
+    exec('ln -fv home/.oh-my-zsh/themes/*.zsh-theme ~/.oh-my-zsh/themes/')
+
 
 def setup_vim():
-    os.system('git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle')
-    os.system('vim +PluginInstall +qa')
+    exec('git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle')
+    exec('vim +PluginInstall +qa')
+
+
+def exec(command):
+    return os.system(command)
 
 
 def main():
+    print('Installing zsh') #TODO: Check if exist
+    exec('sudo apt-get install zsh || brew install zsh || sudo yum install zsh')
+
+    print('Installing ohmyz.sh')
+    exec('sh -c "$(wget https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)"')
+    # exec('sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"')
+
     filelist = get_file_list()
     number_of_files_backed_up = backup_dupes(filelist)
     print(number_of_files_backed_up, 'files backed up')
+
+    print('Linking all files from dotfiles/home')
     copy_files(filelist)
     setup_vim()
     return 0
