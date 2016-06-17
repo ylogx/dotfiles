@@ -32,26 +32,26 @@ def backup_dupes(filelist):
 
 
 def copy_files(filelist):
-    exec('ln -fv home/.* ~/')
-    exec('ln -fv home/.oh-my-zsh/themes/*.zsh-theme ~/.oh-my-zsh/themes/')
+    execute('ln -fv home/.* ~/')
+    execute('ln -fv home/.oh-my-zsh/themes/*.zsh-theme ~/.oh-my-zsh/themes/')
 
 
 def setup_vim():
-    exec('git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle')
-    exec('vim +PluginInstall +qa')
+    execute('git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle')
+    execute('vim +PluginInstall +qa')
 
 
-def exec(command):
+def execute(command):
     return os.system(command)
 
 
 def main():
     print('Installing zsh') #TODO: Check if exist
-    exec('sudo apt-get install zsh || brew install zsh || sudo yum install zsh')
+    execute('sudo apt-get install zsh || brew install zsh || sudo yum install zsh')
 
     print('Installing ohmyz.sh')
-    exec('sh -c "$(wget https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)"')
-    # exec('sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"')
+    execute('sh -c "$(wget https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)"')
+    # execute('sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"')
 
     filelist = get_file_list()
     number_of_files_backed_up = backup_dupes(filelist)
