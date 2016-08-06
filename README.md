@@ -3,6 +3,9 @@
 Add all files in ./home/ folder to your local home directory (~/).  
 
 ## Tools/Configurations provided
+Look at individual instructions to only use parts of this.
+
+To setup everything just run `./install.py`
 
 #### Vim
 To update vim:  
