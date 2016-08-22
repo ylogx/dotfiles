@@ -43,12 +43,13 @@ def setup_vim():
 
 def extra_stuff():
     try_to_install('tmux')
-    try_to_install('pygments')
     try_to_install('tree')
     try_to_install('cloc')
     try_to_install('watch')
     try_to_install('tig')
+    try_to_install('gnupg2')    # ssh-agent caching across terminals
     try_to_install('python3')
+    try_to_install('pygments')
 
 
 def try_to_install(software):
