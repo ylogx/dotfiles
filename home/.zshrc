@@ -162,6 +162,7 @@ elif [[ $PLATFORM == 'Mac' ]]; then
 fi
 export PATH=$PATH:$HOME/bin
 eval "$(ssh-agent)" > /dev/null
+eval $(gpg-agent --daemon --enable-ssh-support --sh) > /dev/null
 
 #Hierarchy Viewer Variable 
 export ANDROID_HVPROTO=ddm
