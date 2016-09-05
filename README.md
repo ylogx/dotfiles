@@ -35,7 +35,8 @@ You'll have to add your username and password to make it work.
 Some small custom configurations to the mighty ack tool.
 
 ### Recommendation
-I'd recommend you to use tool like homeshick to clone this repo:
+I'd recommend you to use tool like [homeshick](https://github.com/andsens/homeshick) to clone this repo:
 ```sh
+git clone git://github.com/andsens/homeshick.git $HOME/.homesick/repos/homeshick
 homeshick clone https://github.com/shubhamchaudhary/dotfiles.git
 ```
