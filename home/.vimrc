@@ -47,6 +47,8 @@
     Plugin 'bling/vim-airline'
     " Ruby on Rails plugin
     Plugin 'tpope/vim-rails'
+    " GoLang plugin
+    Plugin 'fatih/vim-go'
     " sleuth.vim: Heuristically set buffer options like shiftwidth, expandtab...
     Plugin 'tpope/vim-sleuth'
     " Show python code coverage
@@ -57,6 +59,8 @@
     Plugin 'christoomey/vim-tmux-navigator'
     " Android in Vim
     Plugin 'hsanson/vim-android'
+    " Transparent gpg file editing
+    Plugin 'jamessan/vim-gnupg'
     "Plugin ''
 
     " Enable file type detection. Do this after Vundle calls.
@@ -276,7 +280,7 @@
     let g:syntastic_cpp_compiler_options = ' -std=c++11'
     " Make python3 work " TODO: Make it toggle
     let g:syntastic_python_python_exec = 'python3'
-    let g:syntastic_python_checkers = ['pylint', 'python3-pylint', 'python']
+    "let g:syntastic_python_checkers = ['pylint', 'python3-pylint', 'python']
     "let g:syntastic_python_pylint_exec = '/usr/local/bin/pylint'
 
 " }

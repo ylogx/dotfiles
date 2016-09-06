@@ -8,6 +8,7 @@ set smtp_url = "smtp://shubham.chaudhary@zomato.com@smtp.gmail.com:587/"
 #set smtp_pass = "foobar"
 set from = "shubham.chaudhary@zomato.com"
 set realname = "Shubham Chaudhary"
+set smtp_authenticators = 'gssapi:login'
 
 # Change the following line to a different editor you prefer.
 set editor = "vim"

@@ -65,6 +65,7 @@ plugins=(
     github
     git-flow
     gnu-utils
+    golang
     gpg-agent
     #gradle
     heroku
@@ -131,8 +132,8 @@ fi
 if [ -d "$HOME/.homesick" ]; then
     source "$HOME/.homesick/repos/homeshick/homeshick.sh"
     #source "$HOME/.homesick/repos/homeshick/completions/homeshick-completion.bash"
-    alias hs='homeshick'
 fi
+alias hs='homeshick'
 
 if [[ $PLATFORM == 'Linux' ]]; then
     export PATH=$PATH:$HOME/kde/bin
@@ -175,3 +176,4 @@ export PATH="/usr/local/heroku/bin:$PATH"
 
 # added by travis gem
 [ -f /Users/chaudhary/.travis/travis.sh ] && source /Users/chaudhary/.travis/travis.sh
+if which pyenv > /dev/null; then eval "$(pyenv init -)"; fi
