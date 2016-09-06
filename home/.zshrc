@@ -176,4 +176,6 @@ export PATH="/usr/local/heroku/bin:$PATH"
 
 # added by travis gem
 [ -f /Users/chaudhary/.travis/travis.sh ] && source /Users/chaudhary/.travis/travis.sh
-if which pyenv > /dev/null; then eval "$(pyenv init -)"; fi
+
+[ -d "$HOME/.pyenv" ] && export PATH="$HOME/.pyenv/bin:$PATH";
+if which pyenv > /dev/null; then eval "$(pyenv init -)"; eval "$(pyenv virtualenv-init -)"; fi
