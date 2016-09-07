@@ -162,6 +162,8 @@ elif [[ $PLATFORM == 'Mac' ]]; then
     #export PATH=$JAVA_HOME/bin:$PATH
 fi
 export PATH=$PATH:$HOME/bin
+
+#SSH Agent and GPG Agent
 eval "$(ssh-agent)" > /dev/null
 eval $(gpg-agent --daemon --enable-ssh-support --sh) > /dev/null
 
