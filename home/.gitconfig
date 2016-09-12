@@ -141,3 +141,7 @@
 #	proxy = https://ishubhamch:chaudhary@192.168.60.10:3128
 #[http]
 #	proxy = http://ishubhamch:chaudhary@192.168.60.10:3128
+[merge]
+	tool = vimdiff
+;[mergetool "vimdiff"]
+	;cmd = vimdiff -c 'set diffopt+=iwhite'

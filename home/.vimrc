@@ -108,6 +108,7 @@
     if &term =~? 'mlterm\|xterm'
         set t_Co=256
     endif
+    "set diffopt+=iwhite
 " }
 
 
