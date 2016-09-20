@@ -34,9 +34,14 @@ You'll have to add your username and password to make it work.
 #### Ack
 Some small custom configurations to the mighty ack tool.
 
+#### [Oh My Zsh](http://ohmyz.sh)
+```sh
+sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+```
+
 ### Recommendation
 I'd recommend you to use tool like [homeshick](https://github.com/andsens/homeshick) to clone this repo:
 ```sh
 git clone git://github.com/andsens/homeshick.git $HOME/.homesick/repos/homeshick
-homeshick clone https://github.com/shubhamchaudhary/dotfiles.git
+$HOME/.homesick/repos/homeshick clone https://github.com/shubhamchaudhary/dotfiles.git
 ```
