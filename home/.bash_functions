@@ -155,7 +155,9 @@ function ooo(){
   while :; do clear; echo O_o; sleep 1; clear; echo o_O; sleep 1; done
 }
 
+randpw(){
+  < /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c${1:-128};
+  echo;
+}
 
 # vim: set ft=shell:
-
-
