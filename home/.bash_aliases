@@ -156,6 +156,7 @@ alias watch='watch --color'
 alias wcall='wc `ls -tr`'
 #alias tree='tree -Csh'        # nice alternative to 'ls'
 alias t='tree -Csh'        # nice alternative to 'ls'
+alias ta='tmux attach'
 alias today='/home/chaudhary/code/scripts/show_message.sh'
 
 #some variations
