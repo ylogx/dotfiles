@@ -45,5 +45,5 @@ git clone https://github.com/powerline/fonts.git /tmp/fonts && cd /tmp/fonts && 
 I'd recommend you to use tool like [homesick](https://github.com/andsens/homeshick) to clone and sync dotfiles from this repo:
 ```sh
 git clone git://github.com/andsens/homeshick.git $HOME/.homesick/repos/homeshick
-$HOME/.homesick/repos/homeshick clone https://github.com/shubhamchaudhary/dotfiles.git
+$HOME/.homesick/repos/homeshick/bin/homeshick clone https://github.com/shubhamchaudhary/dotfiles.git
 ```
