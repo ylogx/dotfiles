@@ -61,7 +61,7 @@
     Plugin 'hsanson/vim-android'
     " Transparent gpg file editing
     Plugin 'jamessan/vim-gnupg'
-    if v:version >= 800
+    if v:version >= 800 || has('nvim')
       " Async Linting
       Plugin 'w0rp/ale'
     endif
@@ -261,8 +261,10 @@
     set list
 
     " Update by redraw and not INS/DEL
-    set ttyscroll=3
-    set nottyfast
+    if !has('nvim')
+        set ttyscroll=3
+        set nottyfast
+    endif
 
     " Show me what I was doing.
     set showcmd
