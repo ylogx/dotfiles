@@ -39,6 +39,8 @@
 	chainreplyto = false
 	smtpserverport = 587
 
+[url "git@github.com:"]
+	insteadOf = g:
 [url "git://github.com/"]
 	insteadOf = gh:
 [url "git://anongit.kde.org/"]

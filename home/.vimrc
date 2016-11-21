@@ -61,6 +61,10 @@
     Plugin 'hsanson/vim-android'
     " Transparent gpg file editing
     Plugin 'jamessan/vim-gnupg'
+    if v:version >= 800
+      " Async Linting
+      Plugin 'w0rp/ale'
+    endif
     "Plugin ''
 
     " Enable file type detection. Do this after Vundle calls.

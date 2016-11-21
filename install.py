@@ -42,6 +42,7 @@ def setup_vim():
 
 
 def extra_stuff():
+    try_to_install('git')
     try_to_install('tmux')
     try_to_install('tree')
     try_to_install('cloc')

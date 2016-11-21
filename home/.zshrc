@@ -182,3 +182,14 @@ export PATH="/usr/local/heroku/bin:$PATH"
 
 [ -d "$HOME/.pyenv" ] && export PATH="$HOME/.pyenv/bin:$PATH";
 if which pyenv > /dev/null; then eval "$(pyenv init -)"; eval "$(pyenv virtualenv-init -)"; fi
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f /Users/chaudhary/google-cloud-sdk/path.zsh.inc ]; then
+  source '/Users/chaudhary/google-cloud-sdk/path.zsh.inc'
+fi
+
+# The next line enables shell command completion for gcloud.
+#if [ -f /Users/chaudhary/google-cloud-sdk/completion.zsh.inc ]; then
+  #source '/Users/chaudhary/google-cloud-sdk/completion.zsh.inc'
+#fi
+export PATH="/usr/local/bin:$PATH"

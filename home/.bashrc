@@ -176,6 +176,7 @@ fi
 export PATH="/usr/local/heroku/bin:$PATH"
 export PATH=$PATH:$HOME/android-sdk/platform-tools
 export PATH=$PATH:$HOME/android-sdk/tools
+export PATH=/usr/local/bin:$PATH
 
 # added by travis gem
 [ -f /Users/chaudhary/.travis/travis.sh ] && source /Users/chaudhary/.travis/travis.sh
