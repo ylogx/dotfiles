@@ -47,6 +47,7 @@ def extra_stuff():
     try_to_install('tree')
     try_to_install('cloc')
     try_to_install('watch')
+    try_to_install('htop')
     try_to_install('tig')
     try_to_install('gnupg2')    # ssh-agent caching across terminals
     try_to_install('python3')
