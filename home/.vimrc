@@ -65,6 +65,8 @@
       " Async Linting
       Plugin 'w0rp/ale'
     endif
+    " Do ack searches from code
+    Plugin 'mileszs/ack.vim'
     "Plugin ''
 
     " Enable file type detection. Do this after Vundle calls.
@@ -174,6 +176,17 @@
     " }
 " }
 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Tabs {
+    nnoremap th  :tabfirst<CR>
+    nnoremap tj  :tabnext<CR>
+    nnoremap tk  :tabprev<CR>
+    nnoremap tl  :tablast<CR>
+    nnoremap tt  :tabedit<Space>
+    nnoremap tn  :tabnext<Space>
+    nnoremap tm  :tabm<Space>
+    nnoremap td  :tabclose<CR>
+" }
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -436,7 +449,13 @@
     " autocmd InsertLeave * :set relativenumber
 "}
 
-
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Search and Tag plugins {
+    " Use ag instead of ack
+    let g:ackprg = 'ag --nogroup --nocolor --column'
+    "let g:ackprg = 'ag --vimgrep'
+"}
+"
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Tmux Navigation {
     let g:tmux_navigator_no_mappings = 1
