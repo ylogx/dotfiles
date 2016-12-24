@@ -148,6 +148,7 @@ alias py='python3'
 alias py2='python2'
 alias py3='python3'
 alias pyd='pydoc3'
+alias pyl="PYTHONPATH='.' python3"
 alias rm='rm -v'
 alias studio='bash -c "~/code/android/android-studio/bin/studio.sh &"'
 #alias sublime='~/Documents/sublime_text_3/sublime_text'
