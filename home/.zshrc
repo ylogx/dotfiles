@@ -137,14 +137,10 @@ fi
 alias hs='homeshick'
 
 if [[ $PLATFORM == 'Linux' ]]; then
-    export PATH=$PATH:$HOME/kde/bin
-    export JAVA_HOME=/etc/alternatives/java_sdk
-    export PATH=$JAVA_HOME/bin:$PATH
+    [ -d $HOME/kde/bin ] && export PATH=$PATH:$HOME/kde/bin
+    #[ -d /etc/alternatives/java_sdk ] && export JAVA_HOME=/etc/alternatives/java_sdk
+    #export PATH=$JAVA_HOME/bin:$PATH
     #export ANDROID_HOME=$HOME/android-sdk
-
-    # Heroku setup - added by the Heroku Toolbelt
-    export PATH="/usr/local/heroku/bin:$PATH"
-    #export PATH="/usr/local/heroku/bin:/etc/alternatives/java_sdk/bin:/etc/alternatives/java_sdk/bin:/usr/local/heroku/bin:/usr/local/bin:/usr/bin:/bin:/usr/games:/usr/local/sbin:/usr/sbin:/home/chaudhary/kde/bin:/home/chaudhary/.local/bin:/home/chaudhary/bin:/home/chaudhary/kde/bin"
 elif [[ $PLATFORM == 'Mac' ]]; then
     export LC_ALL=en_US.UTF-8
     export LANG=en_US.UTF-8
@@ -152,17 +148,21 @@ elif [[ $PLATFORM == 'Mac' ]]; then
         export LS_OPTIONS='--color=auto'
     fi
     alias ls="ls $LS_OPTIONS"
-    export PATH=$PATH:$HOME/android-sdk/platform-tools
-    export PATH=$PATH:$HOME/android-sdk/tools
-    export PATH=/usr/local/opt/coreutils/libexec/gnubin:$PATH
-    export PATH=$PATH:/usr/local/opt/go/libexec/bin
-    export PATH="/usr/local/share/npm/bin:$PATH"
-    export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
+    [ -d $HOME/android-sdk/platform-tools ] && export PATH=$PATH:$HOME/android-sdk/platform-tools
+    [ -d $HOME/android-sdk/tools ] && export PATH=$PATH:$HOME/android-sdk/tools
+    [ -d /usr/local/opt/coreutils/libexec/gnubin ] && export PATH=/usr/local/opt/coreutils/libexec/gnubin:$PATH
+    [ -d /usr/local/opt/coreutils/libexec/gnubin ] && export PATH=$PATH:/usr/local/opt/go/libexec/bin
+    [ -d /usr/local/share/npm/bin ] && export PATH="/usr/local/share/npm/bin:$PATH"
+    [ -d /usr/local/opt/coreutils/libexec/gnuman ] && export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
     #export JAVA_HOME=`/usr/libexec/java_home`
     #export IDEA_HOME=$JAVA_HOME
     #export PATH=$JAVA_HOME/bin:$PATH
 fi
-export PATH=$PATH:$HOME/bin
+
+[ -d $HOME/bin ] && export PATH=$PATH:$HOME/bin
+
+### Added by the Heroku Toolbelt
+[ -d '/usr/local/heroku/bin' ] && export PATH="/usr/local/heroku/bin:$PATH"
 
 #SSH Agent and GPG Agent
 eval "$(ssh-agent)" > /dev/null
@@ -174,8 +174,6 @@ export ANDROID_HVPROTO=ddm
 EDITOR=vi
 VISUAL=vi
 
-### Added by the Heroku Toolbelt
-export PATH="/usr/local/heroku/bin:$PATH"
 
 # added by travis gem
 [ -f /Users/chaudhary/.travis/travis.sh ] && source /Users/chaudhary/.travis/travis.sh
@@ -192,7 +190,7 @@ fi
 #if [ -f /Users/chaudhary/google-cloud-sdk/completion.zsh.inc ]; then
   #source '/Users/chaudhary/google-cloud-sdk/completion.zsh.inc'
 #fi
-export PATH="/usr/local/bin:$PATH"
+#export PATH="/usr/local/bin:$PATH"
 [ -d "$HOME/.local/bin" ] && export PATH=$HOME/.local/bin:$PATH
 
 # added by Anaconda3 4.2.0 installer
