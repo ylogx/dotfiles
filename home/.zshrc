@@ -193,7 +193,12 @@ fi
   #source '/Users/chaudhary/google-cloud-sdk/completion.zsh.inc'
 #fi
 export PATH="/usr/local/bin:$PATH"
+[ -d "$HOME/.local/bin" ] && export PATH=$HOME/.local/bin:$PATH
 
 # added by Anaconda3 4.2.0 installer
 [ -d "/opt/anaconda3/bin" ] && export PATH="/opt/anaconda3/bin:$PATH"
 [ -d "/opt/node-v4.2.1-linux-x64/bin/" ] && export PATH="/opt/node-v4.2.1-linux-x64/bin/:$PATH"
+
+# Cuda
+[ -d "/usr/local/cuda/bin" ] && export PATH=/usr/local/cuda/bin:$PATH
+[ -d "/usr/local/cuda/lib64" ] && export LD_LIBRARY_PATH=/usr/local/cuda/lib64:$LD_LIBRARY_PATH

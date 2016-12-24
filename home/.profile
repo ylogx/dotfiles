@@ -1,5 +1,5 @@
-export SHELL=`which zsh`
-[ -z "$ZSH_VERSION" ] && exec $SHELL -l #NOTE: Executes zsh if available
+#export SHELL=`which zsh`
+#[ -z "$ZSH_VERSION" ] && exec $SHELL -l #NOTE: Executes zsh if available
 if [ -e /usr/share/terminfo/x/xterm-256color ]; then
         export TERM='xterm-256color'
 else
@@ -17,8 +17,8 @@ fi
 # FIXME: add checks
 
 source ~/.bashrc
-export PATH=$PATH:$HOME/android-sdk/platform-tools
-export PATH=$PATH:$HOME/android-sdk/tools
+[ -d $HOME/android-sdk/platform-tools ] && export PATH=$PATH:$HOME/android-sdk/platform-tools
+[ -d $HOME/android-sdk/tools ] && export PATH=$PATH:$HOME/android-sdk/tools
 #Hierarchy Viewer Variable 
 export ANDROID_HVPROTO=ddm
-export PATH=$PATH:$HOME/phabricator/arcanist/bin
+[ -d $HOME/phabricator/arcanist/bin ] && export PATH=$PATH:$HOME/phabricator/arcanist/bin
