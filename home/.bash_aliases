@@ -154,7 +154,7 @@ alias studio='bash -c "~/code/android/android-studio/bin/studio.sh &"'
 #alias sublime='~/Documents/sublime_text_3/sublime_text'
 #alias sublime='/opt/sublime_text/sublime_text'
 # Cached version of ssh, uses the first connection for subsequent calls
-alias sshc="ssh -o 'controlmaster=auto' -o 'controlpath=/tmp/ssh-%r@%h:%p'"
+alias sshc='ssh -o "controlmaster=auto" -o "controlpath=/tmp/ssh-$USER-%r@%h:%p"'
 alias watch='watch --color'
 alias wcall='wc `ls -tr`'
 #alias tree='tree -Csh'        # nice alternative to 'ls'
