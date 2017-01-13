@@ -141,6 +141,7 @@ alias mymakehere='cp /home/chaudhary/Makefile ./'
 alias myhistory='cat ~/bashbackup.txt'
 
 alias p='pwd'
+alias pms='sudo supervisorctl'
 alias proxy='cat -n /etc/apt/apt.conf'
 #alias proxyNone='sudo sh -c \'echo -n "" > /etc/apt/apt.conf\''
 alias proxyUiet='sudo cp /etc/apt/aptUiet.conf /etc/apt/apt.conf'
