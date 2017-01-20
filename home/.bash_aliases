@@ -151,6 +151,7 @@ alias py3='python3'
 alias pyd='pydoc3'
 alias pyl="PYTHONPATH='.' python3"
 alias rm='rm -v'
+alias serve='python3 -m http.server'
 alias studio='bash -c "~/code/android/android-studio/bin/studio.sh &"'
 #alias sublime='~/Documents/sublime_text_3/sublime_text'
 #alias sublime='/opt/sublime_text/sublime_text'
@@ -161,6 +162,7 @@ alias wcall='wc `ls -tr`'
 #alias tree='tree -Csh'        # nice alternative to 'ls'
 alias t='tree -Csh'        # nice alternative to 'ls'
 alias ta='tmux attach'
+alias timev='/usr/bin/time -v'
 alias today='/home/chaudhary/code/scripts/show_message.sh'
 
 #some variations
