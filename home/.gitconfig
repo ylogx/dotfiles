@@ -51,6 +51,7 @@
 ### Diff ###
 ;[core]
 	;pager = /usr/local/share/git-core/contrib/diff-highlight/diff-highlight | less
+	;pager = perl /usr/share/doc/git/contrib/diff-highlight/diff-highlight | less
 [color]
 	ui = always
 [color "diff-highlight"]
