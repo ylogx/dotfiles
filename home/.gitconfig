@@ -69,6 +69,7 @@
 
 
 [alias]
+	;commit = commit -S
 	changelog = log --pretty=format:\" * %s\"
 	changes = log --pretty=format:\"%h %cr %cn %Cgreen%s%Creset\" --name-status
 	c = commit
