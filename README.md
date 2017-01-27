@@ -34,6 +34,12 @@ You'll have to add your username and password to make it work.
 #### Ack
 Some small custom configurations to the mighty ack tool.
 
+#### Tmux
+```sh
+git clone https://github.com/tmux-plugins/tpm $HOME/.tmux/plugins/tpm
+<prefix (\)>I  # Running this in tmux session will install tmux plugins
+```
+
 #### [Oh My Zsh](http://ohmyz.sh)
 ```sh
 sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"

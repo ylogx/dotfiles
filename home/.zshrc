@@ -79,7 +79,7 @@ plugins=(
     sublime
     sudo
     web-search
-    tmux
+    #tmux
     yum
     zsh-syntax-highlighting
     zsh-wakatime
