@@ -139,6 +139,7 @@ alias lsd='ls -l | grep "^d"'   #list only directories
 alias masquerade='sudo iptables -t nat -A POSTROUTING -o wlp3s0 -s 192.168.1.0/24 -j MASQUERADE'
 alias mymakehere='cp /home/chaudhary/Makefile ./'
 alias myhistory='cat ~/bashbackup.txt'
+alias nf='ls | wc -l'
 
 alias p='pwd'
 alias pms='sudo supervisorctl'
@@ -157,8 +158,6 @@ alias studio='bash -c "~/code/android/android-studio/bin/studio.sh &"'
 #alias sublime='/opt/sublime_text/sublime_text'
 # Cached version of ssh, uses the first connection for subsequent calls
 alias sshc='ssh -o "controlmaster=auto" -o "controlpath=/tmp/ssh-$USER-%r@%h:%p"'
-alias watch='watch --color'
-alias wcall='wc `ls -tr`'
 #alias tree='tree -Csh'        # nice alternative to 'ls'
 alias t='tree -Csh'        # nice alternative to 'ls'
 alias ta='tmux attach'
@@ -170,12 +169,13 @@ alias today='/home/chaudhary/code/scripts/show_message.sh'
 #alias vc='vim `ls -t *.@(c|cpp|h|py)| head -1 `'
 alias vp='vim `ls -t *.@(py|pl|cgi)| head -1 `'
 alias vc='vim `ls -t *.@(c|cpp|h)| head -1 `'
-
 #When I know the file I want to edit is the most recent file in a directory
 alias vew='vim `ls -t * | head -1 `'
-
 alias vtest='/home/chaudhary/code/python/vocab_test.py'
 
+alias watch='watch --color'
+alias wcall='wc `ls -tr`'
+alias wcl='wc -l'
 #execute the most recent script (I call this from within VIM with a mapped button)
 #alias xew='`ls -t *.pl | head -1 `'
 alias xew='xdg-open "`ls -t * | head -1 `"'
