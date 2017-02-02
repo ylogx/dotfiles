@@ -165,8 +165,18 @@ fi
 [ -d '/usr/local/heroku/bin' ] && export PATH="/usr/local/heroku/bin:$PATH"
 
 #SSH Agent and GPG Agent
-eval "$(ssh-agent)" > /dev/null
-eval $(gpg-agent --daemon --enable-ssh-support --sh) > /dev/null
+eval $(gpg-agent --daemon --enable-ssh-support --sh &> /dev/null)
+#eval "$(ssh-agent)" > /dev/null    # Naive approach, leaves a lot of orphan agents
+add_ssh_agent_safely() {
+  if [ ! -S ~/.ssh/ssh_auth_sock ]; then
+    echo "If you want to disable adding ssh key to agent, disable this block"
+    eval "$(ssh-agent)" > /dev/null
+    ln -sf "$SSH_AUTH_SOCK" ~/.ssh/ssh_auth_sock
+  fi
+  export SSH_AUTH_SOCK=~/.ssh/ssh_auth_sock
+  ssh-add -l > /dev/null || ssh-add
+}
+add_ssh_agent_safely
 
 #Hierarchy Viewer Variable 
 export ANDROID_HVPROTO=ddm
