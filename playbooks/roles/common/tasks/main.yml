@@ -1,0 +1,8 @@
+---
+- include: homesick.yml
+
+- name: Clone Vundle
+  git: repo=https://github.com/gmarik/Vundle.vim.git dest=~/.vim/bundle/vundle
+
+- name: Install/Update Vim Plugins
+  command: vim +PluginInstall! +qall

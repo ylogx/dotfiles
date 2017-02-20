@@ -1,0 +1,12 @@
+---
+# name: Clone homesick
+# name: Pull dotfiles into homesic
+# name: Stash dotfiles
+
+- name: Link files using homesick
+  become: false
+  command: homeshick pull dotfiles
+  args:
+    chdir: ~/.homesick/repos/homeshick/bin/
+
+# name: Pop Stash

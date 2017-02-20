@@ -1,0 +1,36 @@
+---
+- name: Update Homebrew
+  homebrew: update_homebrew=yes
+
+- name: Tap fonts
+  homebrew_tap: tap=caskroom/fonts state=present
+
+- name: Install libraries with Homebrew
+  homebrew: name={{ item }} state=latest
+  with_items:
+    - ack
+    - ansible
+    - curl
+    - fasd
+    - git
+    - hub
+    - nmap
+    - python3
+    - vim
+    - watch
+    - wget
+    - zsh
+    - tree
+    - openssl
+    - coreutils
+    - findutils
+    - htop
+
+- name: Install apps with Homebrew Cask
+  homebrew_cask: name={{ item }} state=present
+  with_items:
+    - sublime-text
+    - vlc
+
+- name: Cleanup Brew packages
+  command: brew cleanup

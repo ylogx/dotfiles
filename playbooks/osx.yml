@@ -1,0 +1,5 @@
+---
+- hosts: fleet_osx
+  roles:
+    - role: osx
+    - role: common

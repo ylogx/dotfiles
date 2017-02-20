@@ -1,0 +1,27 @@
+---
+- name: Update packages
+  become: yes
+  apt: upgrade=dist update_cache=yes
+
+- name: Install libraries using APT
+  apt: name={{ item }} state=latest
+  become: yes
+  become_method: sudo
+  with_items:
+    - ack-grep
+    - bash
+    - curl
+    - git
+    - htop
+    - nmap
+    - python3
+    - vim
+    - tmux
+    - wget
+    - zsh
+
+- name: Change shell to ZSH
+  become: yes
+  become_method: sudo
+  user: shell=/bin/zsh name=chaudhary
+  ; TODO: Change chaudhary to variable user
