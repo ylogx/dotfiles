@@ -3,6 +3,7 @@ if [ -f ~/.bash_aliases ]; then
 fi
 
 alias reload='reset; source ~/.zshrc'
+alias reloads='source ~/.zshrc &> /dev/null'
 alias -s java=vim
 alias -s c=vim
 alias -s cpp=vim

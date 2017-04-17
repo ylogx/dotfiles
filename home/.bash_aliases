@@ -9,6 +9,7 @@ alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo
 
 # Reload bashrc; best when editing .bashrc
 alias reload='reset; source ~/.bashrc'
+alias reloads='source ~/.bashrc &> /dev/null'
 alias biggest='BLOCKSIZE=1048576; du -x | sort -nr | head -10'
 
 ## App-specific aliases
