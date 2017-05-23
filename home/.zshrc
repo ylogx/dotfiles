@@ -165,7 +165,6 @@ fi
 [ -d '/usr/local/heroku/bin' ] && export PATH="/usr/local/heroku/bin:$PATH"
 
 #SSH Agent and GPG Agent
-eval $(gpg-agent --daemon --enable-ssh-support --sh &> /dev/null)
 #eval "$(ssh-agent)" > /dev/null    # Naive approach, leaves a lot of orphan agents
 add_ssh_agent_safely() {
   if [ ! -S ~/.ssh/ssh_auth_sock ]; then
@@ -177,6 +176,29 @@ add_ssh_agent_safely() {
   ssh-add -l > /dev/null || ssh-add
 }
 add_ssh_agent_safely
+
+fresh_gpg_agent() {
+  eval $(gpg-agent --daemon --enable-ssh-support --sh --write-env-file $GPG_AGENT_INFO_FILENAME &> /dev/null)
+}
+
+add_gpg_agent_safely() {
+  export GPG_TTY=$(tty)
+  #GPG_AGENT_INFO_FILENAME=${HOME}/.gnupg/gpg-agent.env
+  GPG_AGENT_INFO_FILENAME=${HOME}/.gpg-agent-info
+  if [ ! -f "$GPG_AGENT_INFO_FILENAME" ]; then
+    fresh_gpg_agent
+  fi
+
+  . $GPG_AGENT_INFO_FILENAME
+  if [ ! -S "$SSH_AUTH_SOCK" ]; then
+    fresh_gpg_agent
+  fi
+  . $GPG_AGENT_INFO_FILENAME
+  export GPG_AGENT_INFO
+  export SSH_AUTH_SOCK
+  export SSH_AGENT_PID
+}
+add_gpg_agent_safely
 
 #Hierarchy Viewer Variable 
 export ANDROID_HVPROTO=ddm

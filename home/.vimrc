@@ -61,12 +61,14 @@
     Plugin 'hsanson/vim-android'
     " Transparent gpg file editing
     Plugin 'jamessan/vim-gnupg'
+    " Async Linting
     if v:version >= 800 || has('nvim')
-      " Async Linting
       Plugin 'w0rp/ale'
     endif
     " Do ack searches from code
     Plugin 'mileszs/ack.vim'
+    " Semantic Highlight
+    Plugin 'jaxbot/semantic-highlight.vim'
     "Plugin ''
 
     " Enable file type detection. Do this after Vundle calls.
