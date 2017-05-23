@@ -179,28 +179,32 @@ add_ssh_agent_safely() {
 #add_ssh_agent_safely
 
 fresh_gpg_agent() {
-  eval $(gpg-agent --daemon --enable-ssh-support --sh --write-env-file $GPG_AGENT_INFO_FILENAME &> /dev/null)
+  eval $(gpg-agent --daemon --enable-ssh-support --sh --use-standard-socket --write-env-file $GPG_AGENT_INFO_FILENAME &> /dev/null)
+  touch $GPG_AGENT_INFO_FILENAME
 }
 
 add_gpg_agent_safely() {
-  export GPG_TTY=$(tty)
-  #GPG_AGENT_INFO_FILENAME=${HOME}/.gnupg/gpg-agent.env
-  GPG_AGENT_INFO_FILENAME=${HOME}/.gpg-agent-info
+  #export GPG_TTY=$(tty)
+  # Following file will be created by gpg-agent plugin of oh my zsh
+  GPG_AGENT_INFO_FILENAME=${HOME}/.gnupg/gpg-agent.env
   if [ ! -f "$GPG_AGENT_INFO_FILENAME" ]; then
     fresh_gpg_agent
   fi
 
-  . $GPG_AGENT_INFO_FILENAME
-  if [ ! -S "$SSH_AUTH_SOCK" ]; then
-    fresh_gpg_agent
-  fi
-  . $GPG_AGENT_INFO_FILENAME
-  export GPG_AGENT_INFO
-  export SSH_AUTH_SOCK
-  export SSH_AGENT_PID
-  ssh-add -l > /dev/null || ssh-add
+  #. $GPG_AGENT_INFO_FILENAME
+  #if [ ! -S "$SSH_AUTH_SOCK" ]; then
+    #fresh_gpg_agent
+  #fi
+  #. $GPG_AGENT_INFO_FILENAME
+  #export GPG_AGENT_INFO
+  #export SSH_AUTH_SOCK
+  #export SSH_AGENT_PID
 }
 add_gpg_agent_safely
+
+if [ ! -S "$SSH_AUTH_SOCK" ]; then
+  ssh-add -l > /dev/null || ssh-add
+fi
 
 #Hierarchy Viewer Variable 
 export ANDROID_HVPROTO=ddm
