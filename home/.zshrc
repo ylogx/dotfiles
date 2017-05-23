@@ -202,7 +202,7 @@ add_gpg_agent_safely() {
 }
 add_gpg_agent_safely
 
-if [ ! -S "$SSH_AUTH_SOCK" ]; then
+if [ -S "$SSH_AUTH_SOCK" ]; then
   ssh-add -l > /dev/null || ssh-add
 fi
 
