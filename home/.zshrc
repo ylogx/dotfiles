@@ -175,7 +175,8 @@ add_ssh_agent_safely() {
   export SSH_AUTH_SOCK=~/.ssh/ssh_auth_sock
   ssh-add -l > /dev/null || ssh-add
 }
-add_ssh_agent_safely
+# Using gpg-agent to work as ssh-agent. See below where we export $SSH_AUTH_SOCK created by gpg-agent
+#add_ssh_agent_safely
 
 fresh_gpg_agent() {
   eval $(gpg-agent --daemon --enable-ssh-support --sh --write-env-file $GPG_AGENT_INFO_FILENAME &> /dev/null)
@@ -197,6 +198,7 @@ add_gpg_agent_safely() {
   export GPG_AGENT_INFO
   export SSH_AUTH_SOCK
   export SSH_AGENT_PID
+  ssh-add -l > /dev/null || ssh-add
 }
 add_gpg_agent_safely
 
