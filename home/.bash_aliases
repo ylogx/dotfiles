@@ -179,6 +179,7 @@ alias vtest='/home/chaudhary/code/python/vocab_test.py'
 alias watch='watch --color'
 alias wcall='wc `ls -tr`'
 alias wcl='wc -l'
+alias wcld='for f in `ls`; do echo $f: `ls $f | wc -l`; done'
 #execute the most recent script (I call this from within VIM with a mapped button)
 #alias xew='`ls -t *.pl | head -1 `'
 alias xew='xdg-open "`ls -t * | head -1 `"'
