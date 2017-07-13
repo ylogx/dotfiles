@@ -24,4 +24,4 @@
   become: yes
   become_method: sudo
   user: shell=/bin/zsh name=chaudhary
-  ; TODO: Change chaudhary to variable user
+  # TODO: Change chaudhary to variable user

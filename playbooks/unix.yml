@@ -1,0 +1,6 @@
+---
+#- hosts: fleet_unix
+- hosts: all
+  roles:
+    - role: ubuntu
+    - role: common
