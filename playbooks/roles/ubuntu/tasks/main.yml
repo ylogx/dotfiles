@@ -19,6 +19,7 @@
     - tmux
     - wget
     - zsh
+    - tree
 
 - name: Change shell to ZSH
   become: yes

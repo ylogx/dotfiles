@@ -1,5 +1,12 @@
 # Dot Files
 
+## Automated Installation
+
+Run `./run_ansible.sh`
+
+
+## Manual
+
 Add all files in ./home/ folder to your local home directory (~/).  
 
 ## Tools/Configurations provided
