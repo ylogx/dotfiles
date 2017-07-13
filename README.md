@@ -2,7 +2,7 @@
 
 ## Automated Installation
 
-Run `./run_ansible.sh`
+Run `./run_ansible.sh unix` or `./run_ansible.sh osx` depending on your os and relax.
 
 
 ## Manual
