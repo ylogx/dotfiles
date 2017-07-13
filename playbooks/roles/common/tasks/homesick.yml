@@ -6,24 +6,26 @@
 - name: Add homeshick
   become: false
   command: git clone git://github.com/andsens/homeshick.git $HOME/.homesick/repos/homeshick
+  args:
+    creates: $HOME/.homesick/repos/homeshick
 
 - name: Clone dotfiles files using homesick
   become: false
-  command: homeshick clone https://github.com/shubhamchaudhary/dotfiles.git
+  command: ./homeshick clone https://github.com/shubhamchaudhary/dotfiles.git
   args:
-    chdir: ~/.homesick/repos/homeshick/bin/
+    chdir: ~/.homesick/repos/homeshick/bin
     creates: ~/.homesick/repos/dotfiles
 
 - name: Link files using homesick
   become: false
-  command: homeshick link --force
+  command: ./homeshick link --force
   args:
-    chdir: ~/.homesick/repos/homeshick/bin/
+    chdir: ~/.homesick/repos/homeshick/bin
 
 - name: Pull latest dotfiles files using homesick
   become: false
-  command: homeshick pull dotfiles
+  command: ./homeshick pull dotfiles
   args:
-    chdir: ~/.homesick/repos/homeshick/bin/
+    chdir: ~/.homesick/repos/homeshick/bin
 
 # name: Pop Stash

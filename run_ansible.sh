@@ -10,3 +10,8 @@ install_ansible
 # TODO: Be smart and infer os automatically
 ansible-playbook playbooks/$1.yml -c local -i 'localhost,'  # Use as ./run_ansible.sh unix or ./run_ansible.sh osx
 
+echo 'Please update git credential to your email address now'
+echo 'Run'
+echo
+echo '  git config --global user.email "you@example.com"'
+echo '  git config --global user.name "Your Name"'
