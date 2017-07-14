@@ -6,9 +6,11 @@ install_ansible() {
 }
 
 # TODO: Run only if ansible-playbook doesn't exists
-install_ansible
+if ! hash ansible-playbook 2>/dev/null; then
+    install_ansible
+fi
 # TODO: Be smart and infer os automatically
-ansible-playbook playbooks/$1.yml -c local -i 'localhost,'  # Use as ./run_ansible.sh unix or ./run_ansible.sh osx
+ansible-playbook playbooks/$1.yml -c local -i 'localhost,' $2 $3 $4 $5  # Use as ./run_ansible.sh unix or ./run_ansible.sh osx
 
 echo 'Please update git credential to your email address now'
 echo 'Run'
