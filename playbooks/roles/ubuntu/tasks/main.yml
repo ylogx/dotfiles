@@ -1,4 +1,6 @@
 ---
+- include: hub.yml
+
 - name: Update packages
   become: yes
   apt: upgrade=dist update_cache=yes

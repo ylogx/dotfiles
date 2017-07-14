@@ -1,0 +1,27 @@
+---
+- name: Fetch hub.github.com
+  get_url:
+    url: https://github.com/github/hub/releases/download/v2.3.0-pre10/hub-linux-amd64-2.3.0-pre10.tgz
+    dest: /tmp/hub.tgz
+    checksum: md5:08560440d4a3563ee00412c3252db313
+  tags: hub
+
+- name: Create temp hub folder
+  file:
+    path: /tmp/hub
+    state: directory
+  tags: hub
+
+- name: Unarchive hub
+  unarchive:
+    src: /tmp/hub.tgz
+    dest: /tmp/hub
+    remote_src: yes
+  tags: hub
+
+- name: Install hub
+  become: true
+  command: ./install
+  args:
+    chdir: /tmp/hub/hub-linux-amd64-2.3.0-pre10
+  tags: hub
