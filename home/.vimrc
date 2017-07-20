@@ -69,6 +69,8 @@
     Plugin 'mileszs/ack.vim'
     " Semantic Highlight
     Plugin 'jaxbot/semantic-highlight.vim'
+    " EditorConfig support
+    Plugin 'editorconfig/editorconfig-vim'
     "Plugin ''
 
     " Enable file type detection. Do this after Vundle calls.
