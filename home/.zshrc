@@ -209,8 +209,8 @@ fi
 #Hierarchy Viewer Variable 
 export ANDROID_HVPROTO=ddm
 
-EDITOR=vi
-VISUAL=vi
+export EDITOR=vi
+export VISUAL=vi
 
 
 # added by travis gem
