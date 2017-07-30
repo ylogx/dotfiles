@@ -163,6 +163,7 @@ alias sshc='ssh -o "controlmaster=auto" -o "controlpath=/tmp/ssh-$USER-%r@%h:%p"
 alias sudoh='sudo -H'
 #alias tree='tree -Csh'        # nice alternative to 'ls'
 alias t='tree -Csh'        # nice alternative to 'ls'
+alias tf="find . -print | sed -e 's;[^/]*/;|____;g;s;____|; |;g'"
 alias ta='tmux attach'
 alias timev='/usr/bin/time -v'
 alias today='/home/chaudhary/code/scripts/show_message.sh'
