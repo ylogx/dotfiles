@@ -59,6 +59,8 @@ COMPLETION_WAITING_DOTS="true"
 plugins=(
     brew
     chucknorris
+    docker
+    docker-compose
     fortune
     git
     git-extras
