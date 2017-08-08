@@ -5,4 +5,5 @@
   command: bash -c 'bash -c "$(wget https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)"'
   args:
     creates: $HOME/.oh-my-zsh/lib
+  ignore_errors: true
   tags: zsh
