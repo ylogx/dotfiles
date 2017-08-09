@@ -72,6 +72,7 @@ plugins=(
     #gradle
     heroku
     history-substring-search
+    kubectl
     last-working-dir
     #lol
     osx
@@ -83,6 +84,7 @@ plugins=(
     web-search
     #tmux
     yum
+    zsh-completions
     zsh-syntax-highlighting
     zsh-wakatime
     )
