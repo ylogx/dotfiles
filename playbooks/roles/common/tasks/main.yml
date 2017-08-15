@@ -7,3 +7,6 @@
 
 - name: Install/Update Vim Plugins
   command: vim +PluginInstall! +qall
+
+- name: Install Tmux Plugin Manager
+  git: repo=https://github.com/tmux-plugins/tpm dest=~/.tmux/plugins/tpm
