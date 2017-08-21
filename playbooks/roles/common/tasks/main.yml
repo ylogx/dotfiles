@@ -2,7 +2,7 @@
 - include: ohmyzsh.yml
 - include: homesick.yml
 
-- name: Clone Vundle
+- name: Clone Vim Plugin Manager - Vundle
   git: repo=https://github.com/gmarik/Vundle.vim.git dest=~/.vim/bundle/vundle
 
 - name: Install/Update Vim Plugins
@@ -10,3 +10,6 @@
 
 - name: Install Tmux Plugin Manager
   git: repo=https://github.com/tmux-plugins/tpm dest=~/.tmux/plugins/tpm
+
+- name: Installl Tmux Plugins
+  command: ~/.tmux/plugins/tpm/bin/install_plugins
