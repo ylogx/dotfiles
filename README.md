@@ -2,8 +2,17 @@
 
 ## Automated Installation
 
-Run `./run_ansible.sh unix` or `./run_ansible.sh osx` depending on your os and relax.
+Run `./run_ansible.sh` and relax.
 
+## Updating dotfiles
+
+### Recommendation
+I'd recommend you to use tool like [homesick](https://github.com/andsens/homeshick) to clone and sync dotfiles from this repo.
+With these dotfiles installed, you can run:
+
+```sh
+hs pull
+```
 
 ## Manual
 
@@ -54,8 +63,7 @@ sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/i
 git clone https://github.com/powerline/fonts.git /tmp/fonts && cd /tmp/fonts && ./install.sh
 ```
 
-### Recommendation
-I'd recommend you to use tool like [homesick](https://github.com/andsens/homeshick) to clone and sync dotfiles from this repo:
+#### Homesick
 ```sh
 git clone git://github.com/andsens/homeshick.git $HOME/.homesick/repos/homeshick
 $HOME/.homesick/repos/homeshick/bin/homeshick clone https://github.com/shubhamchaudhary/dotfiles.git

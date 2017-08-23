@@ -10,8 +10,19 @@ install_ansible() {
 if ! hash ansible-playbook 2>/dev/null; then
     install_ansible
 fi
-# TODO: Be smart and infer os automatically
-ansible-playbook playbooks/$1.yml -c local -i 'localhost,' ${2:-} ${3:-} ${4:-} ${5:-}  # Use as ./run_ansible.sh unix or ./run_ansible.sh osx
+case "${OSTYPE}" in
+  #solaris*) echo "SOLARIS" ;;
+  darwin*)  PLAYBOOK_NAME="osx" ;;
+  #linux-gnu*)   PLAYBOOK_NAME="debian"  ;;
+  linux*)   PLAYBOOK_NAME="unix"  ;;
+  #bsd*)     echo "BSD" ;;
+  #msys*)    echo "WINDOWS" ;;
+  *)        echo "Unknown OS: ${OSTYPE}" && exit -1 ;;
+esac
+echo "Running playbook for ${PLAYBOOK_NAME} os."
+ansible-playbook playbooks/${PLAYBOOK_NAME}.yml \
+  -c local -i 'localhost,' \
+  ${1:-} ${2:-} ${3:-} ${4:-} ${5:-}  # Use as ./run_ansible.sh ...  # Any additional ansible flags
 
 echo 'Please update git credential to your email address now'
 echo 'Run'
