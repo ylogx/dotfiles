@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 #set -eux
 set -eu
+
 install_ansible() {
     sudo apt-get install python3-dev libffi-dev libssl-dev libxml2-dev libxslt1-dev libjpeg8-dev zlib1g-dev  # https://askubuntu.com/a/797363/259638
     sudo apt-get install python3-pip
@@ -20,10 +21,12 @@ case "${OSTYPE}" in
   *)        echo "Unknown OS: ${OSTYPE}" && exit -1 ;;
 esac
 echo "Running playbook for ${PLAYBOOK_NAME} os."
+
 ansible-playbook playbooks/${PLAYBOOK_NAME}.yml \
   -c local -i 'localhost,' \
   ${1:-} ${2:-} ${3:-} ${4:-} ${5:-}  # Use as ./run_ansible.sh ...  # Any additional ansible flags
 
+# TODO: Run if not chaudhary in username
 echo 'Please update git credential to your email address now'
 echo 'Run'
 echo
