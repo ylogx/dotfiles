@@ -3,9 +3,19 @@
 set -eu
 
 install_ansible() {
-    sudo apt-get install python3-dev libffi-dev libssl-dev libxml2-dev libxslt1-dev libjpeg8-dev zlib1g-dev  # https://askubuntu.com/a/797363/259638
-    sudo apt-get install python3-pip
-    sudo pip3 install ansible
+    SUDO_IF_NEEDED=''
+    if [[ $EUID > 0 ]]; then
+        SUDO_IF_NEEDED=sudo
+    fi
+    if ! hash gcc 2>/dev/null; then
+	${SUDO_IF_NEEDED} apt-get install --yes gcc
+    fi
+    if ! hash python 2>/dev/null; then
+	${SUDO_IF_NEEDED} apt-get install --yes python3-dev libffi-dev libssl-dev libxml2-dev libxslt1-dev zlib1g-dev  # https://askubuntu.com/a/797363/259638
+	#${SUDO_IF_NEEDED} apt-get install libjpeg8-dev  # https://askubuntu.com/a/797363/259638
+	${SUDO_IF_NEEDED} apt-get install --yes python3-pip
+    fi
+    ${SUDO_IF_NEEDED} python -m pip install ansible
 }
 
 if ! hash ansible-playbook 2>/dev/null; then
