@@ -1,6 +1,13 @@
 #!/usr/bin/env bash
 set -eu
-curl -fsSL https://github.com/shubhamchaudhary/dotfiles/raw/master/install.sh | bash
+
+if hash curl 2>/dev/null; then
+  curl -fsSL https://github.com/shubhamchaudhary/dotfiles/raw/master/install.sh | bash
+elif hash wget 2>/dev/null; then
+  wget https://github.com/shubhamchaudhary/dotfiles/raw/master/install.sh -O - | bash
+else
+  printf "Neither curl nor wget is installed\n"
+fi
 exit 0 # High five! Everything worked.
 
 
