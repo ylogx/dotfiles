@@ -204,7 +204,7 @@ add_gpg_agent_safely() {
   #export SSH_AUTH_SOCK
   #export SSH_AGENT_PID
 }
-if [ ! -f "$HOME/.gnupg" ]; then
+if [ -f "$HOME/.gnupg" ]; then
   add_gpg_agent_safely
 fi
 
