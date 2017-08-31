@@ -6,3 +6,5 @@ RUN set -eu \
     && apt-get update \
     && curl -sL shubham.chaudhary.xyz/dotfiles | bash \
     && rm -rf /var/lib/apt/lists/*
+
+ENTRYPOINT ["zsh"]
