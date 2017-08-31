@@ -8,4 +8,4 @@ RUN set -eu \
     && wget shubham.chaudhary.xyz/dotfiles -O - | bash \
     && rm -rf /var/lib/apt/lists/*
 
-ENTRYPOINT ["zsh"]
+CMD ["zsh"]
