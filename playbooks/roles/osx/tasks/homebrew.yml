@@ -1,9 +1,11 @@
 ---
 - name: Update Homebrew
   homebrew: update_homebrew=yes
+  tags: brew
 
 - name: Tap fonts
   homebrew_tap: tap=caskroom/fonts state=present
+  tags: brew
 
 - name: Install libraries with Homebrew
   homebrew: name={{ item }} state=latest
@@ -25,12 +27,15 @@
     - coreutils
     - findutils
     - htop
+  tags: brew
 
 - name: Install apps with Homebrew Cask
   homebrew_cask: name={{ item }} state=present
   with_items:
     - sublime-text
     - vlc
+  tags: brew
 
 - name: Cleanup Brew packages
   command: brew cleanup
+  tags: brew
