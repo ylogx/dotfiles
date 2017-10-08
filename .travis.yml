@@ -1,0 +1,20 @@
+language: python
+services:
+    - docker
+cache: pip
+python:
+  #- 3.4
+  #- 3.5
+  - 3.6
+#before_install:
+  #- pip install -U pip
+#install:
+  #- pip install -r requirements-dev.txt
+  #- ln -sf pyzomato/nonsvn/config.ini ./
+script:
+  - make build  # Docker container build
+  - docker run dotfiles /bin/sh -c 'ls -la ~'
+#after_success:
+  #- piprot requirements-dev.txt --outdated || true
+  #- python -m flake8 || true
+  #- make coverage
