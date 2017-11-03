@@ -1,6 +1,6 @@
 ---
-- include: ohmyzsh.yml
-- include: homesick.yml
+- include_tasks: ohmyzsh.yml
+- include_tasks: homesick.yml
 
 - name: Clone Vim Plugin Manager - Vundle
   git: repo=https://github.com/gmarik/Vundle.vim.git dest=~/.vim/bundle/vundle

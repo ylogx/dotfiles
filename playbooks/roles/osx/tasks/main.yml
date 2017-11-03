@@ -1,5 +1,5 @@
 ---
-- include: homebrew.yml
+- include_tasks: homebrew.yml
 
 - name: 'Save screenshots to Pictures'
   shell: defaults write com.apple.screencapture location ~/Pictures/
