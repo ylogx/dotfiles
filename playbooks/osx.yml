@@ -1,5 +1,6 @@
 ---
-- hosts: fleet_osx
+#- hosts: fleet_osx
+- hosts: all
   roles:
     - role: osx
     - role: common
