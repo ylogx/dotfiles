@@ -39,6 +39,8 @@ ansible-playbook playbooks/${PLAYBOOK_NAME}.yml \
 
 # TODO: Run if not chaudhary in username
 echo 'Please update git credential to your email address now'
+echo 'Current values are:'
+echo `cat ~/.gitconfig | grep 'name =' -A1`
 echo 'Run'
 echo
 echo '  git config --global user.email "you@example.com"'
