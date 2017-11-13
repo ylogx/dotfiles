@@ -94,8 +94,9 @@ alias cl='clear'
 alias ctop='sudo docker run --rm -it --name=ctop -v /var/run/docker.sock:/var/run/docker.sock quay.io/vektorlab/ctop:latest'
 
 alias d='date'
-alias dfh='df -h'
 alias df='df -h'
+alias dfh='df -h'
+alias dfs='df -h | sort -n'
 alias du='du -h -c'
 alias dn='OPTIONS=$(\ls -F | grep /$); select s in $OPTIONS; do cd $PWD/$s; break;done'
 

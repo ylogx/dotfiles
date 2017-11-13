@@ -4,9 +4,10 @@
 #- name: Update packages
   #become: yes
   #apt: upgrade=dist update_cache=yes
+  #tags: package
 
-- name: Install libraries using APT
-  apt: name={{ item }} state=latest
+- name: Install libraries using package manager
+  package: name={{ item }} state=latest
   become: yes
   become_method: sudo
   with_items:
@@ -22,6 +23,8 @@
     - wget
     - zsh
     - tree
+    - highlight
+  tags: package
 
 - name: Change shell to ZSH
   become: yes
