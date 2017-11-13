@@ -33,6 +33,7 @@ esac
 echo "Running playbook for ${PLAYBOOK_NAME} os."
 
 ansible-playbook playbooks/${PLAYBOOK_NAME}.yml \
+  -u `whoami` \
   -c local -i 'localhost,' \
   ${1:-} ${2:-} ${3:-} ${4:-} ${5:-}  # Use as ./run_ansible.sh ...  # Any additional ansible flags
 
