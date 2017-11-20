@@ -12,4 +12,4 @@
   git: repo=https://github.com/tmux-plugins/tpm dest=~/.tmux/plugins/tpm
 
 - name: Install Tmux Plugins
-  shell: source ~/.tmux.conf && ~/.tmux/plugins/tpm/bin/install_plugins
+  shell: tmux source ~/.tmux.conf && ~/.tmux/plugins/tpm/bin/install_plugins
