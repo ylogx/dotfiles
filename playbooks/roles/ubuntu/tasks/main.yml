@@ -11,7 +11,7 @@
   become: yes
   become_method: sudo
   with_items:
-    - ack-grep
+    #- ack-grep  # Unavailable on ubuntu 17.10
     - bash
     - curl
     - git
