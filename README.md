@@ -8,7 +8,7 @@ Run the following command and relax
 curl -sL shubham.chaudhary.xyz/dotfiles | bash
 ```
 
-See [chaudhary.xyz/dotfiles](http://shubham.chaudhary.xyz/dotfiles) for more info. For manual installation please read the instructions from [wiki](https://github.com/shubhamchaudhary/dotfiles/wiki/Manual-Installation)
+See [chaudhary.xyz/dotfiles](http://shubham.chaudhary.xyz/dotfiles) for more info. For manual installation please read the instructions from [wiki](https://github.com/ylogx/dotfiles/wiki/Manual-Installation)
 
 
 ## Updating dotfiles

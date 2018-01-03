@@ -2,9 +2,9 @@
 set -eu
 
 if hash curl 2>/dev/null; then
-  curl -fsSL https://github.com/shubhamchaudhary/dotfiles/raw/master/install.sh | bash
+  curl -fsSL https://github.com/ylogx/dotfiles/raw/master/install.sh | bash
 elif hash wget 2>/dev/null; then
-  wget https://github.com/shubhamchaudhary/dotfiles/raw/master/install.sh -O - | bash
+  wget https://github.com/ylogx/dotfiles/raw/master/install.sh -O - | bash
 else
   printf "Neither curl nor wget is installed\n"
 fi
@@ -14,7 +14,7 @@ exit 0 # High five! Everything worked.
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Dotfiles - shubhamchaudhary</title>
+  <title>Dotfiles - ylogx</title>
   <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
 </head>
 <body>
@@ -104,7 +104,7 @@ exit 0 # High five! Everything worked.
   </div>
   <div class="row">
     <div class="col-md-12 footer">
-      <p>&copy;2017 <a href="http://twitter.com/ylogx">Shubham Chaudhary</a> &mdash; <a href="http://github.com/shubhamchaudhary/dotfiles">GitHub Project</a></p>
+      <p>&copy;2017 <a href="http://twitter.com/ylogx">Shubham Chaudhary</a> &mdash; <a href="http://github.com/ylogx/dotfiles">GitHub Project</a></p>
     </div>
   </div>
 </div>

@@ -11,7 +11,7 @@
 
 - name: Clone dotfiles files using homesick
   become: false
-  command: ./homeshick clone https://github.com/shubhamchaudhary/dotfiles.git
+  command: ./homeshick clone https://github.com/ylogx/dotfiles.git
   args:
     chdir: ~/.homesick/repos/homeshick/bin
     creates: ~/.homesick/repos/dotfiles

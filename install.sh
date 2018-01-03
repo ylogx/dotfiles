@@ -14,7 +14,7 @@ HOLDING_LOCATION="${HOME}/.homesick/repos/dotfiles"
 
 if [[ ! -d ${HOLDING_LOCATION} ]]; then
   install_git_if_needed
-  git clone --recursive git://github.com/shubhamchaudhary/dotfiles.git ${HOLDING_LOCATION}
+  git clone --recursive git://github.com/ylogx/dotfiles.git ${HOLDING_LOCATION}
 fi
 cd ${HOLDING_LOCATION}
 
