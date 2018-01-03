@@ -1,0 +1,73 @@
+# [Finch]
+# color-available = green; black
+# color-away = blue; black
+# color-idle = gray; black
+# color-offline = red; black
+# color-message-sent = cyan; default
+# color-message-received = red; default
+# color-message-highlight = black; green
+# color-message-action = yellow; default
+# color-timestamp = blue; default
+# #See below for details on color
+
+[general]
+# shadow= 0
+# There is experimental mouse support
+mouse = 1
+# To use some custom window-manager
+# wm = /usr/local/lib/gnt/s.so
+# # There's also a custom window manager called irssi.so
+# # Remember window-positions based on the titles (on by default)
+# remember_position = 1
+# # Use borderless one-line high buttons
+# small-button = true
+#
+# # Workspaces are created simply by adding Workspace-X groups as follows:
+# [Workspace-1]
+# name =blist
+# # window-names specifies that windows with these semi-colon separated names are placed into this workspace
+# window-names = buddylist;debug-window
+#
+# [Workspace-2]
+# name =IM
+# window-names = conversation-window
+# # window-titles specifies that windows with these semi-colon separated titles are placed into this workspace. These are matched as substrings. Window titles take precedence over names.
+# window-titles = Preferences;Pounce
+#
+# [colors]
+# # The RGB values range in [0, 1000]
+# black = 0; 0; 0
+# red = 1000; 0; 0
+# green = 0; 1000; 0
+# blue =250; 250; 700
+# white = 1000; 1000; 1000
+# gray =700; 700; 700
+# darkgray = 256; 256; 256
+#
+# [colorpairs]
+# normal= white; black
+# highlight = white; blue
+# highlightd = black; gray
+# shadow= black; darkgray
+# title = white; blue
+# titled= white; gray
+# text =white; blue
+# disabled = gray; black
+# urgent= green; black
+#
+# # Remap some keys for GntEntry
+# [GntEntry::remap]
+# # Remap the up-arrow to the left-arrow
+# ^[[A =^[[D
+# # Remap the down-arrow to the right-arrow
+# ^[[B =^[[C
+# # Remap 'a' to 'bcd'
+# a = bcd
+# # Completely ignore the key 'q'
+# q =
+# # But the following will NOT work
+# #abc =bcd
+#
+# # Hitting 'space' will activate a button
+# [GntButton::remap]
+# \  = \r
