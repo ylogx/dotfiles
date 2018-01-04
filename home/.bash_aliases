@@ -163,6 +163,8 @@ alias studio='bash -c "~/code/android/android-studio/bin/studio.sh &"'
 #alias sublime='/opt/sublime_text/sublime_text'
 # Cached version of ssh, uses the first connection for subsequent calls
 alias sshc='ssh -o "controlmaster=auto" -o "controlpath=/tmp/ssh-$USER-%r@%h:%p"'
+alias sshb='ssh -nNTC -o "ServerAliveInterval 10" -o "ServerAliveCountMax 3" -v -D'
+alias sshba='autossh -M 0 -nNTC -o "ServerAliveInterval 10" -o "ServerAliveCountMax 3" -v -D'
 alias sudoh='sudo -H'
 #alias tree='tree -Csh'        # nice alternative to 'ls'
 alias t='tree -Csh'        # nice alternative to 'ls'
