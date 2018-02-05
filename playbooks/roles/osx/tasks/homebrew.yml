@@ -1,4 +1,13 @@
 ---
+- name: Check if Homebrew is already installed
+  stat:
+    path: /usr/local/bin/brew
+  register: brew_executable
+
+- name: Install Homebrew
+  shell: yes | /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+  when: not brew_executable.stat.exists
+
 - name: Update Homebrew
   homebrew: update_homebrew=yes
   tags: brew
