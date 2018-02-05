@@ -5,9 +5,13 @@
 
 - name: Add homeshick
   become: false
-  command: git clone git://github.com/andsens/homeshick.git $HOME/.homesick/repos/homeshick
-  args:
-    creates: $HOME/.homesick/repos/homeshick
+  git:
+    repo: 'git://github.com/andsens/homeshick.git'
+    dest: $HOME/.homesick/repos/homeshick
+    version: master
+    track_submodules: yes
+    accept_hostkey: yes
+    ssh_opts: -o StrictHostKeyChecking=no
 
 - name: Clone dotfiles files using homesick
   become: false
@@ -19,12 +23,14 @@
 - name: Link files using homesick
   become: false
   command: ./homeshick link --force
+  when: true
   args:
     chdir: ~/.homesick/repos/homeshick/bin
 
 - name: Pull latest dotfiles files using homesick
   become: false
   command: ./homeshick pull dotfiles
+  when: true
   args:
     chdir: ~/.homesick/repos/homeshick/bin
 

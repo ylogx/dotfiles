@@ -7,7 +7,7 @@
   #tags: package
 
 - name: Install libraries using package manager
-  package: name={{ item }} state=latest
+  package: name={{ item }} state=present
   become: yes
   become_method: sudo
   with_items:

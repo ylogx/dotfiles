@@ -3,13 +3,21 @@
 - include_tasks: homesick.yml
 
 - name: Clone Vim Plugin Manager - Vundle
-  git: repo=https://github.com/gmarik/Vundle.vim.git dest=~/.vim/bundle/vundle
+  git:
+    repo: https://github.com/gmarik/Vundle.vim.git
+    dest: ~/.vim/bundle/vundle
+    version: master
 
 - name: Install/Update Vim Plugins
   command: vim +PluginInstall! +qall
+  when: true
 
 - name: Install Tmux Plugin Manager
-  git: repo=https://github.com/tmux-plugins/tpm dest=~/.tmux/plugins/tpm
+  git:
+    repo: https://github.com/tmux-plugins/tpm
+    dest: ~/.tmux/plugins/tpm
+    version: master
 
 - name: Install Tmux Plugins
-  shell: tmux source ~/.tmux.conf && ~/.tmux/plugins/tpm/bin/install_plugins
+  command: tmux source ~/.tmux.conf && ~/.tmux/plugins/tpm/bin/install_plugins
+  when: true

@@ -2,7 +2,9 @@
 - include_tasks: homebrew.yml
 
 - name: 'Save screenshots to Pictures'
-  shell: defaults write com.apple.screencapture location ~/Pictures/
+  command: defaults write com.apple.screencapture location ~/Pictures/
+  when: true
 
 - name: 'Show hidden files in Finder'
-  shell: defaults write com.apple.finder AppleShowAllFiles TRUE
+  command: defaults write com.apple.finder AppleShowAllFiles TRUE
+  when: true
