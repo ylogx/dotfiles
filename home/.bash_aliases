@@ -142,6 +142,7 @@ alias lsd='ls -l | grep "^d"'   #list only directories
 #alias l='ls -hF --color'    # quick listing
 
 alias masquerade='sudo iptables -t nat -A POSTROUTING -o wlp3s0 -s 192.168.1.0/24 -j MASQUERADE'
+alias mkdirs='temp_c() {mkdir $1; cd $1}; temp_c'
 alias mymakehere='cp /home/chaudhary/Makefile ./'
 alias myhistory='cat ~/bashbackup.txt'
 alias nf='ls | wc -l'
@@ -163,8 +164,9 @@ alias studio='bash -c "~/code/android/android-studio/bin/studio.sh &"'
 #alias sublime='/opt/sublime_text/sublime_text'
 # Cached version of ssh, uses the first connection for subsequent calls
 alias sshc='ssh -o "controlmaster=auto" -o "controlpath=/tmp/ssh-$USER-%r@%h:%p"'
-alias sshb='ssh -nNTC -o "ServerAliveInterval 10" -o "ServerAliveCountMax 3" -v -D'
-alias sshba='autossh -M 0 -nNTC -o "ServerAliveInterval 10" -o "ServerAliveCountMax 3" -v -D'
+alias sshb='ssh -nNT -o "ServerAliveInterval 10" -o "ServerAliveCountMax 3" -v -D'
+alias sshba='autossh -M 0 -nNT -o "ServerAliveInterval 10" -o "ServerAliveCountMax 3" -v -D'
+alias sshbac='autossh -M 0 -nNTC -o "ServerAliveInterval 10" -o "ServerAliveCountMax 3" -v -D'
 alias sudoh='sudo -H'
 #alias tree='tree -Csh'        # nice alternative to 'ls'
 alias t='tree -Csh'        # nice alternative to 'ls'
