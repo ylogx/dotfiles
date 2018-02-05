@@ -1,2 +1,9 @@
 # Ansible
 *.retry
+
+# Other Files
+.cache
+
+# IDEA
+.idea
+*.iml
