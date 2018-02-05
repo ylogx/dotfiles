@@ -3,3 +3,6 @@
 
 - name: 'Save screenshots to Pictures'
   shell: defaults write com.apple.screencapture location ~/Pictures/
+
+- name: 'Show hidden files in Finder'
+  shell: defaults write com.apple.finder AppleShowAllFiles TRUE
