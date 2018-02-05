@@ -11,9 +11,8 @@ install:
 script:
   - ./scripts/lint.sh
 after_success:
-  - travis_wait 30 make build  # Docker container build
-  - docker run dotfiles /bin/sh -c 'ls -la ~'
-
+  - travis_wait 30 ./run_ansible.sh --skip-tags=vim
+  #- docker run dotfiles /bin/sh -c 'ls -la ~'
   #- piprot requirements-dev.txt --outdated || true
   #- python -m flake8 || true
   #- make coverage
