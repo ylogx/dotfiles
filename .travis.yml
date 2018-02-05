@@ -9,9 +9,10 @@ before_install:
 install:
   - pip install ansible-lint
 script:
-  - ./scripts/lint.sh
-after_success:
-  - travis_wait 30 ./run_ansible.sh --skip-tags=vim
+  - ./ci/lint.sh
+  - docker build --tag dotfiles --file ci/Dockerfile .
+  - docker run -v `pwd`:/root/dotfiles dotfiles
+#after_success:
   #- docker run dotfiles /bin/sh -c 'ls -la ~'
   #- piprot requirements-dev.txt --outdated || true
   #- python -m flake8 || true
