@@ -1,0 +1,15 @@
+repos:
+-   repo: git://github.com/pre-commit/pre-commit-hooks
+    sha: v1.2.0
+    hooks:
+    -   id: trailing-whitespace
+    -   id: check-case-conflict
+    -   id: check-merge-conflict
+    -   id: check-symlinks
+    -   id: end-of-file-fixer
+-   repo: local
+    hooks:
+    -   id: lint
+        name: Ansible Lint
+        entry: sh -c "./ci/lint.sh"
+        language: system
