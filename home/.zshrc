@@ -212,7 +212,7 @@ if [ -S "$SSH_AUTH_SOCK" ]; then
   ssh-add -l > /dev/null || ssh-add
 fi
 
-#Hierarchy Viewer Variable 
+#Hierarchy Viewer Variable
 export ANDROID_HVPROTO=ddm
 
 export EDITOR=vi

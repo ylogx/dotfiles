@@ -8,6 +8,3 @@ alias -s java=vim
 alias -s c=vim
 alias -s cpp=vim
 #alias -s py=vim
-
-
-

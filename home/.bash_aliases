@@ -213,4 +213,3 @@ fi
 if [ -f ~/.temp_aliases ]; then
     . ~/.temp_aliases
 fi
-

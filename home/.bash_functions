@@ -18,9 +18,9 @@ check_and_run_bg() {
     fi
 }
 get_fortune_cookies() {
-    if command_exists fortune; then 
+    if command_exists fortune; then
         echo "Fortune Cookies :";
-        if command_exists cowsay; then 
+        if command_exists cowsay; then
             fortune | cowsay
         else
             fortune
@@ -38,7 +38,7 @@ print_date_cal() {
     fi;
 }
 print_system_status() {
-    echo -e "Status of $HOSTNAME: " 
+    echo -e "Status of $HOSTNAME: "
 
     ##### Main Memory #####
     echo -en "\t";
@@ -47,7 +47,7 @@ print_system_status() {
 
     ##### Storage #####
     echo -e "";
-    echo -en "\t"; df -h / | tail -n 1 | awk '{print "Root " $1 "\t:\t" $5 " full & " $4 " still available."}' ; 
+    echo -en "\t"; df -h / | tail -n 1 | awk '{print "Root " $1 "\t:\t" $5 " full & " $4 " still available."}' ;
 
     ##### IP #####
     echo -en "\tIP Address \t:\t"; /sbin/ifconfig wlp3s0 | awk /'inet / {print $2}' | sed -e s/addr:/''/  || /sbin/ifconfig wlan0 || echo "" #dubious, gotta test
@@ -80,9 +80,9 @@ speakwhenup() { [ "$1" ] && PHOST="$1" || return 1; until ping -c1 -W2 $PHOST >/
 
 # get IP adresses
 #function my_ip() # get IP adresses
-my_ip () { 
+my_ip () {
         MY_IP=$(/sbin/ifconfig wlan0 | awk "/inet/ { print $2 } " | sed -e s/addr://)
-                #/sbin/ifconfig | awk /'inet addr/ {print $2}' 
+                #/sbin/ifconfig | awk /'inet addr/ {print $2}'
         MY_ISP=$(/sbin/ifconfig wlan0 | awk "/P-t-P/ { print $3 } " | sed -e s/P-t-P://)
 }
 
@@ -94,7 +94,7 @@ ii () {
     echo -e "\n${red}Current date :$NC " ; date
     echo -e "\n${red}Machine stats :$NC " ; uptime
     echo -e "\n${red}Memory stats :$NC " ; free
-    echo -en "\n${red}Local IP Address :$NC" ; /sbin/ifconfig wlan0 | awk /'inet addr/ {print $2}' | sed -e s/addr:/' '/ 
+    echo -en "\n${red}Local IP Address :$NC" ; /sbin/ifconfig wlan0 | awk /'inet addr/ {print $2}' | sed -e s/addr:/' '/
     #my_ip 2>&. ;
     #my_ip 2>&1 ;
     #echo -e "\n${RED}Local IP Address :$NC" ; echo ${MY_IP:."Not connected"}
@@ -139,15 +139,15 @@ mkcdr () {
 }
 
 function countdown(){
-   date1=$((`date +%s` + $1)); 
-   while [ "$date1" -ne `date +%s` ]; do 
+   date1=$((`date +%s` + $1));
+   while [ "$date1" -ne `date +%s` ]; do
      echo -ne "$(date -u --date @$((`date +%s` - $date1)) +%H:%M:%S)\r";
    done
 }
 function stopwatch(){
-  date1=`date +%s`; 
-   while true; do 
-    echo -ne "$(date -u --date @$((`date +%s` - $date1)) +%H:%M:%S)\r"; 
+  date1=`date +%s`;
+   while true; do
+    echo -ne "$(date -u --date @$((`date +%s` - $date1)) +%H:%M:%S)\r";
    done
 }
 
