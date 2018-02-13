@@ -164,5 +164,8 @@ file_ext() {
   # TODO: If not $1; $1 = .
   find $1 -type f -name "*.*" | grep -o -E "\.[^\.]+$" | grep -o -E "[[:alpha:]]{3,6}" | awk '{print tolower($0)}' | sort | uniq -c | sort -n
 }
+aliasc() {
+  alias | grep "^${1}=" | awk -F= '{ print $2 }' | sed "s/^'//" | sed "s/'$//"
+}
 
 # vim: set ft=shell:
