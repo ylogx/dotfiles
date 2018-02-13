@@ -158,7 +158,7 @@ alias py2='python2'
 alias py3='python3'
 alias pyd='pydoc3'
 alias pyl="PYTHONPATH='.' python3"
-alias rcd='temp_c() {pushd $1; $2 $3 $4 $5 $6 $7 $8 $9 $10 $11 $12 $13; popd}; temp_c'
+alias rcd='temp_c() {pushd $1; ${@:2}; popd}; temp_c'
 alias rm='rm -v'
 alias serve='python3 -m http.server'
 alias studio='bash -c "~/code/android/android-studio/bin/studio.sh &"'
