@@ -106,7 +106,7 @@ exit 0 # High five! Everything worked.
   </div>
   <div class="row">
     <div class="col-md-12 footer">
-      <p>&copy; Copyright 2012-<script>document.write(new Date().getFullYear())</script>, <a href="http://twitter.com/ylogx">Shubham Chaudhary</a> &mdash; <a href="http://github.com/ylogx/dotfiles">GitHub Project</a></p>
+      <p>&copy; Copyright 2012-<span id='copyright-year'>2018</span>, <a href="https://shubham.chaudhary.xyz">Shubham Chaudhar</a><a href="http://twitter.com/ylogx">y</a> &mdash; <a href="http://github.com/ylogx/dotfiles">GitHub Project</a></p>
     </div>
   </div>
 </div>
@@ -132,10 +132,11 @@ exit 0 # High five! Everything worked.
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/highlight.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/styles/dark.min.css">
 <script type="text/javascript">
+  document.getElementById('copyright-year').innerHTML = (new Date().getFullYear())
   hljs.initHighlightingOnLoad();
 </script>
 
-<!-- social, tracking etc, ignore. yes, I know... wanna fight about it? -->
+<!-- social, tracking etc, ignore. yes, I know... wanna fight about it? Install uBlock Origin, save yourself. -->
 <script>
 (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
