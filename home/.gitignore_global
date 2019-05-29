@@ -41,3 +41,6 @@
 .Trashes
 ehthumbs.db
 Thumbs.db
+
+# Other Softwares
+.rake_tasks

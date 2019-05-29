@@ -21,23 +21,35 @@
   with_items:
     - ack
     - ansible
+    - bat
+    - coreutils
     - curl
+    - diff-so-fancy
+    - exa
     - fasd
+    - fd
+    - findutils
+    - fzf
     - git
     - highlight
+    - htop
     - hub
+    - ncdu
     - nmap
+    - noti
+    - openssl
+    - ponysay
+    - prettyping
     - python3
+    - ripgrep
     - vim
     - watch
     - wget
     - zsh
     - tree
     - tmux
-    - openssl
-    - coreutils
-    - findutils
-    - htop
+    - xsv
+    - tldr
   tags: brew
 
 - name: Install apps with Homebrew Cask

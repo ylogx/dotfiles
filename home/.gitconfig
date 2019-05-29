@@ -1,6 +1,6 @@
 [user]
 	name = Shubham Chaudhary
-	email = me@shubhamchaudhary.in
+	email = shubham@chaudhary.xyz
 	signingkey = FAB52DCA
 	logallrefupdates=true
 [core]
@@ -8,6 +8,7 @@
 	excludesfile = ~/.gitignore_global
 	attributesfile = ~/.gitattributes
 	autocrlf = input
+	;pager = diff-so-fancy | less --tabs=4 -RFX
 	;pager=most
 #[commit]
 #	gpgsign = true
@@ -65,9 +66,11 @@
 	;commit = green
 	meta = yellow
 	;frag = cyan
-	old = red
-	new = green
+	old = red bold
+	new = green bold
 	whitespace = red reverse
+	frag = magenta bold
+	commit = yellow bold
 
 
 [alias]

@@ -31,6 +31,7 @@ alias aria2cm='aria2c -c -x 16'
 alias acki='ack --ignore-dir=build --ignore-dir=doc'
 
 #alias c='chaudhary.sh'    #the c c++ compilation script in /usr/games
+#alias c='bat'
 alias c='pygmentize -g'
 alias cats='highlight -O ansi'
 #alias cdw ^defined above
@@ -121,6 +122,7 @@ alias ipy='ipython3'
 alias ipy2='ipython2'
 alias ipy3='ipython3'
 alias j='jobs'
+alias l='exa -lsnew'
 alias l='d; ls -ltrFhH'
 alias lexa='d; exa -bghHlS -s modified --git'
 alias la='d; ls -lAtrFhH'
@@ -146,6 +148,7 @@ alias masquerade='sudo iptables -t nat -A POSTROUTING -o wlp3s0 -s 192.168.1.0/2
 alias mkdirs='temp_c() {mkdir $1; cd $1}; temp_c'
 alias mymakehere='cp /home/chaudhary/Makefile ./'
 alias myhistory='cat ~/bashbackup.txt'
+alias ncdu='ncdu --color dark -rr -x --exclude .git --exclude node_modules'
 alias nf='ls | wc -l'
 
 alias p='pwd'
@@ -180,6 +183,8 @@ alias today='/home/chaudhary/code/scripts/show_message.sh'
 #some variations
 #alias vp='vim `ls -t *.@(pl|cgi)| head -1 `'
 #alias vc='vim `ls -t *.@(c|cpp|h|py)| head -1 `'
+alias v='vpn-it'
+alias vo='vpn-it -o'
 alias vp='vim `ls -t *.@(py|pl|cgi)| head -1 `'
 alias vc='vim `ls -t *.@(c|cpp|h)| head -1 `'
 #When I know the file I want to edit is the most recent file in a directory

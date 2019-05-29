@@ -58,6 +58,7 @@ COMPLETION_WAITING_DOTS="true"
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
     brew
+    chruby
     chucknorris
     docker
     docker-compose
@@ -72,6 +73,7 @@ plugins=(
     #gradle
     heroku
     history-substring-search
+    jruby
     kubectl
     last-working-dir
     #lol
@@ -79,6 +81,10 @@ plugins=(
     pip
     pylint
     python
+    #rails
+    rake
+    rake-fast
+    ruby
     sublime
     sudo
     web-search
@@ -236,10 +242,12 @@ fi
 #fi
 #export PATH="/usr/local/bin:$PATH"
 [ -d "$HOME/.local/bin" ] && export PATH=$HOME/.local/bin:$PATH
+[ -d "/usr/local/sbin" ] && export PATH=/usr/local/sbin:$PATH
 
 # added by Anaconda3 4.2.0 installer
 [ -d "/opt/anaconda3/bin" ] && export PATH="/opt/anaconda3/bin:$PATH"
 [ -d "/opt/node-v4.2.1-linux-x64/bin/" ] && export PATH="/opt/node-v4.2.1-linux-x64/bin/:$PATH"
+[ -d "/usr/local/opt/node@8/bin" ] && export PATH="/usr/local/opt/node@8/bin:$PATH"
 
 # Cuda
 [ -d "/usr/local/cuda/bin" ] && export PATH=/usr/local/cuda/bin:$PATH

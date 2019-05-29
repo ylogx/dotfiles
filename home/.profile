@@ -19,6 +19,7 @@ fi
 source ~/.bashrc
 [ -d $HOME/android-sdk/platform-tools ] && export PATH=$PATH:$HOME/android-sdk/platform-tools
 [ -d $HOME/android-sdk/tools ] && export PATH=$PATH:$HOME/android-sdk/tools
+#export ANDROID_SDK_ROOT="/usr/local/share/android-sdk"
 #Hierarchy Viewer Variable
 export ANDROID_HVPROTO=ddm
 [ -d $HOME/phabricator/arcanist/bin ] && export PATH=$PATH:$HOME/phabricator/arcanist/bin

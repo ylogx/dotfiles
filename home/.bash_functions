@@ -17,6 +17,16 @@ check_and_run_bg() {
         ( "$@" & )  #parens help it run in subshell so that "Done" msg is not printed
     fi
 }
+
+# Fuzzy find last used branch and switch to it
+function fgbr() {
+  local branches branch
+  branches=$(git for-each-ref --sort=-committerdate refs/heads/ --format="(%(authordate:short)) %(refname:short) (%(committerdate:relative))") &&
+  branch=$(echo "$branches" |
+           fzf-tmux -d $(( 2 + $(wc -l <<< "$branches") )) +m) &&
+           git checkout $(echo "$branch" | sed -E 's/\(.*\) | \(.*\)$//g')
+}
+
 get_fortune_cookies() {
     if command_exists fortune; then
         echo "Fortune Cookies :";
