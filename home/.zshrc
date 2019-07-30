@@ -253,5 +253,14 @@ fi
 [ -d "/usr/local/cuda/bin" ] && export PATH=/usr/local/cuda/bin:$PATH
 [ -d "/usr/local/cuda/lib64" ] && export LD_LIBRARY_PATH=/usr/local/cuda/lib64:$LD_LIBRARY_PATH
 export GOPATH=$HOME/.cache/go
+export PATH=$GOPATH/bin:$PATH
 
 hash thefuck 2>/dev/null && eval $(thefuck --alias)
+
+#export PATH="/usr/local/opt/ruby/bin:$PATH"
+#source /usr/local/share/chruby/chruby.sh
+#source /usr/local/share/chruby/auto.sh
+#chruby 2.2.4
+#export ANDROID_SDK_ROOT="/usr/local/share/android-sdk"
+
+#export GIT_COMMITTER_EMAIL='shubham@chaudhary.xyz'

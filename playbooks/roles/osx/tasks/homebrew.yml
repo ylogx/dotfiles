@@ -34,6 +34,7 @@
     - highlight
     - htop
     - hub
+    - macvim  # Has better integration with mac
     - ncdu
     - nmap
     - noti
@@ -42,7 +43,7 @@
     - prettyping
     - python3
     - ripgrep
-    - vim
+    #- vim
     - watch
     - wget
     - zsh
@@ -55,6 +56,7 @@
 - name: Install apps with Homebrew Cask
   homebrew_cask: name={{ item }} state=present
   with_items:
+    - atom
     - sublime-text
     - vlc
     - font-hack

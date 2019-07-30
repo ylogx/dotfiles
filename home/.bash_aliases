@@ -189,6 +189,7 @@ alias vp='vim `ls -t *.@(py|pl|cgi)| head -1 `'
 alias vc='vim `ls -t *.@(c|cpp|h)| head -1 `'
 #When I know the file I want to edit is the most recent file in a directory
 alias vew='vim `ls -t * | head -1 `'
+alias vpns='tmux send-keys -t "0:2.0" C-c "sleep 1 && vpn-it" Enter'
 alias vtest='/home/chaudhary/code/python/vocab_test.py'
 
 alias watch='watch --color'
