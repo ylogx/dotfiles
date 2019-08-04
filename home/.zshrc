@@ -148,9 +148,12 @@ alias hs='homeshick'
 
 if [[ $PLATFORM == 'Linux' ]]; then
     [ -d $HOME/kde/bin ] && export PATH=$PATH:$HOME/kde/bin
+    [ -d ~/kde/src/kdesrc-build ] && export PATH=~/kde/src/kdesrc-build:$PATH
     #[ -d /etc/alternatives/java_sdk ] && export JAVA_HOME=/etc/alternatives/java_sdk
-    #export PATH=$JAVA_HOME/bin:$PATH
-    #export ANDROID_HOME=$HOME/android-sdk
+    [ -d $JAVA_HOME/bin ] && export PATH=$JAVA_HOME/bin:$PATH
+    export ANDROID_HOME=$HOME/sdk/android-sdk
+    [ -d $ANDROID_HOME/platform-tools ] && export PATH=$PATH:$ANDROID_HOME/platform-tools
+    [ -d $ANDROID_HOME/tools ] && export PATH=$PATH:$ANDROID_HOME/tools
 elif [[ $PLATFORM == 'Mac' ]]; then
     export LC_ALL=en_US.UTF-8
     export LANG=en_US.UTF-8
@@ -158,8 +161,9 @@ elif [[ $PLATFORM == 'Mac' ]]; then
         export LS_OPTIONS='--color=auto'
     fi
     alias ls="ls $LS_OPTIONS"
-    [ -d $HOME/android-sdk/platform-tools ] && export PATH=$PATH:$HOME/android-sdk/platform-tools
-    [ -d $HOME/android-sdk/tools ] && export PATH=$PATH:$HOME/android-sdk/tools
+    export ANDROID_HOME=$HOME/sdk/android-sdk
+    [ -d $ANDROID_HOME/platform-tools ] && export PATH=$PATH:$ANDROID_HOME/platform-tools
+    [ -d $ANDROID_HOME/tools ] && export PATH=$PATH:$ANDROID_HOME/tools
     [ -d /usr/local/opt/coreutils/libexec/gnubin ] && export PATH=/usr/local/opt/coreutils/libexec/gnubin:$PATH
     [ -d /usr/local/opt/coreutils/libexec/gnubin ] && export PATH=$PATH:/usr/local/opt/go/libexec/bin
     [ -d /usr/local/share/npm/bin ] && export PATH="/usr/local/share/npm/bin:$PATH"
@@ -170,6 +174,7 @@ elif [[ $PLATFORM == 'Mac' ]]; then
 fi
 
 [ -d $HOME/bin ] && export PATH=$PATH:$HOME/bin
+[ -d $HOME/.local/bin ] && export PATH=$PATH:$HOME/.local/bin
 
 ### Added by the Heroku Toolbelt
 [ -d '/usr/local/heroku/bin' ] && export PATH="/usr/local/heroku/bin:$PATH"
@@ -231,11 +236,6 @@ export VISUAL=vi
 [ -d "$HOME/.pyenv" ] && export PATH="$HOME/.pyenv/bin:$PATH";
 if which pyenv > /dev/null; then eval "$(pyenv init -)"; eval "$(pyenv virtualenv-init -)"; fi
 
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f /Users/chaudhary/google-cloud-sdk/path.zsh.inc ]; then
-  source '/Users/chaudhary/google-cloud-sdk/path.zsh.inc'
-fi
-
 # The next line enables shell command completion for gcloud.
 #if [ -f /Users/chaudhary/google-cloud-sdk/completion.zsh.inc ]; then
   #source '/Users/chaudhary/google-cloud-sdk/completion.zsh.inc'
@@ -252,8 +252,9 @@ fi
 # Cuda
 [ -d "/usr/local/cuda/bin" ] && export PATH=/usr/local/cuda/bin:$PATH
 [ -d "/usr/local/cuda/lib64" ] && export LD_LIBRARY_PATH=/usr/local/cuda/lib64:$LD_LIBRARY_PATH
+
 export GOPATH=$HOME/.cache/go
-export PATH=$GOPATH/bin:$PATH
+[ -d "$GOPATH/bin" ] && export PATH=$GOPATH/bin:$PATH
 
 hash thefuck 2>/dev/null && eval $(thefuck --alias)
 
@@ -264,3 +265,8 @@ hash thefuck 2>/dev/null && eval $(thefuck --alias)
 #export ANDROID_SDK_ROOT="/usr/local/share/android-sdk"
 
 #export GIT_COMMITTER_EMAIL='shubham@chaudhary.xyz'
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/home/chaudhary/sdk/google-cloud-sdk/path.zsh.inc' ]; then . '/home/chaudhary/sdk/google-cloud-sdk/path.zsh.inc'; fi
+# The next line enables shell command completion for gcloud.
+if [ -f '/home/chaudhary/sdk/google-cloud-sdk/completion.zsh.inc' ]; then . '/home/chaudhary/sdk/google-cloud-sdk/completion.zsh.inc'; fi

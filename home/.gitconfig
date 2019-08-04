@@ -44,7 +44,8 @@
 	insteadOf = g:
 [url "git://github.com/"]
 	insteadOf = gh:
-[url "git://anongit.kde.org/"]
+#[url "git://anongit.kde.org/"]
+[url "https://anongit.kde.org/"]
 	insteadOf = kde:
 [url "ssh://git@git.kde.org/"]
 	pushInsteadOf = kde:
