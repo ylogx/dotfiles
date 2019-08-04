@@ -253,8 +253,9 @@ if which pyenv > /dev/null; then eval "$(pyenv init -)"; eval "$(pyenv virtualen
 [ -d "/usr/local/cuda/bin" ] && export PATH=/usr/local/cuda/bin:$PATH
 [ -d "/usr/local/cuda/lib64" ] && export LD_LIBRARY_PATH=/usr/local/cuda/lib64:$LD_LIBRARY_PATH
 
-export GOPATH=$HOME/.cache/go
-[ -d "$GOPATH/bin" ] && export PATH=$GOPATH/bin:$PATH
+export GOPATH="$HOME/.cache/go"
+[ -d "$GOPATH/bin" ] && export PATH="$GOPATH/bin:$PATH"
+[ -d "$HOME/.cargo/bin" ] && export PATH="$HOME/.cargo/bin:$PATH"
 
 hash thefuck 2>/dev/null && eval $(thefuck --alias)
 
