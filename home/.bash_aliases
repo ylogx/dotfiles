@@ -104,6 +104,8 @@ alias dn='OPTIONS=$(\ls -F | grep /$); select s in $OPTIONS; do cd $PWD/$s; brea
 alias enter='/home/chaudhary/code/python/vocab_enter_word.py'
 alias fdroid='~/code/android/fdroidserver/fdroid'
 alias foxit='bash -c "wine ~/Documents/FoxitReaderPortable/FoxitReaderPortable.exe &"'
+alias fzfp='fzf --preview '"'"'[[ $(file --mime {}) =~ binary ]] && echo {} is a binary file || (bat --style=numbers --color=always {} || highlight -O ansi -l {} || coderay {} || rougify {} || cat {}) 2> /dev/null | head -500'"'"''
+alias fzfph='fzf --height 60% --preview '"'"'[[ $(file --mime {}) =~ binary ]] && echo {} is a binary file || (bat --style=numbers --color=always {} || highlight -O ansi -l {} || coderay {} || rougify {} || cat {}) 2> /dev/null | head -500'"'"''
 alias g='git'
 alias gbl='git blame -wMC'
 alias gdf='git diff --name-only'

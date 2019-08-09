@@ -271,3 +271,6 @@ hash thefuck 2>/dev/null && eval $(thefuck --alias)
 if [ -f '/home/chaudhary/sdk/google-cloud-sdk/path.zsh.inc' ]; then . '/home/chaudhary/sdk/google-cloud-sdk/path.zsh.inc'; fi
 # The next line enables shell command completion for gcloud.
 if [ -f '/home/chaudhary/sdk/google-cloud-sdk/completion.zsh.inc' ]; then . '/home/chaudhary/sdk/google-cloud-sdk/completion.zsh.inc'; fi
+
+export FZF_DEFAULT_COMMAND='(git ls-tree -r --name-only HEAD || rg --files || find . -path "*/\.*" -prune -o -type f -print -o -type l -print | sed s/^..//) 2> /dev/null'
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

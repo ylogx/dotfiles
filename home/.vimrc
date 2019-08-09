@@ -73,6 +73,8 @@
     Plugin 'jaxbot/semantic-highlight.vim'
     " EditorConfig support
     Plugin 'editorconfig/editorconfig-vim'
+    " Fuzzy Finder
+    Plugin 'junegunn/fzf.vim'
     "Plugin ''
 
     " Enable file type detection. Do this after Vundle calls.
