@@ -74,6 +74,7 @@
     " EditorConfig support
     Plugin 'editorconfig/editorconfig-vim'
     " Fuzzy Finder
+    Plugin 'junegunn/fzf'
     Plugin 'junegunn/fzf.vim'
     "Plugin ''
 
@@ -583,3 +584,4 @@ endfunction
 nnoremap <leader>\ :call ToggleNERDTreeAndTagbar()<CR>
 
 let g:ale_emit_conflict_warnings = 0
+"source /usr/share/doc/fzf/examples/fzf.vim
