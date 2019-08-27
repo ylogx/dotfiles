@@ -46,7 +46,7 @@
     " <F9> to show tagbar
     Plugin 'majutsushi/tagbar'
     " Better Status line
-    Plugin 'bling/vim-airline'
+    Plugin 'vim-airline/vim-airline'
     " Ruby on Rails plugin
     Plugin 'tpope/vim-rails'
     " GoLang plugin
@@ -76,6 +76,10 @@
     " Fuzzy Finder
     Plugin 'junegunn/fzf'
     Plugin 'junegunn/fzf.vim'
+    " Vim Slime to copy paste from vim to tmux
+    Plugin 'jpalardy/vim-slime'
+    " Vim Git Gutter
+    Plugin 'airblade/vim-gitgutter'
     "Plugin ''
 
     " Enable file type detection. Do this after Vundle calls.
@@ -585,3 +589,4 @@ nnoremap <leader>\ :call ToggleNERDTreeAndTagbar()<CR>
 
 let g:ale_emit_conflict_warnings = 0
 "source /usr/share/doc/fzf/examples/fzf.vim
+let g:slime_target = "tmux"
