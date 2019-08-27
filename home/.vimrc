@@ -24,7 +24,12 @@
     " Auto complete
     "Plugin 'Shougo/neocomplcache.vim'
     "Plugin 'ycm-core/YouCompleteMe'
-    Plugin 'zxqfl/tabnine-vim'
+    "Plugin 'zxqfl/tabnine-vim'
+    if v:version >= 800 || has('nvim')
+      Plugin 'Shougo/neocomplcache.vim'
+    else
+      Plugin 'zxqfl/tabnine-vim'
+    endif
     " Tree mapped below at <F9>
     Plugin 'scrooloose/nerdtree'
     " ys, cs, ds surround with brackets and shit
@@ -50,7 +55,7 @@
     " Ruby on Rails plugin
     Plugin 'tpope/vim-rails'
     " GoLang plugin
-    "Plugin 'fatih/vim-go'
+    Plugin 'fatih/vim-go'
     " sleuth.vim: Heuristically set buffer options like shiftwidth, expandtab...
     Plugin 'tpope/vim-sleuth'
     " Show python code coverage
@@ -80,6 +85,14 @@
     Plugin 'jpalardy/vim-slime'
     " Vim Git Gutter
     Plugin 'airblade/vim-gitgutter'
+    " Rainbow Parenthesis
+    Plugin 'luochen1990/rainbow'
+    " Monokai Theme
+    Plugin 'sickill/vim-monokai'
+    "Plugin 'crusoexia/vim-monokai'
+    Plugin 'ErichDonGubler/vim-sublime-monokai'
+    "Plugin 'fatih/vim-go'
+    Plugin 'rudes/vim-java'
     "Plugin ''
 
     " Enable file type detection. Do this after Vundle calls.
@@ -590,3 +603,37 @@ nnoremap <leader>\ :call ToggleNERDTreeAndTagbar()<CR>
 let g:ale_emit_conflict_warnings = 0
 "source /usr/share/doc/fzf/examples/fzf.vim
 let g:slime_target = "tmux"
+
+" Git Gutter
+set signcolumn=yes
+
+" Rainbow Parens
+let g:rainbow_active = 1 "set to 0 if you want to enable it later via :RainbowToggle
+
+" Monokai Theme
+"if v:version >= 800 || has('nvim')
+if has('nvim')
+    colorscheme sublimemonokai
+    set termguicolors
+    let g:sublimemonokai_term_italic = 1
+else
+    colorscheme monokai
+endif
+"set t_Co=256
+"   Java
+let java_comment_strings=1
+let java_highlight_functions=1
+let java_highlight_java_lang_ids=1
+"    Go
+let g:go_highlight_format_strings = 1
+let g:go_highlight_function_arguments = 1
+let g:go_highlight_function_calls = 1
+let g:go_highlight_functions = 1
+let g:go_highlight_operators = 1
+let g:go_highlight_types = 1
+
+let g:go_highlight_extra_types = 1
+let g:go_highlight_fields = 1
+let g:go_highlight_generate_tags = 1
+let g:go_highlight_variable_assignments = 1
+let g:go_highlight_variable_declarations = 1
