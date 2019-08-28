@@ -25,7 +25,7 @@
     "Plugin 'Shougo/neocomplcache.vim'
     "Plugin 'ycm-core/YouCompleteMe'
     "Plugin 'zxqfl/tabnine-vim'
-    if v:version >= 800 || has('nvim')
+    if has('nvim')
       Plugin 'Shougo/neocomplcache.vim'
     else
       Plugin 'zxqfl/tabnine-vim'
@@ -48,7 +48,7 @@
     " Plugin 'tpope/vim-commentary'
     " <F5> to show undo/redo tree
     Plugin 'sjl/gundo.vim'
-    " <F9> to show tagbar
+    " <F9> to show tagbar C-], C-t
     Plugin 'majutsushi/tagbar'
     " Better Status line
     Plugin 'vim-airline/vim-airline'
@@ -81,13 +81,14 @@
     " Fuzzy Finder
     Plugin 'junegunn/fzf'
     Plugin 'junegunn/fzf.vim'
-    " Vim Slime to copy paste from vim to tmux
+    " Vim Slime to copy paste from vim to tmux: C-c, C-c; :SlimeConfig Pane Syntax :i.j
     Plugin 'jpalardy/vim-slime'
-    " Vim Git Gutter
+    " Vim Git Gutter ,hn ,hp ]c [c
     Plugin 'airblade/vim-gitgutter'
     " Rainbow Parenthesis
     Plugin 'luochen1990/rainbow'
     " Monokai Theme
+    Plugin 'patstockwell/vim-monokai-tasty'
     Plugin 'sickill/vim-monokai'
     "Plugin 'crusoexia/vim-monokai'
     Plugin 'ErichDonGubler/vim-sublime-monokai'
@@ -125,7 +126,7 @@
 
     set modeline
     set modelines=10    " Search 10 lines from top and bottom for modelines
-    set textwidth=79
+    set textwidth=119 "79
     set colorcolumn=+1  " i.e textwidth+1
     " Change column color from red to greyish
     highlight ColorColumn ctermbg=233
@@ -611,29 +612,38 @@ set signcolumn=yes
 let g:rainbow_active = 1 "set to 0 if you want to enable it later via :RainbowToggle
 
 " Monokai Theme
-"if v:version >= 800 || has('nvim')
+
+""if v:version >= 800 || has('nvim')
 if has('nvim')
-    colorscheme sublimemonokai
-    set termguicolors
-    let g:sublimemonokai_term_italic = 1
+    let g:vim_monokai_tasty_italic = 1
+    colorscheme vim-monokai-tasty
+    let g:airline_theme='monokai_tasty'
+"
+"    "   Java
+"    let java_comment_strings=1
+"    let java_highlight_functions=1
+"    let java_highlight_java_lang_ids=1
+"    "    Go
+"    let g:go_highlight_format_strings = 1
+"    let g:go_highlight_function_arguments = 1
+"    let g:go_highlight_function_calls = 1
+"    let g:go_highlight_functions = 1
+"    let g:go_highlight_operators = 1
+"    let g:go_highlight_types = 1
+"    "      Extras
+"    let g:go_highlight_extra_types = 1
+"    let g:go_highlight_fields = 1
+"    let g:go_highlight_generate_tags = 1
+"    let g:go_highlight_variable_assignments = 1
+"    let g:go_highlight_variable_declarations = 1
+"
+"    set termguicolors "set t_Co=256
+"    colorscheme sublimemonokai
+"    let g:sublimemonokai_term_italic = 1
 else
     colorscheme monokai
+    colorscheme vim-monokai-tasty
+    let g:airline_theme='monokai_tasty'
 endif
-"set t_Co=256
-"   Java
-let java_comment_strings=1
-let java_highlight_functions=1
-let java_highlight_java_lang_ids=1
-"    Go
-let g:go_highlight_format_strings = 1
-let g:go_highlight_function_arguments = 1
-let g:go_highlight_function_calls = 1
-let g:go_highlight_functions = 1
-let g:go_highlight_operators = 1
-let g:go_highlight_types = 1
-
-let g:go_highlight_extra_types = 1
-let g:go_highlight_fields = 1
-let g:go_highlight_generate_tags = 1
-let g:go_highlight_variable_assignments = 1
-let g:go_highlight_variable_declarations = 1
+" Black Background Color
+"hi Normal ctermfg=231 ctermbg=016 cterm=NONE guifg=#f8f8f2 guibg=#272822 gui=NONE
