@@ -32,7 +32,7 @@
     endif
     " Tree mapped below at <F9>
     Plugin 'scrooloose/nerdtree'
-    " ys, cs, ds surround with brackets and shit
+    " Surround with brackets etc: Add cst", Remove ds", Change cs"', Full line yss(, Current word ysiw{, Visual V select S<p>
     Plugin 'tpope/vim-surround'
     " Read tags and highlighten them
     " Plugin 'skroll/vim-taghighlight'
@@ -62,7 +62,7 @@
     Plugin 'alfredodeza/coveragepy.vim'
     " WakaTime programming time calculator
     Plugin 'wakatime/vim-wakatime'
-    " Vim - TMux Navigation using Ctrl-h,j,k,l
+    " Vim - TMux Navigation using Ctrl-h,j,k,l,\
     Plugin 'christoomey/vim-tmux-navigator'
     " Android in Vim
     Plugin 'hsanson/vim-android'
@@ -94,6 +94,8 @@
     Plugin 'ErichDonGubler/vim-sublime-monokai'
     "Plugin 'fatih/vim-go'
     Plugin 'rudes/vim-java'
+    " Auto read files when they change outside and are unchanged in vim
+    Plugin 'djoshea/vim-autoread'
     "Plugin ''
 
     " Enable file type detection. Do this after Vundle calls.
@@ -149,6 +151,7 @@
 " General {
 " Automatic reloading of .vimrc file
     autocmd! BufWritePost .vimrc source %
+    "set autoread " Using plugin instead: djoshea/vim-autoread
     " allow saving as sudo if opened not as sudo
     cmap w!! w !sudo tee > /dev/null %
 
@@ -320,6 +323,7 @@
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Syntastic Plugin {
+    " Clear search highlights
     map <leader>r :SyntasticReset<CR> :nohls<CR>
     "map <leader>sr :SyntasticReset<CR>
     " Make C++11 work
@@ -484,7 +488,7 @@
 "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Tmux Navigation {
-    let g:tmux_navigator_no_mappings = 1
+    "let g:tmux_navigator_no_mappings = 1
 
     "nnoremap <silent> {c-h} :TmuxNavigateLeft<cr>
     "nnoremap <silent> {C-j} :TmuxNavigateDown<cr>
@@ -606,7 +610,7 @@ let g:ale_emit_conflict_warnings = 0
 let g:slime_target = "tmux"
 
 " Git Gutter
-set signcolumn=yes
+"set signcolumn=yes
 
 " Rainbow Parens
 let g:rainbow_active = 1 "set to 0 if you want to enable it later via :RainbowToggle
