@@ -109,20 +109,21 @@
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Formatting {
-    set backspace=2                " To make backspace work like all other apps
+    set backspace=2 " To make backspace work like all other apps
     "set backspace=indent,eol,start
-    set number  " Alternative: set nu!
+    set number " Alternative: set nu!
     set relativenumber " Show line numbers relative to cursor line
-    set hlsearch    " Highlight searched item
-    set nowrap                      " wrap long lines
-    set autoindent                  " indent at the same level of the previous line
-    set shiftwidth=4                " use indents of 4 spaces
-    set expandtab                   " tabs are spaces, not tabs
-    set tabstop=4                   " an indentation every four columns
-    set softtabstop=4               " let backspace delete indent
-    "set matchpairs+=<:>                " match, to be used with %
-    set pastetoggle=<F10>           " pastetoggle (sane indentation on pastes)
-    "set comments=sl:/*,mb:*,elx:*/  " auto format comment blocks
+    set hlsearch " Highlight searched item
+    set incsearch " Start searching as you type
+    set nowrap " wrap long lines
+    set autoindent " indent at the same level of the previous line
+    set shiftwidth=4 " use indents of 4 spaces
+    set expandtab " tabs are spaces, not tabs
+    set tabstop=4 " an indentation every four columns
+    set softtabstop=4 " let backspace delete indent
+    "set matchpairs+=<:> " match, to be used with %
+    set pastetoggle=<F10> " pastetoggle (sane indentation on pastes)
+    "set comments=sl:/*,mb:*,elx:*/ " auto format comment blocks
     " Remove trailing whitespaces and ^M chars
     autocmd FileType c,cpp,java,php,js,python,twig,vim,xml,yml,matlab autocmd BufWritePre <buffer> :call setline(1,map(getline(1,"$"),'substitute(v:val,"\\s\\+$","","")'))
 
