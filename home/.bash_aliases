@@ -118,7 +118,7 @@ alias glm='git l --all'
 alias grepi='grep -i'
 alias gtop='git rev-parse --show-toplevel'
 alias gw='./gradlew '
-alias gyolo='git commit -m"$(curl -s whatthecommit.com/index.txt)"'
+alias gyolo='git yolo || git commit -m"$(curl -s whatthecommit.com/index.txt)"'
 #alias gwipit='git add -A; git rm $(git ls-files --deleted) 2> /dev/null; git commit --no-verify --no-gpg-sign -m "--wip-- [skip ci]"'
 
 alias idea='bash -c "~/Documents/idea-IC/bin/idea.sh &"'
