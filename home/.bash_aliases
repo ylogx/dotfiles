@@ -194,7 +194,10 @@ alias vp='vim `ls -t *.@(py|pl|cgi)| head -1 `'
 alias vc='vim `ls -t *.@(c|cpp|h)| head -1 `'
 #When I know the file I want to edit is the most recent file in a directory
 alias vew='vim `ls -t * | head -1 `'
-alias vpns='tmux send-keys -t "0:2.0" C-c "sleep 1 && vpn-it" Enter'
+alias vpnl='while 1; do; echo "[$(date)]: Restarting VPN"; vpns; sleep `expr 15 \* 60`; done'
+#alias vpnl='watch bash -c \'echo "[$(date)]: Restarting VPN"; vpns;\''
+alias vpns='tmux send-keys -t "0:2.0" C-c "sleep 1 && watch vpn-it" Enter'
+alias vpnst='[[ "$(echo quit | timeout --signal=9 2 telnet git.lo 22 2>&1)" == *"Connected to git.lo"* ]] && echo Connected || echo Disconnected'
 alias vtest='/home/chaudhary/code/python/vocab_test.py'
 
 alias watch='watch --color'
