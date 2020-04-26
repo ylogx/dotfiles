@@ -174,7 +174,7 @@ elif [[ $PLATFORM == 'Mac' ]]; then
     #export PATH=$JAVA_HOME/bin:$PATH
 fi
 
-[ -d $HOME/bin ] && export PATH=$PATH:$HOME/bin
+[ -d $HOME/bin ] && export PATH=$HOME/bin:$PATH
 [ -d $HOME/.local/bin ] && export PATH=$PATH:$HOME/.local/bin
 
 ### Added by the Heroku Toolbelt

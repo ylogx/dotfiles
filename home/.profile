@@ -23,3 +23,5 @@ source ~/.bashrc
 #Hierarchy Viewer Variable
 export ANDROID_HVPROTO=ddm
 [ -d $HOME/phabricator/arcanist/bin ] && export PATH=$PATH:$HOME/phabricator/arcanist/bin
+
+export PATH="$HOME/.cargo/bin:$PATH"

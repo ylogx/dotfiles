@@ -13,7 +13,7 @@
   with_items:
     #- ack-grep  # Unavailable on ubuntu 17.10
     - bash
-    - cargo
+    - bat
     - curl
     - exa
     - git
@@ -26,12 +26,6 @@
     - vim
     - wget
     - zsh
-  tags: package
-
-- name: Install bat using cargo
-  command: cargo install bat
-  when: true
-  ignore_errors: yes
   tags: package
 
 - name: Change shell to ZSH
