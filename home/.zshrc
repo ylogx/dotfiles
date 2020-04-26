@@ -56,44 +56,44 @@ COMPLETION_WAITING_DOTS="true"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(
-    brew
-    #chruby
-    chucknorris
-    docker
-    docker-compose
-    #fortune
-    git
-    git-extras
-    github
-    git-flow
-    gnu-utils
-    golang
-    gpg-agent
-    #gradle
-    heroku
-    history-substring-search
-    jruby
-    kubectl
-    last-working-dir
-    #lol
-    macos
-    pip
-    pylint
-    python
-    #rails
-    rake
-    rake-fast
-    ruby
-    sublime
-    sudo
-    web-search
-    #tmux
-    yum
-    #zsh-completions
-    #zsh-syntax-highlighting
-    #zsh-wakatime
-    )
+#plugins=(
+#    brew
+#    #chruby
+#    chucknorris
+#    docker
+#    docker-compose
+#    #fortune
+#    git
+#    git-extras
+#    github
+#    git-flow
+#    gnu-utils
+#    golang
+#    gpg-agent
+#    #gradle
+#    heroku
+#    history-substring-search
+#    jruby
+#    kubectl
+#    last-working-dir
+#    #lol
+#    macos
+#    pip
+#    pylint
+#    python
+#    #rails
+#    rake
+#    rake-fast
+#    ruby
+#    sublime
+#    sudo
+#    web-search
+#    #tmux
+#    yum
+#    #zsh-completions
+#    #zsh-syntax-highlighting
+#    #zsh-wakatime
+#    )
 
 # User configuration
 ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern cursor)
@@ -101,7 +101,7 @@ ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern cursor)
 
 # export MANPATH="/usr/local/man:$MANPATH"
 
-source $ZSH/oh-my-zsh.sh
+### source $ZSH/oh-my-zsh.sh
 
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8
@@ -127,6 +127,106 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+#
+
+
+
+##################################################################
+source ~/bin/antigen.zsh
+
+# Load the oh-my-zsh's library.
+antigen use oh-my-zsh
+
+# Bundles from the default repo (robbyrussell's oh-my-zsh).
+#antigen bundle git
+#antigen bundle heroku
+#antigen bundle pip
+#antigen bundle lein
+#antigen bundle command-not-found
+
+antigen bundle brew
+antigen bundle chruby
+antigen bundle chucknorris
+antigen bundle docker
+antigen bundle docker-compose
+antigen bundle fortune
+antigen bundle git
+antigen bundle git-extras
+antigen bundle github
+antigen bundle git-flow
+antigen bundle gnu-utils
+antigen bundle golang
+antigen bundle gpg-agent
+#antigen bundle #gradle
+antigen bundle heroku
+antigen bundle history-substring-search
+antigen bundle jruby
+antigen bundle kubectl
+antigen bundle last-working-dir
+#antigen bundle #lol
+antigen bundle osx
+antigen bundle pip
+antigen bundle pylint
+antigen bundle python
+#antigen bundle #rails
+antigen bundle rake
+antigen bundle rake-fast
+antigen bundle ruby
+antigen bundle sublime
+antigen bundle sudo
+antigen bundle web-search
+#antigen bundle #tmux
+antigen bundle yum
+antigen bundle zsh-completions
+antigen bundle zsh-syntax-highlighting
+antigen bundle zsh-wakatime
+
+# Syntax highlighting bundle.
+antigen bundle zsh-users/zsh-syntax-highlighting
+
+# Load the theme.
+#antigen theme robbyrussell
+antigen theme denysdovhan/spaceship-prompt
+
+SPACESHIP_PROMPT_ORDER=(
+  time          # Time stamps section
+  user          # Username section
+  dir           # Current directory section
+  host          # Hostname section
+  git           # Git section (git_branch + git_status)
+  hg            # Mercurial section (hg_branch  + hg_status)
+  package       # Package version
+  node          # Node.js section
+  ruby          # Ruby section
+  elixir        # Elixir section
+  xcode         # Xcode section
+  swift         # Swift section
+  golang        # Go section
+  php           # PHP section
+  rust          # Rust section
+  haskell       # Haskell Stack section
+  julia         # Julia section
+  docker        # Docker section
+  aws           # Amazon Web Services section
+  venv          # virtualenv section
+  conda         # conda virtualenv section
+  pyenv         # Pyenv section
+  dotnet        # .NET section
+  ember         # Ember.js section
+  kubecontext   # Kubectl context section
+  terraform     # Terraform workspace section
+  exec_time     # Execution time
+  line_sep      # Line break
+  battery       # Battery level and status
+  vi_mode       # Vi-mode indicator
+  jobs          # Background jobs indicator
+  exit_code     # Exit code section
+  char          # Prompt character
+)
+
+# Tell Antigen that you're done.
+antigen apply
+##################################################################
 
 if [ -d "$HOME/.homesick" ]; then
     source "$HOME/.homesick/repos/homeshick/homeshick.sh"
