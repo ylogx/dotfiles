@@ -154,6 +154,7 @@ if [[ $PLATFORM == 'Linux' ]]; then
     export ANDROID_HOME=$HOME/sdk/android-sdk
     [ -d $ANDROID_HOME/platform-tools ] && export PATH=$PATH:$ANDROID_HOME/platform-tools
     [ -d $ANDROID_HOME/tools ] && export PATH=$PATH:$ANDROID_HOME/tools
+    hash xdg-open 2>/dev/null && alias open='xdg-open'
 elif [[ $PLATFORM == 'Mac' ]]; then
     export LC_ALL=en_US.UTF-8
     export LANG=en_US.UTF-8
