@@ -58,11 +58,11 @@ COMPLETION_WAITING_DOTS="true"
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
     brew
-    chruby
+    #chruby
     chucknorris
     docker
     docker-compose
-    fortune
+    #fortune
     git
     git-extras
     github
@@ -90,9 +90,9 @@ plugins=(
     web-search
     #tmux
     yum
-    zsh-completions
-    zsh-syntax-highlighting
-    zsh-wakatime
+    #zsh-completions
+    #zsh-syntax-highlighting
+    #zsh-wakatime
     )
 
 # User configuration
