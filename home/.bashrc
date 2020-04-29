@@ -170,10 +170,14 @@ export PATH=/usr/local/bin:$PATH
 # See /usr/share/doc/bash-doc/examples in the bash-doc package.
 
 # Doing this at the end, so that $PATH is properly filled
-if [ -f ~/.bash_aliases ]; then
-    . ~/.bash_aliases
-fi
+load_aliases() {
+  if [ -f ~/.bash_aliases ]; then
+      . ~/.bash_aliases
+  fi
 
-if [ -f ~/.bash_functions ]; then
-    . ~/.bash_functions
-fi
+  if [ -f ~/.bash_functions ]; then
+      . ~/.bash_functions
+  fi
+}
+load_aliases
+type welcome_message >/dev/null && welcome_message

@@ -288,3 +288,4 @@ load_aliases() {
   fi
 }
 load_aliases # Doing this at the end, so that $PATH is properly filled
+type welcome_message >/dev/null && welcome_message

@@ -83,7 +83,6 @@ welcome_message() {
     # check_and_run_bg ansiweather;
     get_fortune_cookies
 }
-welcome_message;
 
 # Speaks a message on ios when a server comes back up
 speakwhenup() { [ "$1" ] && PHOST="$1" || return 1; until ping -c1 -W2 $PHOST >/dev/null 2>&1; do sleep 5s; done; say "$PHOST is up" >/dev/null 2>&1; }
