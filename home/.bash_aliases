@@ -23,6 +23,11 @@ alias less='less -R'
 alias top-commands='history | awk "{print $2}" | awk "{print $1}" |sort|uniq -c | sort -rn | head -10'
 #alias top-commands='history | awk "{print $2}" | awk "BEGIN {FS="|"} {print $1}" |sort|uniq -c | sort -rn | head -10'
 
+alias_cd_if_exists() {
+    alias_name=$1
+    dir=$2
+    [[ -d "$dir" ]] && alias ${alias_name}="cd '${dir}'"
+}
 
 ### Alphabetical
 alias a='aria2c -c -x 16'
@@ -36,35 +41,36 @@ alias c='bat'
 alias cats='highlight -O ansi'
 #alias cdw ^defined above
 alias catlatest='cat `ls -t|head -1`'
+
 alias cd..='cd ..'
-[[ -d "$HOME/Dropbox" ]] && alias cddb='cd ~/Dropbox'
-[[ -d "$HOME/Downloads" ]] && alias cddw='cd ~/Downloads'
+alias_cd_if_exists cddb "$HOME/Dropbox"
+alias_cd_if_exists cddw "$HOME/Downloads"
 
-[[ -d "$HOME/code" ]] && alias cdd='cd ~/code'
-[[ -d "$HOME/code/python" ]] && alias cdpy='cd ~/code/python'
-[[ -d "$HOME/code/go" ]] && alias cdgo='cd ~/code/go'
-[[ -d "$HOME/code/rust" ]] && alias cdru='cd ~/code/rust'
-[[ -d "$HOME/code/c" ]] && alias cdc='cd ~/code/c'
-[[ -d "$HOME/code/cpp" ]] && alias cdcpp='cd ~/code/cpp'
-[[ -d "$HOME/code/java" ]] && alias cdja='cd ~/code/java'
-[[ -d "$HOME/code/html" ]] && alias cdht='cd ~/code/html'
-[[ -d "$HOME/code/js" ]] && alias cdjs='cd ~/code/js'
-[[ -d "$HOME/kde/" ]] && alias cdkde='cd ~/kde/'
-[[ -d "$HOME/code/linux" ]] && alias cdli='cd ~/code/linux'
-[[ -d "$HOME/code/ai/ml" ]] && alias cdml='cd ~/code/ai/ml'
-[[ -d "$HOME/code/os" ]] && alias cdos='cd ~/code/os'
-[[ -d "$HOME/code/pi" ]] && alias cdpi='cd ~/code/pi'
-[[ -d "$HOME/code/me" ]] && alias cdme='cd ~/code/me'
-[[ -d "$HOME/code/me/resume" ]] && alias cdre='cd ~/code/me/resume'
-[[ -d "$HOME/code/scripts" ]] && alias cdsc='cd ~/code/scripts'
-[[ -d "$HOME/code/ai" ]] && alias cdai='cd ~/code/ai'
-[[ -d "$HOME/code/algo/" ]] && alias cdal='cd ~/code/algo/'
-[[ -d "$HOME/code/android" ]] && alias cdan='cd ~/code/android'
-[[ -d "$HOME/code/hacking" ]] && alias cdh='cd ~/code/hacking'
+alias_cd_if_exists cdd "$HOME/code"
+alias_cd_if_exists cdpy "$HOME/code/python"
+alias_cd_if_exists cdgo "$HOME/code/go"
+alias_cd_if_exists cdru "$HOME/code/rust"
+alias_cd_if_exists cdc "$HOME/code/c"
+alias_cd_if_exists cdcpp "$HOME/code/cpp"
+alias_cd_if_exists cdja "$HOME/code/java"
+alias_cd_if_exists cdht "$HOME/code/html"
+alias_cd_if_exists cdjs "$HOME/code/js"
+alias_cd_if_exists cdkde "$HOME/kde/"
+alias_cd_if_exists cdli "$HOME/code/linux"
+alias_cd_if_exists cdml "$HOME/code/ai/ml"
+alias_cd_if_exists cdos "$HOME/code/os"
+alias_cd_if_exists cdpi "$HOME/code/pi"
+alias_cd_if_exists cdme "$HOME/code/me"
+alias_cd_if_exists cdre "$HOME/code/me/resume"
+alias_cd_if_exists cdsc "$HOME/code/scripts"
+alias_cd_if_exists cdai "$HOME/code/ai"
+alias_cd_if_exists cdal "$HOME/code/algo/"
+alias_cd_if_exists cdan "$HOME/code/android"
+alias_cd_if_exists cdh "$HOME/code/hacking"
 
-alias cdv='cd ~/Vault'
+alias_cd_if_exists cdv "$HOME/Vault"
 alias cdw='cd ./`ls -td * | head -1`' # Go to most recently modified directory
-alias cdz='cd ~/code/work'
+alias_cd_if_exists cdz "$HOME/code/work"
 #alias cmk='mkdir $1 && cd ./$1'
 alias cl='clear'
 alias ctop='sudo docker run --rm -it --name=ctop -v /var/run/docker.sock:/var/run/docker.sock quay.io/vektorlab/ctop:latest'
