@@ -126,12 +126,6 @@ if ! shopt -oq posix; then
   fi
 fi
 
-#export http_proxy= #"http://ishubhamch:chaudhary@192.168.60.10:3128/"
-#export https_proxy= #"http://ishubhamch:chaudhary@192.168.60.10:3128/"
-
-DEBFULLNAME="Shubham Chaudhary"
-DEBEMAIL="shubham.chaudhary@kdemail.net"
-EMAIL="me@shubhamchaudhary.in"
 EDITOR=vim
 SUDO_EDITOR=vim
 
@@ -179,6 +173,6 @@ export PATH=$PATH:$HOME/android-sdk/tools
 export PATH=/usr/local/bin:$PATH
 
 # added by travis gem
-[ -f /Users/chaudhary/.travis/travis.sh ] && source /Users/chaudhary/.travis/travis.sh
+[ -f ~/.travis/travis.sh ] && source ~/.travis/travis.sh
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash

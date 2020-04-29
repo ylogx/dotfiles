@@ -232,14 +232,14 @@ export VISUAL=vi
 
 
 # added by travis gem
-[ -f /Users/chaudhary/.travis/travis.sh ] && source /Users/chaudhary/.travis/travis.sh
+[ -f ~/.travis/travis.sh ] && source ~/.travis/travis.sh
 
 [ -d "$HOME/.pyenv" ] && export PATH="$HOME/.pyenv/bin:$PATH";
 if which pyenv > /dev/null; then eval "$(pyenv init -)"; eval "$(pyenv virtualenv-init -)"; fi
 
 # The next line enables shell command completion for gcloud.
-#if [ -f /Users/chaudhary/google-cloud-sdk/completion.zsh.inc ]; then
-  #source '/Users/chaudhary/google-cloud-sdk/completion.zsh.inc'
+#if [ -f ~/google-cloud-sdk/completion.zsh.inc ]; then
+  #source '~/google-cloud-sdk/completion.zsh.inc'
 #fi
 #export PATH="/usr/local/bin:$PATH"
 [ -d "$HOME/.local/bin" ] && export PATH=$HOME/.local/bin:$PATH
@@ -266,12 +266,10 @@ hash thefuck 2>/dev/null && eval $(thefuck --alias)
 #chruby 2.2.4
 #export ANDROID_SDK_ROOT="/usr/local/share/android-sdk"
 
-#export GIT_COMMITTER_EMAIL='shubham@chaudhary.xyz'
-
 # The next line updates PATH for the Google Cloud SDK.
-if [ -f '/home/chaudhary/sdk/google-cloud-sdk/path.zsh.inc' ]; then . '/home/chaudhary/sdk/google-cloud-sdk/path.zsh.inc'; fi
+if [ -f '~/sdk/google-cloud-sdk/path.zsh.inc' ]; then . '~/sdk/google-cloud-sdk/path.zsh.inc'; fi
 # The next line enables shell command completion for gcloud.
-if [ -f '/home/chaudhary/sdk/google-cloud-sdk/completion.zsh.inc' ]; then . '/home/chaudhary/sdk/google-cloud-sdk/completion.zsh.inc'; fi
+if [ -f '~/sdk/google-cloud-sdk/completion.zsh.inc' ]; then . '~/sdk/google-cloud-sdk/completion.zsh.inc'; fi
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 [ -f /usr/share/doc/fzf/examples/key-bindings.zsh ] && source /usr/share/doc/fzf/examples/key-bindings.zsh
