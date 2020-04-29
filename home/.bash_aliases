@@ -16,7 +16,7 @@ alias biggest='BLOCKSIZE=1048576; du -x | sort -nr | head -10'
 
 ## App-specific aliases
 alias wget='wget -c'
-alias trash='mv -t ~/.local/share/Trash/files'
+[[ -d "$HOME/.local/share/Trash/files" ]] && alias trash='mv -t ~/.local/share/Trash/files'
 alias less='less -R'
 
 #show most popular commands
@@ -30,15 +30,16 @@ alias_cd_if_exists() {
 }
 
 ### Alphabetical
-alias a='aria2c -c -x 16'
+hash aria2c 2>/dev/null && alias a='aria2c -c -x 16'
 # alias ack='ack-grep'
-alias aria2cm='aria2c -c -x 16'
+hash aria2c 2>/dev/null && alias aria2cm='aria2c -c -x 16'
 #alias acki='ack --ignore-dir=build'
 alias acki='ack --ignore-dir=build --ignore-dir=doc'
 
-alias c='pygmentize -g'
-alias c='bat'
-alias cats='highlight -O ansi'
+alias c='cat'
+hash pygmentize 2>/dev/null && alias c='pygmentize -g'
+hash bat 2>/dev/null && alias c='bat'
+hash highlight 2>/dev/null && alias cats='highlight -O ansi'
 #alias cdw ^defined above
 alias catlatest='cat `ls -t|head -1`'
 
@@ -82,7 +83,7 @@ alias dfs='df -h | sort -n'
 alias du='du -h -c'
 alias dn='OPTIONS=$(\ls -F | grep /$); select s in $OPTIONS; do cd $PWD/$s; break;done'
 
-alias foxit='bash -c "wine ~/Documents/FoxitReaderPortable/FoxitReaderPortable.exe &"'
+[[ -f "$HOME/Documents/FoxitReaderPortable/FoxitReaderPortable.exe" ]] && alias foxit='bash -c "wine ~/Documents/FoxitReaderPortable/FoxitReaderPortable.exe &"'
 hash fzf 2>/dev/null && alias fzfp='fzf --preview '"'"'[[ $(file --mime {}) =~ binary ]] && echo {} is a binary file || (bat --style=numbers --color=always {} || highlight -O ansi -l {} || coderay {} || rougify {} || cat {}) 2> /dev/null | head -500'"'"''
 hash fzf 2>/dev/null && alias fzfph='fzf --height 60% --preview '"'"'[[ $(file --mime {}) =~ binary ]] && echo {} is a binary file || (bat --style=numbers --color=always {} || highlight -O ansi -l {} || coderay {} || rougify {} || cat {}) 2> /dev/null | head -500'"'"''
 alias g='git'
@@ -147,9 +148,9 @@ alias sshba='autossh -M 0 -nNT -o "ServerAliveInterval 10" -o "ServerAliveCountM
 alias sshbac='autossh -M 0 -nNTC -o "ServerAliveInterval 10" -o "ServerAliveCountMax 3" -v -D'
 alias sudoh='sudo -H'
 #alias tree='tree -Csh'        # nice alternative to 'ls'
-alias t='tree -Csh'        # nice alternative to 'ls'
+hash tree 2>/dev/null && alias t='tree -Csh'        # nice alternative to 'ls'
 alias tf="find . -print | sed -e 's;[^/]*/;|____;g;s;____|; |;g'"
-alias ta='tmux attach'
+hash tmux 2>/dev/null && alias ta='tmux attach'
 alias timev='/usr/bin/time -v'
 
 #some variations
@@ -164,11 +165,11 @@ alias vp='vim `ls -t *.@(py|pl|cgi)| head -1 `'
 alias vc='vim `ls -t *.@(c|cpp|h)| head -1 `'
 #When I know the file I want to edit is the most recent file in a directory
 alias vew='vim `ls -t * | head -1 `'
-alias vpnl='while 1; do; echo "[$(date)]: Restarting VPN"; vpns; sleep `expr 15 \* 60`; done'
+hash vpn-it 2>/dev/null && alias vpnl='while 1; do; echo "[$(date)]: Restarting VPN"; vpns; sleep `expr 15 \* 60`; done'
 #alias vpnl='watch bash -c \'echo "[$(date)]: Restarting VPN"; vpns;\''
-alias vpns='tmux send-keys -t "0:2.0" C-c "sleep 1 && watch vpn-it" Enter'
-alias vpnst='[[ "$(echo quit | timeout --signal=9 2 telnet git.lo 22 2>&1)" == *"Connected to git.lo"* ]] && echo Connected || echo Disconnected'
-alias vpnstop='tmux send-keys -t "0:2.0" C-c'
+hash vpn-it 2>/dev/null && alias vpns='tmux send-keys -t "0:2.0" C-c "sleep 1 && watch vpn-it" Enter'
+hash vpn-it 2>/dev/null && alias vpnst='[[ "$(echo quit | timeout --signal=9 2 telnet git.lo 22 2>&1)" == *"Connected to git.lo"* ]] && echo Connected || echo Disconnected'
+hash vpn-it 2>/dev/null && alias vpnstop='tmux send-keys -t "0:2.0" C-c'
 
 alias watch='watch --color'
 alias wcall='wc `ls -tr`'
@@ -178,7 +179,6 @@ alias wcld='for f in `ls`; do echo $f: `ls $f | wc -l`; done'
 #alias xew='`ls -t *.pl | head -1 `'
 hash xdg-open 2>/dev/null && alias xew='xdg-open "`ls -t * | head -1 `"'
 hash xdg-open 2>/dev/null && alias x='xdg-open'
-
 
 
 ## Keeping things organized
