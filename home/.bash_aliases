@@ -26,7 +26,7 @@ alias top-commands='history | awk "{print $2}" | awk "{print $1}" |sort|uniq -c 
 alias_cd_if_exists() {
     alias_name=$1
     dir=$2
-    [[ -d "$dir" ]] && alias ${alias_name}="cd '${dir}'"
+    [[ -d "$dir" ]] && alias ${alias_name}="cd ${dir}"
 }
 
 ### Alphabetical
