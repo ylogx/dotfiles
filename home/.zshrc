@@ -128,18 +128,6 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-if [ -f ~/.zsh_aliases ]; then
-    . ~/.zsh_aliases
-elif [ -f ~/.bash_aliases ]; then
-    . ~/.bash_aliases
-fi
-
-if [ -f ~/.zsh_functions ]; then
-    . ~/.zsh_functions
-elif [ -f ~/.bash_functions ]; then
-    . ~/.bash_functions
-fi
-
 if [ -d "$HOME/.homesick" ]; then
     source "$HOME/.homesick/repos/homeshick/homeshick.sh"
     #source "$HOME/.homesick/repos/homeshick/completions/homeshick-completion.bash"
@@ -285,3 +273,18 @@ export FZF_DEFAULT_COMMAND='(rg --files || find . -path "*/\.*" -prune -o -type 
 [ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh
 
 [ -d /home/linuxbrew/.linuxbrew/bin ] && export PATH=/home/linuxbrew/.linuxbrew/bin:$PATH
+
+load_aliases() {
+  if [ -f ~/.zsh_aliases ]; then
+      . ~/.zsh_aliases
+  elif [ -f ~/.bash_aliases ]; then
+      . ~/.bash_aliases
+  fi
+
+  if [ -f ~/.zsh_functions ]; then
+      . ~/.zsh_functions
+  elif [ -f ~/.bash_functions ]; then
+      . ~/.bash_functions
+  fi
+}
+load_aliases # Doing this at the end, so that $PATH is properly filled

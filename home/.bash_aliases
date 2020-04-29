@@ -6,7 +6,7 @@ alias lla='ls -a'
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
 alias act='[ -d venv ] && source venv/bin/activate || echo "No environment directory found in venv"'
-alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
+hash notify-send 2>/dev/null && alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 
 # Reload bashrc; best when editing .bashrc
 alias reload='reset; source ~/.bashrc'
@@ -73,7 +73,7 @@ alias cdw='cd ./`ls -td * | head -1`' # Go to most recently modified directory
 alias_cd_if_exists cdz "$HOME/code/work"
 #alias cmk='mkdir $1 && cd ./$1'
 alias cl='clear'
-alias ctop='sudo docker run --rm -it --name=ctop -v /var/run/docker.sock:/var/run/docker.sock quay.io/vektorlab/ctop:latest'
+hash docker 2>/dev/null && alias ctop='sudo docker run --rm -it --name=ctop -v /var/run/docker.sock:/var/run/docker.sock quay.io/vektorlab/ctop:latest'
 
 alias d='date'
 alias df='df -h'
@@ -83,8 +83,8 @@ alias du='du -h -c'
 alias dn='OPTIONS=$(\ls -F | grep /$); select s in $OPTIONS; do cd $PWD/$s; break;done'
 
 alias foxit='bash -c "wine ~/Documents/FoxitReaderPortable/FoxitReaderPortable.exe &"'
-alias fzfp='fzf --preview '"'"'[[ $(file --mime {}) =~ binary ]] && echo {} is a binary file || (bat --style=numbers --color=always {} || highlight -O ansi -l {} || coderay {} || rougify {} || cat {}) 2> /dev/null | head -500'"'"''
-alias fzfph='fzf --height 60% --preview '"'"'[[ $(file --mime {}) =~ binary ]] && echo {} is a binary file || (bat --style=numbers --color=always {} || highlight -O ansi -l {} || coderay {} || rougify {} || cat {}) 2> /dev/null | head -500'"'"''
+hash fzf 2>/dev/null && alias fzfp='fzf --preview '"'"'[[ $(file --mime {}) =~ binary ]] && echo {} is a binary file || (bat --style=numbers --color=always {} || highlight -O ansi -l {} || coderay {} || rougify {} || cat {}) 2> /dev/null | head -500'"'"''
+hash fzf 2>/dev/null && alias fzfph='fzf --height 60% --preview '"'"'[[ $(file --mime {}) =~ binary ]] && echo {} is a binary file || (bat --style=numbers --color=always {} || highlight -O ansi -l {} || coderay {} || rougify {} || cat {}) 2> /dev/null | head -500'"'"''
 alias g='git'
 alias gbl='git blame -wMC'
 alias gdf='git diff --name-only'
@@ -100,13 +100,13 @@ alias gw='./gradlew '
 alias gyolo='git yolo || git commit -m"$(curl -s whatthecommit.com/index.txt)"'
 #alias gwipit='git add -A; git rm $(git ls-files --deleted) 2> /dev/null; git commit --no-verify --no-gpg-sign -m "--wip-- [skip ci]"'
 
-[[ hash ipython3 2>/dev/null ]] && alias ipy='ipython3'
-[[ hash ipython2 2>/dev/null ]] && alias ipy2='ipython2'
-[[ hash ipython3 2>/dev/null ]] && alias ipy3='ipython3'
+hash ipython3 2>/dev/null && alias ipy='ipython3'
+hash ipython2 2>/dev/null && alias ipy2='ipython2'
+hash ipython3 2>/dev/null && alias ipy3='ipython3'
 #alias j='jobs'
 alias l='d; ls -ltrFhH'
-[[ hash exa 2>/dev/null ]] && alias l='exa -lsnew'
-[[ hash exa 2>/dev/null ]] && alias lexa='d; exa -bghHlS -s modified --git'
+hash exa 2>/dev/null && alias l='exa -lsnew'
+hash exa 2>/dev/null && alias lexa='d; exa -bghHlS -s modified --git'
 alias la='d; ls -lAtrFhH'
 alias lsize='ls --sort=size -lhr' # list by size
 alias lx='ls -lXB'        # sort by extension
@@ -122,14 +122,14 @@ alias lsd='ls -l | grep "^d"'   #list only directories
 #alias ll='ls -l'        # long listing
 #alias l='ls -hF --color'    # quick listing
 
-[[ hash iptables 2>/dev/null ]] && alias masquerade='sudo iptables -t nat -A POSTROUTING -o wlp3s0 -s 192.168.1.0/24 -j MASQUERADE'
+hash iptables 2>/dev/null && alias masquerade='sudo iptables -t nat -A POSTROUTING -o wlp3s0 -s 192.168.1.0/24 -j MASQUERADE'
 alias mkdirs='temp_c() {mkdir $1; cd $1}; temp_c'
 [[ -f "$HOME/Makefile" ]] && alias mymakehere='cp ~/Makefile ./'
-[[ hash ncdu 2>/dev/null ]] && alias ncdu='ncdu --color dark -rr -x --exclude .git --exclude node_modules'
+hash ncdu 2>/dev/null && alias ncdu='ncdu --color dark -rr -x --exclude .git --exclude node_modules'
 alias nf='ls | wc -l'
 
 alias p='pwd'
-[[ hash supervisorctl 2>/dev/null ]] && alias pms='sudo supervisorctl'
+hash supervisorctl 2>/dev/null && alias pms='sudo supervisorctl'
 [[ -f "/etc/apt/apt.conf" ]] && alias proxy='cat -n /etc/apt/apt.conf'
 #alias proxyNone='sudo sh -c \'echo -n "" > /etc/apt/apt.conf\''
 alias py='python3'
@@ -155,11 +155,11 @@ alias timev='/usr/bin/time -v'
 #some variations
 #alias vp='vim `ls -t *.@(pl|cgi)| head -1 `'
 #alias vc='vim `ls -t *.@(c|cpp|h|py)| head -1 `'
-alias v='vpn-it'
-alias vo='vpn-it -o'
-alias von='gocryptfs -info ~/Documents/Vault/data && gocryptfs ~/Documents/Vault/data ~/Documents/Vault/files'
-alias voff='umount ~/Documents/Vault/files'
-alias vofff='umount -f ~/Documents/Vault/files'
+hash vpn-it 2>/dev/null && alias v='vpn-it'
+hash vpn-it 2>/dev/null && alias vo='vpn-it -o'
+[[ -d "$HOME/Documents/Vault/data" ]] && alias von='gocryptfs -info ~/Documents/Vault/data && gocryptfs ~/Documents/Vault/data ~/Documents/Vault/files'
+[[ -d "$HOME/Documents/Vault/files" ]] && alias voff='umount ~/Documents/Vault/files'
+[[ -d "$HOME/Documents/Vault/files" ]] && alias vofff='umount -f ~/Documents/Vault/files'
 alias vp='vim `ls -t *.@(py|pl|cgi)| head -1 `'
 alias vc='vim `ls -t *.@(c|cpp|h)| head -1 `'
 #When I know the file I want to edit is the most recent file in a directory
@@ -176,8 +176,8 @@ alias wcl='wc -l'
 alias wcld='for f in `ls`; do echo $f: `ls $f | wc -l`; done'
 #execute the most recent script (I call this from within VIM with a mapped button)
 #alias xew='`ls -t *.pl | head -1 `'
-alias xew='xdg-open "`ls -t * | head -1 `"'
-alias x='xdg-open'
+hash xdg-open 2>/dev/null && alias xew='xdg-open "`ls -t * | head -1 `"'
+hash xdg-open 2>/dev/null && alias x='xdg-open'
 
 
 
