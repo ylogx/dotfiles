@@ -82,7 +82,6 @@ alias dfs='df -h | sort -n'
 alias du='du -h -c'
 alias dn='OPTIONS=$(\ls -F | grep /$); select s in $OPTIONS; do cd $PWD/$s; break;done'
 
-alias fdroid='~/code/android/fdroidserver/fdroid'
 alias foxit='bash -c "wine ~/Documents/FoxitReaderPortable/FoxitReaderPortable.exe &"'
 alias fzfp='fzf --preview '"'"'[[ $(file --mime {}) =~ binary ]] && echo {} is a binary file || (bat --style=numbers --color=always {} || highlight -O ansi -l {} || coderay {} || rougify {} || cat {}) 2> /dev/null | head -500'"'"''
 alias fzfph='fzf --height 60% --preview '"'"'[[ $(file --mime {}) =~ binary ]] && echo {} is a binary file || (bat --style=numbers --color=always {} || highlight -O ansi -l {} || coderay {} || rougify {} || cat {}) 2> /dev/null | head -500'"'"''
@@ -101,13 +100,13 @@ alias gw='./gradlew '
 alias gyolo='git yolo || git commit -m"$(curl -s whatthecommit.com/index.txt)"'
 #alias gwipit='git add -A; git rm $(git ls-files --deleted) 2> /dev/null; git commit --no-verify --no-gpg-sign -m "--wip-- [skip ci]"'
 
-alias ipy='ipython3'
-alias ipy2='ipython2'
-alias ipy3='ipython3'
+[[ hash ipython3 2>/dev/null ]] && alias ipy='ipython3'
+[[ hash ipython2 2>/dev/null ]] && alias ipy2='ipython2'
+[[ hash ipython3 2>/dev/null ]] && alias ipy3='ipython3'
 #alias j='jobs'
 alias l='d; ls -ltrFhH'
-alias l='exa -lsnew'
-alias lexa='d; exa -bghHlS -s modified --git'
+[[ hash exa 2>/dev/null ]] && alias l='exa -lsnew'
+[[ hash exa 2>/dev/null ]] && alias lexa='d; exa -bghHlS -s modified --git'
 alias la='d; ls -lAtrFhH'
 alias lsize='ls --sort=size -lhr' # list by size
 alias lx='ls -lXB'        # sort by extension
@@ -123,15 +122,15 @@ alias lsd='ls -l | grep "^d"'   #list only directories
 #alias ll='ls -l'        # long listing
 #alias l='ls -hF --color'    # quick listing
 
-alias masquerade='sudo iptables -t nat -A POSTROUTING -o wlp3s0 -s 192.168.1.0/24 -j MASQUERADE'
+[[ hash iptables 2>/dev/null ]] && alias masquerade='sudo iptables -t nat -A POSTROUTING -o wlp3s0 -s 192.168.1.0/24 -j MASQUERADE'
 alias mkdirs='temp_c() {mkdir $1; cd $1}; temp_c'
-alias mymakehere='cp ~/Makefile ./'
-alias ncdu='ncdu --color dark -rr -x --exclude .git --exclude node_modules'
+[[ -f "$HOME/Makefile" ]] && alias mymakehere='cp ~/Makefile ./'
+[[ hash ncdu 2>/dev/null ]] && alias ncdu='ncdu --color dark -rr -x --exclude .git --exclude node_modules'
 alias nf='ls | wc -l'
 
 alias p='pwd'
-alias pms='sudo supervisorctl'
-alias proxy='cat -n /etc/apt/apt.conf'
+[[ hash supervisorctl 2>/dev/null ]] && alias pms='sudo supervisorctl'
+[[ -f "/etc/apt/apt.conf" ]] && alias proxy='cat -n /etc/apt/apt.conf'
 #alias proxyNone='sudo sh -c \'echo -n "" > /etc/apt/apt.conf\''
 alias py='python3'
 alias py2='python2'
