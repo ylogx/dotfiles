@@ -167,6 +167,7 @@ elif [[ $PLATFORM == 'Mac' ]]; then
     [ -d $ANDROID_HOME/tools ] && export PATH=$PATH:$ANDROID_HOME/tools
     [ -d /usr/local/opt/coreutils/libexec/gnubin ] && export PATH=/usr/local/opt/coreutils/libexec/gnubin:$PATH
     [ -d /usr/local/opt/coreutils/libexec/gnubin ] && export PATH=$PATH:/usr/local/opt/go/libexec/bin
+    [ -d /usr/local/opt/gnu-sed/libexec/gnubin ] && export PATH="/usr/local/opt/gnu-sed/libexec/gnubin:$PATH"
     [ -d /usr/local/share/npm/bin ] && export PATH="/usr/local/share/npm/bin:$PATH"
     [ -d /usr/local/opt/coreutils/libexec/gnuman ] && export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
     #export JAVA_HOME=`/usr/libexec/java_home`
@@ -234,6 +235,7 @@ export VISUAL=vi
 # added by travis gem
 [ -f ~/.travis/travis.sh ] && source ~/.travis/travis.sh
 
+[ -d "$HOME/Library/Python/3.7/bin" ] && export PATH="$HOME/Library/Python/3.7/bin":$PATH
 [ -d "$HOME/.pyenv" ] && export PATH="$HOME/.pyenv/bin:$PATH";
 if which pyenv > /dev/null; then eval "$(pyenv init -)"; eval "$(pyenv virtualenv-init -)"; fi
 
@@ -257,6 +259,7 @@ if which pyenv > /dev/null; then eval "$(pyenv init -)"; eval "$(pyenv virtualen
 export GOPATH="$HOME/.cache/go"
 [ -d "$GOPATH/bin" ] && export PATH="$GOPATH/bin:$PATH"
 [ -d "$HOME/.cargo/bin" ] && export PATH="$HOME/.cargo/bin:$PATH"
+[ -d "$HOME/.pub-cache/bin" ] && export PATH="$PATH":"$HOME/.pub-cache/bin"
 
 hash thefuck 2>/dev/null && eval $(thefuck --alias)
 
@@ -279,5 +282,6 @@ export FZF_DEFAULT_COMMAND='(git ls-tree -r --name-only HEAD || rg --files --no-
 export FZF_DEFAULT_COMMAND='(rg --files --no-ignore --hidden --follow --glob "!.git/*" || find . -path "*/\.*" -prune -o -type f -print -o -type l -print | sed s/^..//) 2> /dev/null'
 export FZF_DEFAULT_COMMAND='(rg --files || find . -path "*/\.*" -prune -o -type f -print -o -type l -print | sed s/^..//) 2> /dev/null'
 
+[ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh
 
 [ -d /home/linuxbrew/.linuxbrew/bin ] && export PATH=/home/linuxbrew/.linuxbrew/bin:$PATH

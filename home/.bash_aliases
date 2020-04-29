@@ -5,12 +5,13 @@ alias lla='ls -a'
 #alias l='ls -CF'
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
-alias act='[ -d env ] && source env/bin/activate || echo "No environment directory found here"'
+alias act='[ -d venv ] && source venv/bin/activate || echo "No environment directory found in venv"'
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 
 # Reload bashrc; best when editing .bashrc
 alias reload='reset; source ~/.bashrc'
 alias reloads='source ~/.bashrc &> /dev/null'
+alias sourcef='source ~/.bash_aliases ~/.bash_functions'
 alias biggest='BLOCKSIZE=1048576; du -x | sort -nr | head -10'
 
 ## App-specific aliases

@@ -22,14 +22,14 @@
     " Compile and find error
     Plugin 'scrooloose/syntastic'
     " Auto complete
-    "Plugin 'Shougo/neocomplcache.vim'
+    Plugin 'Shougo/neocomplcache.vim'
     "Plugin 'ycm-core/YouCompleteMe'
     "Plugin 'zxqfl/tabnine-vim'
-    if has('nvim')
-      Plugin 'Shougo/neocomplcache.vim'
-    else
-      Plugin 'zxqfl/tabnine-vim'
-    endif
+    "if has('nvim')
+      "Plugin 'Shougo/neocomplcache.vim'
+    "else
+      "Plugin 'zxqfl/tabnine-vim'
+    "endif
     " Tree mapped below at <F9>
     Plugin 'scrooloose/nerdtree'
     " Surround with brackets etc: Add cst", Remove ds", Change cs"', Full line yss(, Current word ysiw{, Visual V select S<p>
@@ -78,7 +78,7 @@
     Plugin 'jaxbot/semantic-highlight.vim'
     " EditorConfig support
     Plugin 'editorconfig/editorconfig-vim'
-    " Fuzzy Finder
+    " Fuzzy Finder : set rtp+=/usr/local/opt/fzf
     Plugin 'junegunn/fzf'
     Plugin 'junegunn/fzf.vim'
     " Vim Slime to copy paste from vim to tmux: C-c, C-c; :SlimeConfig Pane Syntax :i.j
