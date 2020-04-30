@@ -300,7 +300,8 @@ load_aliases() {
 
   if [ -f ~/.zsh_functions ]; then
       . ~/.zsh_functions
-  elif [ -f ~/.bash_functions ]; then
+  fi
+  if [ -f ~/.bash_functions ]; then
       . ~/.bash_functions
   fi
 }
