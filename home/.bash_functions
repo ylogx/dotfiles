@@ -29,7 +29,7 @@ function fgbr() {
 
 get_fortune_cookies() {
     if command_exists fortune; then
-        echo "Fortune Cookies :";
+        echo "Fortune Cookies:";
         if command_exists cowsay; then
             fortune | cowsay
         else
@@ -110,7 +110,7 @@ welcome_message() {
     # this will display the username, date, time, a calendar, the amount of users, and the up time.
     # Gotta love ASCII art with figlet
     check_and_run figlet "Welcome, " $USER;
-    echo -e "";
+    #echo -e "";
 
     print_date_cal
 
@@ -119,6 +119,7 @@ welcome_message() {
     #else
     #  print_system_status
     #fi
+    echo -e "";
     print_system_status_linux
 
     echo "";
