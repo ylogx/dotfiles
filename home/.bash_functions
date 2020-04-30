@@ -52,7 +52,7 @@ print_system_status_linux() {
     #echo -e "-------------------------------System Information----------------------------"
     echo "\tSystem Status"
     echo "\t============="
-    echo -e "Hostname:\t\t"`hostname` "("`vserver=$(lscpu | grep Hypervisor | wc -l); if [ $vserver -gt 0 ]; then echo "VM"; else echo "Physical"; fi`")"
+    echo -e "Hostname:\t\t"`hostname` "("`vserver=$(lscpu 2>/dev/null | grep Hypervisor | wc -l); if [ $vserver -gt 0 ]; then echo "VM"; else echo "Physical"; fi`")"
     if [[ -f "/sys/class/dmi/id/chassis_vendor" ]]; then
       echo -en "Laptop:\t\t\t"`cat /sys/class/dmi/id/chassis_vendor`
       if [[ -f "/sys/class/dmi/id/product_name" ]]; then
@@ -63,13 +63,13 @@ print_system_status_linux() {
     fi
     #echo -e "Version:\t\t"`cat /sys/class/dmi/id/product_version`
     #echo -e "Serial Number:\t\t"`cat /sys/class/dmi/id/product_serial`
-    echo -e "Operating System:\t"`hostnamectl | grep "Operating System" | cut -d ' ' -f5-`
+    hash hostnamectl 2>/dev/null && echo -e "Operating System:\t"`hostnamectl | grep "Operating System" | cut -d ' ' -f5-`
     echo -e "Kernel:\t\t\t"`uname -r` `arch`
-    echo -e "Processor Name:\t\t"`awk -F':' '/^model name/ {print $2}' /proc/cpuinfo | uniq | sed -e 's/^[ \t]*//'`
+    [[ -f "/proc/cpuinfo" ]] && echo -e "Processor Name:\t\t"`awk -F':' '/^model name/ {print $2}' /proc/cpuinfo | uniq | sed -e 's/^[ \t]*//'`
     #echo -e "Active User:\t\t"`w | cut -d ' ' -f1 | grep -v USER | xargs -n1`
     echo -e "Active User:\t\t${USER}"
     echo -e "Up Since:\t\t"`uptime | awk '{print $3,$4}' | sed 's/,//'`
-    echo -e "System Main IP:\t\t"`hostname -I`
+    echo -e "System Main IP:\t\t"`hash ipconfig 2>/dev/null && ipconfig getifaddr en0 || hostname -I`
     echo ""
     #echo -e "-------------------------------CPU/Memory Usage------------------------------"
     #echo -e "Memory Usage:\t"`free | awk '/Mem/{printf("%.2f%"), $3/$2*100}' 2>/dev/null`
@@ -94,6 +94,7 @@ print_system_status() {
     echo -en "\t"; df -h / | tail -n 1 | awk '{print "Root " $1 "\t:\t" $5 " full & " $4 " still available."}' ;
 
     ##### IP #####
+    #echo -en "\tIP Address \t:\t"; /sbin/ifconfig wlp3s0 | awk /'inet / {print $2}' | sed -e s/addr:/''/  || /sbin/ifconfig wlan0 || echo "" #dubious, gotta test
     echo -en "\tIP Address \t:\t"; /sbin/ifconfig wlp3s0 | awk /'inet / {print $2}' | sed -e s/addr:/''/  || /sbin/ifconfig wlan0 || echo "" #dubious, gotta test
 
     ##### Uptime #####
