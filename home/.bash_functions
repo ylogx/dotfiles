@@ -114,11 +114,12 @@ welcome_message() {
 
     print_date_cal
 
-    if [[ "${PLATFORM}" == "Linux" ]]; then
-      print_system_status_linux
-    else
-      print_system_status
-    fi
+    #if [[ "${PLATFORM}" == "Linux" ]]; then
+    #  print_system_status_linux
+    #else
+    #  print_system_status
+    #fi
+    print_system_status_linux
 
     echo "";
     # check_and_run_bg ansiweather;
