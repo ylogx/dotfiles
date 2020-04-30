@@ -70,11 +70,13 @@ print_system_status_linux() {
     echo -e "Active User:\t\t${USER}"
     echo -e "Up Since:\t\t"`uptime | awk '{print $3,$4}' | sed 's/,//'`
     echo -e "System Main IP:\t\t"`hash ipconfig 2>/dev/null && ipconfig getifaddr en0 || hostname -I`
-    echo ""
+    #echo ""
     #echo -e "-------------------------------CPU/Memory Usage------------------------------"
-    #echo -e "Memory Usage:\t"`free | awk '/Mem/{printf("%.2f%"), $3/$2*100}' 2>/dev/null`
-    #echo -e "Swap Usage:\t"`free | awk '/Swap/{printf("%.2f%"), $3/$2*100}' 2>/dev/null`
-    #echo -e "CPU Usage:\t"`cat /proc/stat | awk '/cpu/{printf("%.2f%\n"), ($2+$4)*100/($2+$4+$5)}' 2>/dev/null |  awk '{print $0}' | head -1`
+    if hash free 2>/dev/null; then
+      echo -e "Memory Usage:\t\tMain "`free | awk '/Mem/{printf("%.2f%"), $3/$2*100}' 2>/dev/null`"%" "and Swap "`free | awk '/Swap/{printf("%.2f%"), $3/$2*100}' 2>/dev/null`"%"
+      #echo -e "Swap Usage:\t\t"`free | awk '/Swap/{printf("%.2f%"), $3/$2*100}' 2>/dev/null`"%"
+    fi
+    [[ -f "/proc/stat" ]] && echo -e "CPU Usage:\t\t"`cat /proc/stat | awk '/cpu/{printf("%.2f%\n"), ($2+$4)*100/($2+$4+$5)}' 2>/dev/null |  awk '{print $0}' | head -1`"%"
     #echo ""
     #echo -e "-------------------------------Disk Usage >80%-------------------------------"
     #df -Ph | sed s/%//g | awk '{ if($5 > 80) print $0;}'
