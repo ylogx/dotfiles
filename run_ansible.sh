@@ -10,12 +10,10 @@ install_ansible() {
     if ! hash gcc 2>/dev/null; then
 	${SUDO_IF_NEEDED} apt-get install --yes gcc
     fi
-    if ! hash python 2>/dev/null; then
-	${SUDO_IF_NEEDED} apt-get install --yes python-dev libffi-dev libssl-dev libxml2-dev libxslt1-dev zlib1g-dev  # https://askubuntu.com/a/797363/259638
-	#${SUDO_IF_NEEDED} apt-get install libjpeg8-dev  # https://askubuntu.com/a/797363/259638
-	${SUDO_IF_NEEDED} apt-get install --yes python-pip
+    if ! hash python3 2>/dev/null; then
+	${SUDO_IF_NEEDED} apt-get install --yes python3 python3-pip  # https://askubuntu.com/a/797363/259638
     fi
-    ${SUDO_IF_NEEDED} python -m pip install ansible
+    ${SUDO_IF_NEEDED} python3 -m pip install ansible
 }
 
 if ! hash ansible-playbook 2>/dev/null; then

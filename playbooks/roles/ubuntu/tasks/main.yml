@@ -15,7 +15,7 @@
     - bash
     - bat
     - curl
-    - exa
+    #- exa
     - git
     - highlight
     - htop
@@ -26,6 +26,15 @@
     - vim
     - wget
     - zsh
+  tags: package
+
+- name: Install libraries using package manager that might not be available
+  package: name={{ item }} state=present
+  become: yes
+  become_method: sudo
+  with_items:
+    - exa
+  ignore_errors: true
   tags: package
 
 - name: Change shell to ZSH
