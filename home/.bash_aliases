@@ -36,9 +36,9 @@ hash aria2c 2>/dev/null && alias aria2cm='aria2c -c -x 16'
 #alias acki='ack --ignore-dir=build'
 alias acki='ack --ignore-dir=build --ignore-dir=doc'
 
-alias c='cat'
-hash pygmentize 2>/dev/null && alias c='pygmentize -g'
-hash bat 2>/dev/null && alias c='bat'
+alias c='temp_c() {[[ -d "$1" ]] && l "$1" || cat "$1"}; temp_c'
+hash pygmentize 2>/dev/null && alias c='temp_c() {[[ -d "$1" ]] && l "$1" || pygmentize -g "$1"}; temp_c'
+hash bat 2>/dev/null && alias c='temp_c() {[[ -d "$1" ]] && l "$1" || bat "$1"}; temp_c'
 hash highlight 2>/dev/null && alias cats='highlight -O ansi'
 #alias cdw ^defined above
 alias catlatest='cat `ls -t|head -1`'
