@@ -2,6 +2,7 @@
 # some more ls aliases
 alias ll='ls -alF'
 alias lla='ls -a'
+alias rg='rg --hidden'
 #alias l='ls -CF'
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
