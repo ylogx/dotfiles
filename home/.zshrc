@@ -77,7 +77,7 @@ plugins=(
     kubectl
     last-working-dir
     #lol
-    osx
+    macos
     pip
     pylint
     python
