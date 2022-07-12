@@ -57,9 +57,6 @@
 - name: Install apps with Homebrew Cask
   homebrew_cask: name={{ item }} state=present
   with_items:
-    - atom
-    - sublime-text
-    - vlc
     - font-hack
     - font-meslo-for-powerline
     - font-menlo-for-powerline
