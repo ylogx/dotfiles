@@ -9,11 +9,6 @@
     version: master
   tags: vim
 
-- name: Install/Update Vim Plugins
-  command: vim +PluginInstall! +qall
-  when: true
-  tags: vim
-
 - name: Install Tmux Plugin Manager
   git:
     repo: https://github.com/tmux-plugins/tpm
@@ -26,3 +21,8 @@
   ignore_errors: true
   when: true
   tags: tmux
+
+- name: Install/Update Vim Plugins
+  command: vim +PluginInstall! +qall
+  when: true
+  tags: vim
