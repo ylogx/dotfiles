@@ -13,7 +13,7 @@
   tags: brew
 
 - name: Tap fonts
-  homebrew_tap: tap=caskroom/fonts state=present
+  homebrew_tap: tap=homebrew/cask-fonts state=present
   tags: brew
 
 - name: Install libraries with Homebrew
