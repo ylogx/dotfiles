@@ -44,14 +44,15 @@
     - prettyping
     - python3
     - ripgrep
+    #- svn # Required by font-source-code-pro-for-powerline
+    - tree
+    - tmux
+    - tldr
     #- vim
     - watch
     - wget
-    - zsh
-    - tree
-    - tmux
     - xsv
-    - tldr
+    - zsh
   tags: brew
 
 - name: Install apps with Homebrew Cask
@@ -60,9 +61,9 @@
     - font-hack
     - font-meslo-for-powerline
     - font-menlo-for-powerline
-    - font-source-code-pro-for-powerline
-    - font-ubuntu-mono-derivative-powerline
-    - font-roboto-mono-for-powerline
+    #- font-source-code-pro-for-powerline
+    #- font-ubuntu-mono-derivative-powerline
+    #- font-roboto-mono-for-powerline
   tags: brew
 
 - name: Cleanup Brew packages
