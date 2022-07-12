@@ -6,7 +6,7 @@
 - name: Add homeshick
   become: false
   git:
-    repo: 'git://github.com/andsens/homeshick.git'
+    repo: 'https://github.com/andsens/homeshick.git'
     dest: $HOME/.homesick/repos/homeshick
     version: master
     track_submodules: yes
