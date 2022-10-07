@@ -221,11 +221,18 @@ aliasc() {
 }
 
 about () {
-  type $1
-  #where $1
-  which $1
-  xxd "$(which $1)" | head -25
-  bat "$(which $1)"
+  if [ -f "${1}" ] ; then
+    xxd "${1}" | head -25
+  else
+    type $1
+    #where $1
+    which $1
+    filename_for_about_binary="$(which ${1})"
+    if [ -f "${filename_for_about_binary}" ]; then
+      xxd "${filename_for_about_binary}" | head -25
+      hash bat && bat "${filename_for_about_binary}"
+    fi
+  fi
 }
 
 # vim: set ft=shell:
