@@ -225,6 +225,7 @@ about () {
   if [ -f "${1}" ] ; then
     file -pk "${1}"
     xxd "${1}" | head -25
+    hash exa || ls -ltrha --color "${1}" && exa -lsnew "${1}"
   else
     type $1
     #where $1
@@ -234,6 +235,7 @@ about () {
     if [ -f "${filename_for_about_binary}" ]; then
       xxd "${filename_for_about_binary}" | head -25
       hash bat && bat "${filename_for_about_binary}"
+      hash exa || ls -ltrha --color "${filename_for_about_binary}" && exa -lsnew "${filename_for_about_binary}"
     fi
   fi
 }
