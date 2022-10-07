@@ -220,4 +220,12 @@ aliasc() {
   alias | grep "^${1}=" | awk -F= '{ print $2 }' | sed "s/^'//" | sed "s/'$//"
 }
 
+about () {
+  type $1
+  #where $1
+  which $1
+  xxd "$(which $1)" | head -25
+  bat "$(which $1)"
+}
+
 # vim: set ft=shell:
