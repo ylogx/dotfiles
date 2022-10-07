@@ -222,12 +222,14 @@ aliasc() {
 
 about () {
   if [ -f "${1}" ] ; then
+    file "${1}"
     xxd "${1}" | head -25
   else
     type $1
     #where $1
     which $1
     filename_for_about_binary="$(which ${1})"
+    file "${filename_for_about_binary}"
     if [ -f "${filename_for_about_binary}" ]; then
       xxd "${filename_for_about_binary}" | head -25
       hash bat && bat "${filename_for_about_binary}"
