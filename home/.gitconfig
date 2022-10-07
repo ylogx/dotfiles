@@ -155,3 +155,5 @@
 	tool = vimdiff
 ;[mergetool "vimdiff"]
 	;cmd = vimdiff -c 'set diffopt+=iwhite'
+[init]
+	defaultBranch = main
