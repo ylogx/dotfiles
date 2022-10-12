@@ -228,10 +228,13 @@ about () {
     hash exa || ls -ltrha --color "${1}" && exa -lsnew "${1}"
   else
     type $1
-    #where $1
-    which $1
-    filename_for_about_binary="$(which ${1})"
+    #which $1
+    #filename_for_about_binary="$(which ${1})"
+
+    where $1
+    filename_for_about_binary="$(where ${1} | tail -1)"
     file -pk "${filename_for_about_binary}"
+
     if [ -f "${filename_for_about_binary}" ]; then
       my_hex_dump "${filename_for_about_binary}"
       hash bat && bat -r 1:25 "${filename_for_about_binary}"
@@ -242,8 +245,13 @@ about () {
 
 my_hex_dump () {
   filename_for_hexdump="${1}"
-  hash hexyl && hexyl -n 500 "${filename_for_hexdump}"
+
+  hash hexyl && hexyl -n=256 "${filename_for_hexdump}"
+  hash hexyl && hexyl -s=-128 "${filename_for_hexdump}"
+
   hash hexyl || xxd "${filename_for_hexdump}" | head -25
+  hash hexyl || xxd "${filename_for_hexdump}" | tail -5
+
   echo "For full hex dump, use:"
   echo "  hexyl ${filename_for_hexdump} | less"
 }
@@ -251,6 +259,7 @@ my_hex_dump () {
 dush () {
   # file_to_size=$(find "${1}" -mindepth 1 -maxdepth 1 | grep -v "^\.*$")
   # for i in ${file_to_size}; do
+
   for i in $(find "${1}" -mindepth 1 -maxdepth 1 | grep -v "^\.*$"); do
     hash diskus 2>/dev/null && echo "$(diskus $i)\t\t$i" || du -s $i | head -1;
   done # | sort -n
