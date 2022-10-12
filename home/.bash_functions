@@ -252,9 +252,7 @@ dush () {
   # file_to_size=$(find "${1}" -mindepth 1 -maxdepth 1 | grep -v "^\.*$")
   # for i in ${file_to_size}; do
   for i in $(find "${1}" -mindepth 1 -maxdepth 1 | grep -v "^\.*$"); do
-    # echo "$(diskus -v $i)\t\t$i";
-    # hash diskus && echo "$(diskus $i)\t\t$i"; # echo "$(diskus -v $i)\t\t$i";
-    echo "$(diskus $i)\t\t$i";
+    hash diskus 2>/dev/null && echo "$(diskus $i)\t\t$i" || du -s $i | head -1;
   done # | sort -n
 }
 
