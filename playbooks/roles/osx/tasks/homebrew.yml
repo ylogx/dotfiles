@@ -26,6 +26,7 @@
     - coreutils
     - curl
     - diff-so-fancy
+    - diskus
     - exa
     - fasd
     - fd

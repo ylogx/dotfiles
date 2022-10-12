@@ -13,12 +13,8 @@
   with_items:
     #- ack-grep  # Unavailable on ubuntu 17.10
     - bash
-    - bat
     - curl
-    - fd
-    #- exa
     - git
-    - hexyl
     - highlight
     - htop
     - nmap
@@ -35,7 +31,11 @@
   become: yes
   become_method: sudo
   with_items:
+    - bat
+    - diskus
+    - fd
     - exa
+    - hexyl
   ignore_errors: true
   tags: package
 
