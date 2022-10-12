@@ -23,6 +23,7 @@
     - ack
     - ansible
     - bat
+    # - binocle # cargo install binocle
     - coreutils
     - curl
     - diff-so-fancy

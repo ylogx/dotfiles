@@ -32,6 +32,7 @@
   become_method: sudo
   with_items:
     - bat
+    # - binocle # cargo install binocle
     - diskus
     - fd
     - exa
