@@ -6,7 +6,7 @@
 - name: Add homeshick
   become: false
   git:
-    repo: 'https://github.com/andsens/homeshick.git'
+    repo: "https://github.com/andsens/homeshick.git"
     dest: $HOME/.homesick/repos/homeshick
     version: master
     track_submodules: yes
@@ -33,5 +33,4 @@
   when: true
   args:
     chdir: ~/.homesick/repos/homeshick/bin
-
 # name: Pop Stash

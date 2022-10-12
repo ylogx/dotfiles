@@ -2,9 +2,9 @@
 - include_tasks: hub.yml
 
 #- name: Update packages
-  #become: yes
-  #apt: upgrade=dist update_cache=yes
-  #tags: package
+#  become: yes
+#  apt: upgrade=dist update_cache=yes
+#  tags: package
 
 - name: Install libraries using package manager
   package: name={{ item }} state=present

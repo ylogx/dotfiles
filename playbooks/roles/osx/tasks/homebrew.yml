@@ -37,7 +37,7 @@
     - highlight
     - htop
     - hub
-    - macvim  # Has better integration with mac
+    - macvim # Has better integration with mac
     - ncdu
     - nmap
     - noti
