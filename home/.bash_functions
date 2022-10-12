@@ -224,7 +224,7 @@ aliasc() {
 about () {
   if [ -f "${1}" ] ; then
     file -pk "${1}"
-    xxd "${1}" | head -25
+    my_hex_dump "${1}"
     hash exa || ls -ltrha --color "${1}" && exa -lsnew "${1}"
   else
     type $1
@@ -233,11 +233,19 @@ about () {
     filename_for_about_binary="$(which ${1})"
     file -pk "${filename_for_about_binary}"
     if [ -f "${filename_for_about_binary}" ]; then
-      xxd "${filename_for_about_binary}" | head -25
-      hash bat && bat "${filename_for_about_binary}"
+      my_hex_dump "${filename_for_about_binary}"
+      hash bat && bat -r 1:25 "${filename_for_about_binary}"
       hash exa || ls -ltrha --color "${filename_for_about_binary}" && exa -lsnew "${filename_for_about_binary}"
     fi
   fi
+}
+
+my_hex_dump () {
+  filename_for_hexdump="${1}"
+  hash hexyl && hexyl -n 500 "${filename_for_hexdump}"
+  hash hexyl || xxd "${filename_for_hexdump}" | head -25
+  echo "For full hex dump, use:"
+  echo "  hexyl ${filename_for_hexdump} | less"
 }
 
 # vim: set ft=shell:

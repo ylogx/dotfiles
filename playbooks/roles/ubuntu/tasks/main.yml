@@ -15,8 +15,10 @@
     - bash
     - bat
     - curl
+    - fd
     #- exa
     - git
+    - hexyl
     - highlight
     - htop
     - nmap

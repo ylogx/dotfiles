@@ -16,6 +16,7 @@
   homebrew_tap: tap=homebrew/cask-fonts state=present
   tags: brew
 
+# TODO: Set this up for linuxbrew as well.
 - name: Install libraries with Homebrew
   homebrew: name={{ item }} state=present
   with_items:
@@ -32,6 +33,7 @@
     - fzf
     - git
     - gnu-sed
+    - hexyl
     - highlight
     - htop
     - hub
