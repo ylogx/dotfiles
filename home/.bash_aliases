@@ -150,7 +150,8 @@ alias sshbac='autossh -M 0 -nNTC -o "ServerAliveInterval 10" -o "ServerAliveCoun
 alias sudoh='sudo -H'
 #alias tree='tree -Csh'        # nice alternative to 'ls'
 hash tree 2>/dev/null && alias t='tree -Csh'        # nice alternative to 'ls'
-hash tree 2>/dev/null && alias t3='tree -Csh -L 3' && alias t5='tree -Csh -L 5'        # nice alternative to 'ls'
+hash tree 2>/dev/null && alias t2='tree -Csh -L 2' && alias t3='tree -Csh -L 3'
+hash tree 2>/dev/null && alias t4='tree -Csh -L 4' && alias t5='tree -Csh -L 5'        # nice alternative to 'ls'
 alias tf="find . -print | sed -e 's;[^/]*/;|____;g;s;____|; |;g'"
 hash tmux 2>/dev/null && alias ta='tmux attach'
 alias timev='/usr/bin/time -v'
