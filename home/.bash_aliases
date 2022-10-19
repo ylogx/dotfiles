@@ -40,6 +40,7 @@ alias acki='ack --ignore-dir=build --ignore-dir=doc'
 alias c='temp_c() {[[ -d "$1" ]] && l "$1" || cat "$1"}; temp_c'
 hash pygmentize 2>/dev/null && alias c='temp_c() {[[ -d "$1" ]] && l "$1" || pygmentize -g "$1"}; temp_c'
 hash bat 2>/dev/null && alias c='temp_c() {[[ -d "$1" ]] && l "$1" || bat "$1"}; temp_c'
+hash bat 2>/dev/null && alias bp='temp_c() {[[ -d "$1" ]] && l "$1" || bat -P "$1"}; temp_c'
 hash highlight 2>/dev/null && alias cats='highlight -O ansi'
 #alias cdw ^defined above
 alias catlatest='cat `ls -t|head -1`'
