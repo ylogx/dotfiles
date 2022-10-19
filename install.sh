@@ -21,10 +21,10 @@ cd ${HOLDING_LOCATION}
 if [[ -d ${HOLDING_LOCATION}/.git ]]; then
     # if [[ ! -f ~/.dev_aliases ]]; then # TODO: Use better proxy to figure out if installation has finished.
     if [[ ! `git status --porcelain --untracked-files=no` ]]; then # No local git changes, can pull safely
-        if $(git show-ref --verify --quiet "refs/heads/master"); then
+        if $(git show-ref --verify --quiet "refs/heads/main"); then
             install_git_if_needed
             echo "Pulling latest changes from dotfiles repo."
-            git pull origin master
+            git pull origin main
         fi
     fi
 fi
