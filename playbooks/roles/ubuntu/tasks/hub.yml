@@ -5,12 +5,11 @@
     path: /usr/local/bin/hub
   register: hub_executable
 
-# TODO: Use latest version
 - name: Fetch hub.github.com
   get_url:
-    url: https://github.com/github/hub/releases/download/v2.3.0-pre10/hub-linux-amd64-2.3.0-pre10.tgz
+    url: https://github.com/github/hub/releases/download/v2.14.2/hub-linux-amd64-2.14.2.tgz
     dest: /tmp/hub.tgz
-    checksum: md5:08560440d4a3563ee00412c3252db313
+    checksum: sha1:b14d7e16d45bce26ee6c2cc19fa2e4b4535ca9c6
   when: not hub_executable.stat.exists
   tags: hub
 
@@ -33,6 +32,6 @@
   become: true
   command: ./install
   args:
-    chdir: /tmp/hub/hub-linux-amd64-2.3.0-pre10
+    chdir: /tmp/hub/hub-linux-amd64-2.14.2
   when: not hub_executable.stat.exists
   tags: hub
