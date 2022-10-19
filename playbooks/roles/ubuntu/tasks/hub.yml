@@ -4,6 +4,7 @@
   stat:
     path: /usr/local/bin/hub
   register: hub_executable
+  when: ansible_architecture == "x86_64"
 
 - name: Fetch hub.github.com
   get_url:
