@@ -8,3 +8,6 @@
 - name: "Show hidden files in Finder"
   command: defaults write com.apple.finder AppleShowAllFiles TRUE
   when: true
+
+- name: "Restart all Finder windows"
+  command: killall Finder
