@@ -21,6 +21,17 @@ cd ${HOLDING_LOCATION}
 if [[ -d ${HOLDING_LOCATION}/.git ]]; then
     # if [[ ! -f ~/.dev_aliases ]]; then # TODO: Use better proxy to figure out if installation has finished.
     if [[ ! `git status --porcelain --untracked-files=no` ]]; then # No local git changes, can pull safely
+        if [[ "$(git branch --show-current --quiet)" == "master" ]]; then
+            echo "Switching from master to main branch"
+            if [[ ! $(git show-ref --verify --quiet "refs/heads/main") ]]; then
+                echo "Fetching latest main branch"
+                git fetch --all
+                git checkout main
+            fi
+            echo "Pulling latest changes for main branch from dotfiles repo."
+            git pull --set-upstream origin main
+        fi
+
         if $(git show-ref --verify --quiet "refs/heads/main"); then
             install_git_if_needed
             echo "Pulling latest changes from dotfiles repo."
