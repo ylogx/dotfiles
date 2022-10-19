@@ -27,6 +27,7 @@ if [[ -d ${HOLDING_LOCATION}/.git ]]; then
                 echo "Fetching latest main branch"
                 git fetch --all
                 git checkout main
+                git remote set-head origin main
             fi
             echo "Pulling latest changes for main branch from dotfiles repo."
             git pull --set-upstream origin main
