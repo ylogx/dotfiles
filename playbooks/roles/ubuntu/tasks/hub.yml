@@ -4,21 +4,20 @@
   stat:
     path: /usr/local/bin/hub
   register: hub_executable
-  when: ansible_architecture == "x86_64"
 
 - name: Fetch hub.github.com
   get_url:
     url: https://github.com/github/hub/releases/download/v2.14.2/hub-linux-amd64-2.14.2.tgz
     dest: /tmp/hub.tgz
     checksum: sha1:b14d7e16d45bce26ee6c2cc19fa2e4b4535ca9c6
-  when: not hub_executable.stat.exists
+  when: not hub_executable.stat.exists and ansible_architecture == "x86_64"
   tags: hub
 
 - name: Create temp hub folder
   file:
     path: /tmp/hub
     state: directory
-  when: not hub_executable.stat.exists
+  when: not hub_executable.stat.exists and ansible_architecture == "x86_64"
   tags: hub
 
 - name: Unarchive hub
@@ -26,7 +25,7 @@
     src: /tmp/hub.tgz
     dest: /tmp/hub
     remote_src: yes
-  when: not hub_executable.stat.exists
+  when: not hub_executable.stat.exists and ansible_architecture == "x86_64"
   tags: hub
 
 - name: Install hub
@@ -34,5 +33,5 @@
   command: ./install
   args:
     chdir: /tmp/hub/hub-linux-amd64-2.14.2
-  when: not hub_executable.stat.exists
+  when: not hub_executable.stat.exists and ansible_architecture == "x86_64"
   tags: hub
