@@ -1,9 +1,11 @@
 ---
+# TODO: Use linuxbrew to install hub
 - name: Check if hub is already installed
   stat:
     path: /usr/local/bin/hub
   register: hub_executable
 
+# TODO: Use latest version
 - name: Fetch hub.github.com
   get_url:
     url: https://github.com/github/hub/releases/download/v2.3.0-pre10/hub-linux-amd64-2.3.0-pre10.tgz
