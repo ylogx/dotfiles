@@ -1,0 +1,45 @@
+---
+#- name: Update packages
+#  become: yes
+#  apt: upgrade=dist update_cache=yes
+#  tags: package
+
+- name: Install libraries using package manager
+  package: name={{ item }} state=present
+  become: true
+  become_method: sudo
+  with_items:
+    #- ack-grep  # Unavailable on ubuntu 17.10
+    - bash
+    - curl
+    - git
+    - highlight
+    - htop
+    - nmap
+    - python3
+    - tmux
+    - tree
+    - vim
+    - wget
+    - zsh
+  tags: package
+
+- name: Install libraries using package manager that might not be available
+  package: name={{ item }} state=present
+  become: true
+  become_method: sudo
+  with_items:
+    - bat
+    # - binocle # cargo install binocle
+    - diskus
+    - fd
+    - exa
+    - hexyl
+  ignore_errors: true
+  tags: package
+
+- name: Change shell to ZSH
+  become: true
+  become_method: sudo
+  user: shell=/bin/zsh name=chaudhary
+  # TODO: Change chaudhary to variable user
