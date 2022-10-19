@@ -32,10 +32,20 @@
     state: present
     name:
       - bat
-      # - binocle # cargo install binocle
-      - diskus
-      - fd
       - exa
       - hexyl
+  ignore_errors: true
+  tags: package
+
+- name: Install libraries using package manager that unlikely to be available
+  become: true
+  become_method: sudo
+  package:
+    state: present
+    name: "{{ item }}"
+  with_items:
+    #- binocle # cargo install binocle
+    - diskus
+    - fd
   ignore_errors: true
   tags: package
