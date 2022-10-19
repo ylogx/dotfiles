@@ -12,65 +12,70 @@
   tags: brew
 
 - name: Update Homebrew
-  homebrew: update_homebrew=yes
-  tags: brew
-
-- name: Tap fonts
-  homebrew_tap: tap=homebrew/cask-fonts state=present
+  homebrew:
+    update_homebrew: true
   tags: brew
 
 # TODO: Set this up for linuxbrew as well.
 - name: Install libraries with Homebrew
-  homebrew: name={{ item }} state=present
-  with_items:
-    - ack
-    - ansible
-    - bat
-    # - binocle # cargo install binocle
-    - coreutils
-    - curl
-    - diff-so-fancy
-    - diskus
-    - exa
-    - fasd
-    - fd
-    - findutils
-    - fzf
-    - git
-    - gnu-sed
-    - hexyl
-    - highlight
-    - htop
-    - hub
-    - macvim # Has better integration with mac
-    - ncdu
-    - nmap
-    - noti
-    - openssl
-    - ponysay
-    - prettyping
-    - python3
-    - ripgrep
-    #- svn # Required by font-source-code-pro-for-powerline
-    - tree
-    - tmux
-    - tldr
-    #- vim
-    - watch
-    - wget
-    - xsv
-    - zsh
+  homebrew:
+    state: present
+    name:
+      - ack
+      - ansible
+      - bat
+      # - binocle # cargo install binocle
+      - coreutils
+      - curl
+      - diff-so-fancy
+      - diskus
+      - exa
+      - fasd
+      - fd
+      - findutils
+      - fzf
+      - git
+      - gnu-sed
+      - hexyl
+      - highlight
+      - htop
+      - hub
+      - macvim # Has better integration with mac
+      - ncdu
+      - nmap
+      - noti
+      - openssl
+      - ponysay
+      - prettyping
+      - python3
+      - ripgrep
+      #- svn # Required by font-source-code-pro-for-powerline
+      - tree
+      - tmux
+      - tldr
+      #- vim
+      - watch
+      - wget
+      - xsv
+      - zsh
+  tags: brew
+
+- name: Tap fonts
+  homebrew_tap:
+    tap: homebrew/cask-fonts
+    state: present
   tags: brew
 
 - name: Install apps with Homebrew Cask
-  homebrew_cask: name={{ item }} state=present
-  with_items:
-    - font-hack
-    - font-meslo-for-powerline
-    - font-menlo-for-powerline
-    #- font-source-code-pro-for-powerline
-    #- font-ubuntu-mono-derivative-powerline
-    #- font-roboto-mono-for-powerline
+  homebrew_cask:
+    state: present
+    name:
+      - font-hack
+      - font-meslo-for-powerline
+      - font-menlo-for-powerline
+      #- font-source-code-pro-for-powerline
+      #- font-ubuntu-mono-derivative-powerline
+      #- font-roboto-mono-for-powerline
   tags: brew
 
 - name: Cleanup Brew packages

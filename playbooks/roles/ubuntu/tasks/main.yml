@@ -1,3 +1,10 @@
 ---
 - include_tasks: hub.yml
 - include_tasks: package.yml
+
+- name: Change shell to ZSH
+  become: true
+  become_method: sudo
+  user:
+    name: "{{ ansible_user }}"
+    shell: /bin/zsh
