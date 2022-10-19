@@ -1,0 +1,13 @@
+---
+- name: "Save screenshots to Pictures"
+  command: defaults write com.apple.screencapture location ~/Pictures/
+  tags: settings
+
+- name: "Show hidden files in Finder"
+  command: defaults write com.apple.finder AppleShowAllFiles TRUE
+  tags: settings
+
+- name: "Restart all Finder windows"
+  command: killall Finder
+  tags: settings
+  # TODO: Only perform if previous command makes changes

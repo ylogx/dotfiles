@@ -3,11 +3,13 @@
   stat:
     path: /usr/local/bin/brew
   register: brew_executable
+  tags: brew
 
 - name: Install Homebrew
   become: true
   shell: yes | /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
   when: not brew_executable.stat.exists
+  tags: brew
 
 - name: Update Homebrew
   homebrew: update_homebrew=yes
