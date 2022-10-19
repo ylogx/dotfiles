@@ -1,6 +1,11 @@
 ---
+- name: "Current screenshots location"
+  command: defaults read com.apple.screencapture location
+  register: screenshot_location
+
 - name: "Save screenshots to Pictures"
   command: defaults write com.apple.screencapture location ~/Pictures/
+  # when: screenshot_location != ~/Pictures/
   tags: settings
 
 - name: "Show hidden files in Finder"
