@@ -41,5 +41,6 @@
 - name: Change shell to ZSH
   become: true
   become_method: sudo
-  user: shell=/bin/zsh name=chaudhary
-  # TODO: Change chaudhary to variable user
+  user:
+    name: "{{ ansible_user }}"
+    shell: /bin/zsh
