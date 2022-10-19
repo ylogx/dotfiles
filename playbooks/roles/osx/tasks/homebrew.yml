@@ -5,7 +5,8 @@
   register: brew_executable
 
 - name: Install Homebrew
-  shell: yes | /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+  become: true
+  shell: yes | /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
   when: not brew_executable.stat.exists
 
 - name: Update Homebrew
@@ -72,5 +73,4 @@
 
 - name: Cleanup Brew packages
   command: brew cleanup
-  when: true
   tags: brew
