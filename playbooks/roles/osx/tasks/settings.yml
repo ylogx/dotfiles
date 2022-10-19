@@ -1,18 +1,24 @@
 ---
-- name: "Current screenshots location"
-  command: defaults read com.apple.screencapture location
-  register: screenshot_location
-
 - name: "Save screenshots to Pictures"
-  command: defaults write com.apple.screencapture location ~/Pictures/
-  # when: screenshot_location != ~/Pictures/
+  community.general.osx_defaults:
+    domain: com.apple.screencapture
+    key: location
+    type: string
+    value: "~/Pictures/ScreenShots"
+    state: present
   tags: settings
 
 - name: "Show hidden files in Finder"
-  command: defaults write com.apple.finder AppleShowAllFiles TRUE
+  community.general.osx_defaults:
+    domain: com.apple.finder
+    key: AppleShowAllFiles
+    type: bool
+    value: true
+    state: present
+  register: settings_hidden_file_changes
   tags: settings
 
 - name: "Restart all Finder windows"
   command: killall Finder
+  when: settings_hidden_file_changes.changed
   tags: settings
-  # TODO: Only perform if previous command makes changes
