@@ -1,0 +1,21 @@
+---
+- name: Install fish shell with package manager
+  package:
+    name: fish
+    state: present
+  tags: fish
+
+#- name: Check if oh-my-fish is already installed
+#  stat:
+#    path: $HOME/.local/share/omf
+#  register: omf_directory
+#  tags: fish
+
+- name: Add ohmyfish package
+  become: false
+  command:
+    cmd: fish -c 'curl -L https://get.oh-my.fish | fish'
+    creates: $HOME/.local/share/omf
+  #when: not omf_directory.stat.isdir
+  ignore_errors: true
+  tags: fish

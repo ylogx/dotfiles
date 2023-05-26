@@ -2,3 +2,30 @@
 - include_tasks: ohmyzsh.yml
 - include_tasks: homesick.yml
 - include_tasks: plugins.yml
+- include_tasks: ohmyfish.yml
+  tags: fish
+
+- name: Clone Vim Plugin Manager - Vundle
+  git:
+    repo: https://github.com/gmarik/Vundle.vim.git
+    dest: ~/.vim/bundle/vundle
+    version: master
+  tags: vim
+
+- name: Install Tmux Plugin Manager
+  git:
+    repo: https://github.com/tmux-plugins/tpm
+    dest: ~/.tmux/plugins/tpm
+    version: master
+  tags: tmux
+
+- name: Install Tmux Plugins
+  command: tmux source ~/.tmux.conf && ~/.tmux/plugins/tpm/bin/install_plugins
+  ignore_errors: true
+  when: true
+  tags: tmux
+
+- name: Install/Update Vim Plugins
+  command: vim +PluginInstall! +qall
+  when: true
+  tags: vim
