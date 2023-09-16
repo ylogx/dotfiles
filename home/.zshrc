@@ -1,22 +1,8 @@
+#################
+### Oh My Zsh ###
+#################
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
-
-PLATFORM='Unknown'
-unamestr=`uname`
-if [[ "$unamestr" == 'Linux' ]]; then
-   PLATFORM='Linux'
-elif [[ "$unamestr" == 'Darwin' ]]; then
-   PLATFORM='Mac'
-elif [[ "$unamestr" == 'FreeBSD' ]]; then
-   PLATFORM='FreeBSD'
-fi
-
-# Set name of the theme to load.
-# Look in ~/.oh-my-zsh/themes/
-# Optionally, if you set this to "random", it'll load a random theme each
-# time that oh-my-zsh is loaded.
-# ZSH_THEME="shubhamchaudhary"
-# ZSH_THEME="agnoster-sc"
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -57,81 +43,30 @@ COMPLETION_WAITING_DOTS="true"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 #plugins=(
-#    brew
-#    #chruby
-#    chucknorris
-#    docker
-#    docker-compose
-#    #fortune
-#    git
-#    git-extras
-#    github
-#    git-flow
-#    gnu-utils
-#    golang
-#    gpg-agent
-#    #gradle
-#    heroku
-#    history-substring-search
-#    jruby
-#    kubectl
-#    last-working-dir
-#    #lol
-#    macos
-#    pip
-#    pylint
-#    python
-#    #rails
-#    rake
-#    rake-fast
-#    ruby
-#    sublime
-#    sudo
-#    web-search
-#    #tmux
-#    yum
 #    #zsh-completions
 #    #zsh-syntax-highlighting
-#    #zsh-wakatime
 #    )
 
 # User configuration
 ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern cursor)
 # paths at bottom of file
-
 # export MANPATH="/usr/local/man:$MANPATH"
-
 ### source $ZSH/oh-my-zsh.sh
 
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8
-
-# Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='mvim'
-# fi
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
 
 # ssh
 # export SSH_KEY_PATH="~/.ssh/dsa_id"
-
-# Set personal aliases, overriding those provided by oh-my-zsh libs,
-# plugins, and themes. Aliases can be placed here, though oh-my-zsh
-# users are encouraged to define aliases within the ZSH_CUSTOM folder.
-# For a full list of active aliases, run `alias`.
-#
-# Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
-#
-
-
-
 ##################################################################
+
+
+###############
+### Antigen ###
+###############
 #source ~/bin/antigen.zsh
 source /usr/local/share/antigen/antigen.zsh # brew install antigen
 
@@ -230,6 +165,20 @@ antigen theme agnoster
 antigen apply
 ##################################################################
 
+
+#########################
+### Platform Specific ###
+#########################
+PLATFORM='Unknown'
+unamestr=`uname`
+if [[ "$unamestr" == 'Linux' ]]; then
+   PLATFORM='Linux'
+elif [[ "$unamestr" == 'Darwin' ]]; then
+   PLATFORM='Mac'
+elif [[ "$unamestr" == 'FreeBSD' ]]; then
+   PLATFORM='FreeBSD'
+fi
+
 if [ -d "$HOME/.homesick" ]; then
     source "$HOME/.homesick/repos/homeshick/homeshick.sh"
     #source "$HOME/.homesick/repos/homeshick/completions/homeshick-completion.bash"
@@ -264,14 +213,22 @@ elif [[ $PLATFORM == 'Mac' ]]; then
     #export IDEA_HOME=$JAVA_HOME
     #export PATH=$JAVA_HOME/bin:$PATH
 fi
+##################################################################
 
+###################
+### Executables ###
+###################
 [ -d $HOME/bin ] && export PATH=$HOME/bin:$PATH
 [ -d $HOME/.local/bin ] && export PATH=$PATH:$HOME/.local/bin
 
-### Added by the Heroku Toolbelt
-[ -d '/usr/local/heroku/bin' ] && export PATH="/usr/local/heroku/bin:$PATH"
+#export PATH="/usr/local/bin:$PATH"
+[ -d "$HOME/.local/bin" ] && export PATH=$HOME/.local/bin:$PATH
+[ -d "/usr/local/sbin" ] && export PATH=/usr/local/sbin:$PATH
+##################################################################
 
-#SSH Agent and GPG Agent
+###############################
+### SSH Agent and GPG Agent ###
+###############################
 #eval "$(ssh-agent)" > /dev/null    # Naive approach, leaves a lot of orphan agents
 add_ssh_agent_safely() {
   if [ ! -S ~/.ssh/ssh_auth_sock ]; then
@@ -314,13 +271,20 @@ fi
 if [ -S "$SSH_AUTH_SOCK" ]; then
   ssh-add -l > /dev/null || ssh-add
 fi
+##################################################################
 
+
+#########################
+### Software Specific ###
+#########################
 #Hierarchy Viewer Variable
 export ANDROID_HVPROTO=ddm
 
 export EDITOR=vi
 export VISUAL=vi
 
+### Added by the Heroku Toolbelt
+[ -d '/usr/local/heroku/bin' ] && export PATH="/usr/local/heroku/bin:$PATH"
 
 # added by travis gem
 [ -f ~/.travis/travis.sh ] && source ~/.travis/travis.sh
@@ -333,9 +297,6 @@ if which pyenv > /dev/null; then eval "$(pyenv init -)"; eval "$(pyenv virtualen
 #if [ -f ~/google-cloud-sdk/completion.zsh.inc ]; then
   #source '~/google-cloud-sdk/completion.zsh.inc'
 #fi
-#export PATH="/usr/local/bin:$PATH"
-[ -d "$HOME/.local/bin" ] && export PATH=$HOME/.local/bin:$PATH
-[ -d "/usr/local/sbin" ] && export PATH=/usr/local/sbin:$PATH
 
 # added by Anaconda3 4.2.0 installer
 [ -d "/opt/anaconda3/bin" ] && export PATH="/opt/anaconda3/bin:$PATH"
@@ -392,7 +353,11 @@ load_conda() {
   unset __conda_setup
   # <<< conda initialize <<<
 }
+#################################################################
 
+###############
+### Aliases ###
+###############
 load_aliases() {
   if [ -f ~/.zsh_aliases ]; then
       . ~/.zsh_aliases
@@ -408,4 +373,10 @@ load_aliases() {
   fi
 }
 load_aliases # Doing this at the end, so that $PATH is properly filled
+#################################################################
+
+
+###########################
+### Welcome to home! <3 ###
+###########################
 type welcome_message >/dev/null && welcome_message
