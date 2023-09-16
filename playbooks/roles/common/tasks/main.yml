@@ -19,6 +19,7 @@
     version: master
   tags: tmux
 
+# These are the two commands that you may have to run manually
 - name: Install Tmux Plugins
   command: tmux source ~/.tmux.conf && ~/.tmux/plugins/tpm/bin/install_plugins
   ignore_errors: true
