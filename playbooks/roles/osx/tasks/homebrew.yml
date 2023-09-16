@@ -50,6 +50,7 @@
       - prettyping
       - python3
       - ripgrep
+      - starship
       #- svn # Required by font-source-code-pro-for-powerline
       - tree
       - tmux

@@ -122,9 +122,10 @@ antigen bundle zsh-users/zsh-syntax-highlighting
 
 # Load the theme.
 #antigen theme robbyrussell
-antigen theme agnoster
+# antigen theme agnoster
 
-#antigen theme denysdovhan/spaceship-prompt
+antigen bundle starship
+# antigen theme spaceship-prompt/spaceship-prompt
 #SPACESHIP_PROMPT_ORDER=(
 #  time          # Time stamps section
 #  user          # Username section
