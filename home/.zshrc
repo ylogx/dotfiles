@@ -383,3 +383,5 @@ load_aliases # Doing this at the end, so that $PATH is properly filled
 ### Welcome to home! <3 ###
 ###########################
 type welcome_message >/dev/null && welcome_message
+
+eval "$(starship init zsh)"
