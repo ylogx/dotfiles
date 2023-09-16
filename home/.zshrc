@@ -262,6 +262,9 @@ if [ -f '~/sdk/google-cloud-sdk/path.zsh.inc' ]; then . '~/sdk/google-cloud-sdk/
 # The next line enables shell command completion for gcloud.
 if [ -f '~/sdk/google-cloud-sdk/completion.zsh.inc' ]; then . '~/sdk/google-cloud-sdk/completion.zsh.inc'; fi
 
+### FZF ###
+# To install useful key bindings and fuzzy completion:
+# $(brew --prefix)/opt/fzf/install
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 [ -f /usr/share/doc/fzf/examples/key-bindings.zsh ] && source /usr/share/doc/fzf/examples/key-bindings.zsh
 #export FZF_DEFAULT_COMMAND='(git ls-tree -r --name-only HEAD || rg --files || find . -path "*/\.*" -prune -o -type f -print -o -type l -print | sed s/^..//) 2> /dev/null'
