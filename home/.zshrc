@@ -132,7 +132,8 @@ ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern cursor)
 
 
 ##################################################################
-source ~/bin/antigen.zsh
+#source ~/bin/antigen.zsh
+source /usr/local/share/antigen/antigen.zsh # brew install antigen
 
 # Load the oh-my-zsh's library.
 antigen use oh-my-zsh
@@ -145,11 +146,11 @@ antigen use oh-my-zsh
 #antigen bundle command-not-found
 
 antigen bundle brew
-antigen bundle chruby
+#antigen bundle chruby
 antigen bundle chucknorris
 antigen bundle docker
 antigen bundle docker-compose
-antigen bundle fortune
+#antigen bundle fortune
 antigen bundle git
 antigen bundle git-extras
 antigen bundle github
@@ -164,7 +165,7 @@ antigen bundle jruby
 antigen bundle kubectl
 antigen bundle last-working-dir
 #antigen bundle #lol
-antigen bundle osx
+antigen bundle macos
 antigen bundle pip
 antigen bundle pylint
 antigen bundle python
@@ -177,9 +178,9 @@ antigen bundle sudo
 antigen bundle web-search
 #antigen bundle #tmux
 antigen bundle yum
-antigen bundle zsh-completions
-antigen bundle zsh-syntax-highlighting
-antigen bundle zsh-wakatime
+#antigen bundle zsh-completions
+#antigen bundle zsh-syntax-highlighting
+#antigen bundle zsh-wakatime
 
 # Syntax highlighting bundle.
 antigen bundle zsh-users/zsh-syntax-highlighting
