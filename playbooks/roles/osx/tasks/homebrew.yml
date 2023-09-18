@@ -41,6 +41,7 @@
       - highlight
       - htop
       - hub
+      - jump # Better cd
       - macvim # Has better integration with mac
       - ncdu
       - nmap

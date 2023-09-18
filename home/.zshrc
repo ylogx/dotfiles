@@ -341,6 +341,8 @@ export FZF_DEFAULT_COMMAND='(git ls-tree -r --name-only HEAD || rg --files --no-
 export FZF_DEFAULT_COMMAND='(rg --files --no-ignore --hidden --follow --glob "!.git/*" || find . -path "*/\.*" -prune -o -type f -print -o -type l -print | sed s/^..//) 2> /dev/null'
 export FZF_DEFAULT_COMMAND='(rg --files || find . -path "*/\.*" -prune -o -type f -print -o -type l -print | sed s/^..//) 2> /dev/null'
 
+hash jump 2>/dev/null && eval "$(jump shell)"
+
 [ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh
 
 [ -d /home/linuxbrew/.linuxbrew/bin ] && export PATH=/home/linuxbrew/.linuxbrew/bin:$PATH
