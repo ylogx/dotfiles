@@ -342,6 +342,7 @@ export FZF_DEFAULT_COMMAND='(rg --files --no-ignore --hidden --follow --glob "!.
 export FZF_DEFAULT_COMMAND='(rg --files || find . -path "*/\.*" -prune -o -type f -print -o -type l -print | sed s/^..//) 2> /dev/null'
 
 hash jump 2>/dev/null && eval "$(jump shell)"
+hash zoxide 2>/dev/null && eval "$(zoxide init zsh)"
 
 [ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh
 

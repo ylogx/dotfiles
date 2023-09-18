@@ -41,7 +41,7 @@
       - highlight
       - htop
       - hub
-      - jump # Better cd
+      #- jump # Better cd
       - macvim # Has better integration with mac
       - ncdu
       - nmap
@@ -60,6 +60,7 @@
       - watch
       - wget
       - xsv
+      - zoxide # Better cd
       - zsh
   tags: brew
 
