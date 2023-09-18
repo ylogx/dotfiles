@@ -24,20 +24,20 @@
       - ack
       - antigen
       - ansible
-      - bat
+      - bat # Better cat
       # - binocle # cargo install binocle
       - coreutils
       - curl
       - diff-so-fancy
-      - diskus
-      - exa
+      - diskus # Better du
+      - exa # Better ls
       - fasd
-      - fd
+      - fd # Better find
       - findutils
-      - fzf
+      - fzf # Better ctrl-r
       - git
       - gnu-sed
-      - hexyl
+      - hexyl # Better xxd
       - highlight
       - htop
       - hub
@@ -50,12 +50,12 @@
       - ponysay
       - prettyping
       - python3
-      - ripgrep
-      - starship
+      - ripgrep # Better grep
+      - starship # Better prompt
       #- svn # Required by font-source-code-pro-for-powerline
       - tree
       - tmux
-      - tldr
+      - tldr # Better man
       #- vim
       - watch
       - wget
