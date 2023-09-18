@@ -107,15 +107,19 @@ antigen bundle python
 #antigen bundle #rails
 antigen bundle rake
 antigen bundle rake-fast
+antigen bundle redis-cli
 antigen bundle ruby
+antigen bundle rust
 antigen bundle sublime
 antigen bundle sudo
+antigen bundle ufw
 antigen bundle web-search
 #antigen bundle #tmux
 antigen bundle yum
 #antigen bundle zsh-completions
 #antigen bundle zsh-syntax-highlighting
 #antigen bundle zsh-wakatime
+#antigen bundle jeffreytse/zsh-vi-mode
 
 # Syntax highlighting bundle.
 antigen bundle zsh-users/zsh-syntax-highlighting
