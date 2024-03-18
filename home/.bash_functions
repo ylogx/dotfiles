@@ -225,7 +225,7 @@ about () {
   if [ -f "${1}" ] ; then
     file -pk "${1}"
     my_hex_dump "${1}"
-    hash exa || ls -ltrha --color "${1}" && exa -lsnew "${1}"
+    hash eza || ls -ltrha --color "${1}" && eza -lsnew "${1}"
   else
     type $1
     #which $1
@@ -238,7 +238,7 @@ about () {
     if [ -f "${filename_for_about_binary}" ]; then
       my_hex_dump "${filename_for_about_binary}"
       hash bat && bat -r 1:25 "${filename_for_about_binary}"
-      hash exa || ls -ltrha --color "${filename_for_about_binary}" && exa -lsnew "${filename_for_about_binary}"
+      hash eza || ls -ltrha --color "${filename_for_about_binary}" && eza -lsnew "${filename_for_about_binary}"
     fi
   fi
 }

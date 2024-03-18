@@ -30,7 +30,7 @@
       - curl
       - diff-so-fancy
       - diskus # Better du
-      - exa # Better ls
+      - eza # Better ls
       - fasd
       - fd # Better find
       - findutils

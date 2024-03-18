@@ -108,8 +108,8 @@ hash ipython2 2>/dev/null && alias ipy2='ipython2'
 hash ipython3 2>/dev/null && alias ipy3='ipython3'
 #alias j='jobs'
 alias l='d; ls -ltrFhH'
-hash exa 2>/dev/null && alias l='exa -lsnew'
-hash exa 2>/dev/null && alias lexa='d; exa -bghHlS -s modified --git'
+hash eza 2>/dev/null && alias l='eza -lsnew'
+hash eza 2>/dev/null && alias leza='d; eza -bghHlS -s modified --git'
 alias la='d; ls -lAtrFhH'
 alias lsize='ls --sort=size -lhr' # list by size
 alias lx='ls -lXB'        # sort by extension

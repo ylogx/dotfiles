@@ -32,7 +32,7 @@
     state: present
     name:
       - bat
-      - exa
+      - eza
       - hexyl
   ignore_errors: true
   tags: package
