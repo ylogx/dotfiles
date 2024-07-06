@@ -11,6 +11,21 @@ print_file_content() {
 # List of file extensions to include
 include_extensions=("py" "yml" "toml" "md" "txt" "Dockerfile")
 
+# Parse command line options
+print_content=true
+while getopts "n" opt; do
+    case $opt in
+        n)
+            print_content=false
+            ;;
+        *)
+            echo "Usage: $0 [-n]"
+            echo "  -n   Print only file names"
+            exit 1
+            ;;
+    esac
+done
+
 # Iterate through each file in the directory structure
 find . -type f | while read -r filepath; do
     filename=$(basename -- "$filepath")
@@ -18,7 +33,10 @@ find . -type f | while read -r filepath; do
     
     # Check if the file has an extension or is a Dockerfile
     if [[ " ${include_extensions[@]} " =~ " ${extension} " ]] || [[ "$filename" == "Dockerfile" ]]; then
-        print_file_content "$filepath"
+        echo "$filepath"
+        if $print_content; then
+            print_file_content "$filepath"
+        fi
     fi
 done
 
