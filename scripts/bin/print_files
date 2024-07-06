@@ -1,0 +1,24 @@
+#!/bin/bash
+
+# Function to print file content with the format
+print_file_content() {
+    local filepath=$1
+    echo "$filepath:"
+    cat "$filepath"
+    echo -e "\n"
+}
+
+# List of file extensions to include
+include_extensions=("py" "yml" "toml" "md" "txt" "Dockerfile")
+
+# Iterate through each file in the directory structure
+find . -type f | while read -r filepath; do
+    filename=$(basename -- "$filepath")
+    extension="${filename##*.}"
+    
+    # Check if the file has an extension or is a Dockerfile
+    if [[ " ${include_extensions[@]} " =~ " ${extension} " ]] || [[ "$filename" == "Dockerfile" ]]; then
+        print_file_content "$filepath"
+    fi
+done
+
