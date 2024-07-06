@@ -8,15 +8,22 @@ print_file_content() {
     echo -e "\n"
 }
 
-# Function to copy file content to clipboard
-copy_to_clipboard() {
+# Function to collect file content
+collect_file_content() {
     local filepath=$1
+    echo "$filepath:"
+    cat "$filepath"
+    echo -e "\n"
+}
+
+# Function to copy combined content to clipboard
+copy_combined_content_to_clipboard() {
     if [[ "$OSTYPE" == "darwin"* ]]; then
         # macOS
-        cat "$filepath" | pbcopy
+        echo "$combined_content" | pbcopy
     elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
         # Linux
-        cat "$filepath" | xclip -selection clipboard
+        echo "$combined_content" | xclip -selection clipboard
     else
         echo "Clipboard copy not supported on this OS."
         exit 1
@@ -40,14 +47,17 @@ while getopts "nc" opt; do
         *)
             echo "Usage: $0 [-n] [-c]"
             echo "  -n   Print only file names"
-            echo "  -c   Copy content to clipboard"
+            echo "  -c   Copy combined content to clipboard"
             exit 1
             ;;
     esac
 done
 
+# Initialize combined content variable
+combined_content=""
+
 # Iterate through each file in the directory structure
-find . -type f | while read -r filepath; do
+for filepath in $(find . -type f); do
     filename=$(basename -- "$filepath")
     extension="${filename##*.}"
     
@@ -58,9 +68,12 @@ find . -type f | while read -r filepath; do
             print_file_content "$filepath"
         fi
         if $copy_content; then
-            copy_to_clipboard "$filepath"
-            echo "Content of $filepath copied to clipboard."
+            combined_content+=$(collect_file_content "$filepath")
         fi
     fi
 done
 
+if $copy_content; then
+    copy_combined_content_to_clipboard
+    echo "Combined content of all files copied to clipboard."
+fi
