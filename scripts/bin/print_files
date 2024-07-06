@@ -8,19 +8,39 @@ print_file_content() {
     echo -e "\n"
 }
 
+# Function to copy file content to clipboard
+copy_to_clipboard() {
+    local filepath=$1
+    if [[ "$OSTYPE" == "darwin"* ]]; then
+        # macOS
+        cat "$filepath" | pbcopy
+    elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
+        # Linux
+        cat "$filepath" | xclip -selection clipboard
+    else
+        echo "Clipboard copy not supported on this OS."
+        exit 1
+    fi
+}
+
 # List of file extensions to include
 include_extensions=("py" "yml" "toml" "md" "txt" "Dockerfile")
 
 # Parse command line options
 print_content=true
-while getopts "n" opt; do
+copy_content=false
+while getopts "nc" opt; do
     case $opt in
         n)
             print_content=false
             ;;
+        c)
+            copy_content=true
+            ;;
         *)
-            echo "Usage: $0 [-n]"
+            echo "Usage: $0 [-n] [-c]"
             echo "  -n   Print only file names"
+            echo "  -c   Copy content to clipboard"
             exit 1
             ;;
     esac
@@ -36,6 +56,10 @@ find . -type f | while read -r filepath; do
         echo "$filepath"
         if $print_content; then
             print_file_content "$filepath"
+        fi
+        if $copy_content; then
+            copy_to_clipboard "$filepath"
+            echo "Content of $filepath copied to clipboard."
         fi
     fi
 done
