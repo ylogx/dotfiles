@@ -80,6 +80,7 @@
       #- font-source-code-pro-for-powerline
       #- font-ubuntu-mono-derivative-powerline
       #- font-roboto-mono-for-powerline
+      - rectangle
   tags: brew
 
 - name: Cleanup Brew packages
