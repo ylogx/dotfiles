@@ -1,0 +1,67 @@
+#!/usr/bin/env bash
+set -eu
+
+PROMPT="Based on the changes above, generate an expertly crafted concise commit message following best practices.
+Generate a concise git commit message that summarizes the key changes.
+Stay high-level and combine smaller changes to overarching topics.
+Skip describing any reformatting changes if not needed.
+Use appropriate prefixes like feat:, fix:, docs:, style:, refactor:, perf:, test:, build:, ci:, chore:, revert:, etc., based on the changes made.
+Format it for a git commit message, first line overview and details after a blank line as markdown.
+Ensure lines are not too long to mess up git log."
+
+
+help_message() {
+  echo "Usage: script.sh [show|staged|diff-all|diff-heads] [commit|amend|no-op]"
+  echo "  Diff options:"
+  echo "    - show: Show the commit message for the last commit"
+  echo "    - staged: Show the commit message for the staged changes"
+  echo "    - diff-all: Show the commit message for all changes"
+  echo "    - diff-heads: Show the commit message for the last commit"
+  echo "  Action options:"
+  echo "    - commit: Commit the changes with the generated message"
+  echo "    - amend: Amend the last commit with the generated message"
+  echo "    - no-op: Just show the generated message without committing"
+}
+
+# Parse params, 1-2 params are expected
+if [ "$#" -lt 1 ] || [ "$#" -gt 2 ]; then
+  echo "Illegal number of parameters"
+  help_message
+  exit 1
+fi
+
+# Get the diff based on the first parameter
+if [ "$1" == "staged" ]; then
+  DIFF=$(git diff --staged)
+elif [ "$1" == "show" ]; then
+  DIFF=$(git show HEAD)
+elif [ "$1" == "diff-all" ]; then
+  DIFF=$(git diff)
+elif [ "$1" == "diff-heads" ]; then
+  DIFF=$(git diff HEAD^..HEAD)
+else
+  echo "Illegal diff parameter: $1"
+  echo "Usage: script.sh [show|staged|diff-all|diff-heads] [commit|amend|no-op]"
+  exit 2
+fi
+
+# Generate the commit message
+MSG=$(echo "$DIFF" | sgpt  --model gpt-4o-mini --code "$PROMPT")
+echo "$MSG"
+
+# Perform the action based on the second parameter
+if [ "$#" -ne 2 ]; then # Avoid unbound variable error
+  exit 0
+elif [ "$2" == "" ]; then # Use no-op as default
+  exit 0
+elif [ "$2" == "no-op" ]; then
+  exit 0
+elif [ "$2" == "commit" ]; then
+  git commit -m "$MSG"
+elif [ "$2" == "amend" ]; then
+  git commit --amend -m "$MSG"
+else
+  echo "Illegal action parameter: $2"
+  help_message
+  exit 3
+fi
