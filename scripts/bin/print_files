@@ -31,7 +31,7 @@ copy_combined_content_to_clipboard() {
 }
 
 # List of file extensions to include
-include_extensions=("py" "yml" "toml" "js" "ts" "tsx" "css" "md" "txt" "Dockerfile")
+include_extensions=("py" "rs" "scala" "yml" "yaml" "toml" "js" "ts" "tsx" "css" "md" "txt" "Dockerfile")
 
 # Parse command line options
 print_content=true
