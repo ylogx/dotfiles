@@ -46,6 +46,7 @@ else
 fi
 
 # Generate the commit message
+hash sgpt || printf "Please install shell-gpt using:\n \npip install shell-gpt\n \nThis will add the 'sgpt' cli tool.\n"
 MSG=$(echo "$DIFF" | sgpt  --model gpt-4o-mini --code "$PROMPT")
 echo "$MSG"
 
