@@ -34,7 +34,7 @@ fi
 if [ "$1" == "staged" ]; then
   DIFF=$(git diff --staged)
 elif [ "$1" == "show" ]; then
-  DIFF=$(git show HEAD)
+  DIFF=$(git show --pretty=fuller HEAD)
 elif [ "$1" == "diff-all" ]; then
   DIFF=$(git diff)
 elif [ "$1" == "diff-heads" ]; then
