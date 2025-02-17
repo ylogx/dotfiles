@@ -67,9 +67,14 @@ ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern cursor)
 ###############
 ### Antigen ###
 ###############
-#source ~/bin/antigen.zsh
-#source /usr/local/share/antigen/antigen.zsh # brew install antigen
-source /opt/homebrew/share/antigen/antigen.zsh
+#brew install antigen
+if [ -f "/opt/homebrew/share/antigen/antigen.zsh" ]; then
+    source /opt/homebrew/share/antigen/antigen.zsh
+elif [ -f "/usr/local/share/antigen/antigen.zsh" ]; then
+    source /usr/local/share/antigen/antigen.zsh
+else
+    echo "Antigen not found. Please install antigen using: brew install antigen"
+fi
 
 # Load the oh-my-zsh's library.
 antigen use oh-my-zsh
