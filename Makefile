@@ -5,4 +5,4 @@ build:
 	sudo docker build --tag dotfiles .
 
 link:
-	homeshick link dotfiles --verbose
+	~/.homesick/repos/homeshick/bin/homeshick link dotfiles --verbose
