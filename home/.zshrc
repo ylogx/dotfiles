@@ -68,7 +68,8 @@ ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern cursor)
 ### Antigen ###
 ###############
 #source ~/bin/antigen.zsh
-source /usr/local/share/antigen/antigen.zsh # brew install antigen
+#source /usr/local/share/antigen/antigen.zsh # brew install antigen
+source /opt/homebrew/share/antigen/antigen.zsh
 
 # Load the oh-my-zsh's library.
 antigen use oh-my-zsh
@@ -346,6 +347,7 @@ hash zoxide 2>/dev/null && eval "$(zoxide init zsh)"
 
 [ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh
 
+#[ -d /opt/homebrew/bin ] && export PATH=/opt/homebrew/bin:$PATH # Taken care in .zprofile/.zshenv
 [ -d /home/linuxbrew/.linuxbrew/bin ] && export PATH=/home/linuxbrew/.linuxbrew/bin:$PATH
 
 load_conda() {

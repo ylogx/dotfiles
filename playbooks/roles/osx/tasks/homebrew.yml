@@ -31,9 +31,10 @@
       - diff-so-fancy
       - diskus # Better du
       - eza # Better ls
-      - fasd
+      #- fasd
       - fd # Better find
       - findutils
+      - fortune
       - fzf # Better ctrl-r
       - git
       - gnu-sed
@@ -64,11 +65,11 @@
       - zsh
   tags: brew
 
-- name: Tap fonts
-  homebrew_tap:
-    tap: homebrew/cask-fonts
-    state: present
-  tags: brew
+#- name: Tap fonts
+#  homebrew_tap:
+#    tap: homebrew/cask-fonts
+#    state: present
+#  tags: brew
 
 - name: Install apps with Homebrew Cask
   homebrew_cask:
