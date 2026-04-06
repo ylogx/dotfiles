@@ -128,9 +128,8 @@ antigen bundle web-search
 #antigen bundle zsh-wakatime
 #antigen bundle jeffreytse/zsh-vi-mode
 
-# Platform-specific bundles
-[[ "$(uname)" == "Darwin" ]] && antigen bundle macos
-[[ "$(uname)" == "Darwin" ]] && antigen bundle chucknorris
+# Platform-specific bundles ($OSTYPE avoids uname subprocess)
+[[ "$OSTYPE" == darwin* ]] && antigen bundle macos && antigen bundle chucknorris
 
 # Syntax highlighting bundle.
 antigen bundle zsh-users/zsh-syntax-highlighting
@@ -186,12 +185,11 @@ antigen apply
 ### Platform Specific ###
 #########################
 PLATFORM='Unknown'
-unamestr=`uname`
-if [[ "$unamestr" == 'Linux' ]]; then
+if [[ "$OSTYPE" == linux* ]]; then
    PLATFORM='Linux'
-elif [[ "$unamestr" == 'Darwin' ]]; then
+elif [[ "$OSTYPE" == darwin* ]]; then
    PLATFORM='Mac'
-elif [[ "$unamestr" == 'FreeBSD' ]]; then
+elif [[ "$OSTYPE" == freebsd* ]]; then
    PLATFORM='FreeBSD'
 fi
 

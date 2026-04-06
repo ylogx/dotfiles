@@ -39,14 +39,15 @@ get_fortune_cookies() {
 }
 
 print_date_cal() {
-    cal;
-    echo -ne "Today is "; date
-    local dm=$(date +"%d%m")
+    local now=$(date +"%d%m %c")
+    cal
+    echo "Today is ${now#* }"
+    local dm=${now%% *}
     if [[ "$dm" == "0101" ]]; then
         check_and_run figlet "Happy New Year"; echo "$USER";
     elif [[ "$dm" == "2603" ]]; then
         check_and_run figlet "Happy Birthday"
-    fi;
+    fi
 }
 
 # Gather system data in parallel, then print in order
@@ -86,24 +87,34 @@ print_system_status_fast() {
         wait
     )
 
+    # Read all results using builtins (no subprocess overhead)
+    local v_hostname v_os v_kernel v_arch v_cpu v_mem v_uptime v_ip v_fortune
+    read -r v_hostname < "$tmpdir/hostname"
+    read -r v_os < "$tmpdir/os"
+    read -r v_kernel < "$tmpdir/kernel"
+    read -r v_arch < "$tmpdir/arch"
+    read -r v_cpu < "$tmpdir/cpu"
+    read -r v_mem < "$tmpdir/mem"
+    read -r v_uptime < "$tmpdir/uptime"
+    read -r v_ip < "$tmpdir/ip"
+    v_fortune=$(<"$tmpdir/fortune")
+
     # Print collected data in order
     echo "\tSystem Status"
     echo "\t============="
-    echo -e "Hostname:\t\t$(cat $tmpdir/hostname)"
-    echo -e "OS:\t\t\t$([[ "$PLATFORM" == "Mac" ]] && echo "macOS $(cat $tmpdir/os)" || cat $tmpdir/os)"
-    echo -e "Kernel:\t\t\t$(cat $tmpdir/kernel) $(cat $tmpdir/arch)"
-    echo -e "CPU:\t\t\t$(cat $tmpdir/cpu)"
-    echo -e "Memory:\t\t\t$(cat $tmpdir/mem)"
+    echo -e "Hostname:\t\t${v_hostname}"
+    echo -e "OS:\t\t\t$([[ "$PLATFORM" == "Mac" ]] && echo "macOS ${v_os}" || echo "${v_os}")"
+    echo -e "Kernel:\t\t\t${v_kernel} ${v_arch}"
+    echo -e "CPU:\t\t\t${v_cpu}"
+    echo -e "Memory:\t\t\t${v_mem}"
     echo -e "Active User:\t\t${USER}"
-    echo -e "Up Since:\t\t$(cat $tmpdir/uptime)"
-    echo -e "System Main IP:\t\t$(cat $tmpdir/ip)"
+    echo -e "Up Since:\t\t${v_uptime}"
+    echo -e "System Main IP:\t\t${v_ip}"
 
-    # Fortune cookie
-    local fortune_text=$(cat "$tmpdir/fortune")
-    if [[ -n "$fortune_text" ]]; then
+    if [[ -n "$v_fortune" ]]; then
         echo ""
         echo "Fortune Cookie:"
-        echo "$fortune_text"
+        echo "$v_fortune"
     fi
 
     command rm -rf "$tmpdir"
