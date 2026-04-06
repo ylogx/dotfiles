@@ -3,3 +3,5 @@ if [ -x "/opt/homebrew/bin/brew" ]; then
 elif [ -x "/usr/local/bin/brew" ]; then
     eval "$(/usr/local/bin/brew shellenv)"
 fi
+
+[ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"
