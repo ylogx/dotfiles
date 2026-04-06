@@ -41,90 +41,80 @@ get_fortune_cookies() {
 print_date_cal() {
     cal;
     echo -ne "Today is "; date
-    if [[ `date +"%d%m"` == 0101 ]]; then       #if [[ `date +"%D"` =~ 01/01* ]];
-        echo "Hey man, I forgot"; figlet "Happy New Year"; echo "$USER";
-    elif [[ `date +"%d%m"` == 2603 ]]; then
-        figlet "Happy Birthday"
+    local dm=$(date +"%d%m")
+    if [[ "$dm" == "0101" ]]; then
+        check_and_run figlet "Happy New Year"; echo "$USER";
+    elif [[ "$dm" == "2603" ]]; then
+        check_and_run figlet "Happy Birthday"
     fi;
 }
 
-print_system_status_linux() {
-    #echo -e "-------------------------------System Information----------------------------"
+# Gather system data in parallel, then print in order
+print_system_status_fast() {
+    local tmpdir=$(mktemp -d)
+    trap "command rm -rf $tmpdir" EXIT
+
+    # Run all data-gathering in a subshell to suppress job control notifications
+    (
+        { hostname; } > "$tmpdir/hostname" 2>/dev/null &
+        { uname -r; } > "$tmpdir/kernel" 2>/dev/null &
+        { arch; } > "$tmpdir/arch" 2>/dev/null &
+        { uptime | awk '{print $3,$4}' | sed 's/,//'; } > "$tmpdir/uptime" 2>/dev/null &
+        { fortune 2>/dev/null; } > "$tmpdir/fortune" &
+
+        if [[ "$PLATFORM" == "Mac" ]]; then
+            { sysctl -n machdep.cpu.brand_string; } > "$tmpdir/cpu" 2>/dev/null &
+            { sw_vers -productVersion; } > "$tmpdir/os" 2>/dev/null &
+            { ipconfig getifaddr en0 2>/dev/null || echo "N/A"; } > "$tmpdir/ip" &
+            { vm_stat | awk '/Pages free|Pages active|Pages inactive|Pages speculative|Pages wired|Pages occupied by compressor/ {gsub(/\./,"",$NF); a[NR]=$NF} END {
+                total=0; for(i in a) total+=a[i];
+                used=total-a[1]-a[4]; # total minus free minus speculative
+                pct=(used*100)/total;
+                printf "%.0f%% of ~%.0fGB\n", pct, (total*16384/1073741824)
+            }'; } > "$tmpdir/mem" 2>/dev/null &
+        else
+            { [[ -f /proc/cpuinfo ]] && awk -F: '/^model name/{gsub(/^[ \t]+/,"",$2); print $2; exit}' /proc/cpuinfo || echo "Unknown"; } > "$tmpdir/cpu" 2>/dev/null &
+            { hash hostnamectl 2>/dev/null && hostnamectl | awk -F: '/Operating System/{gsub(/^[ \t]+/,"",$2); print $2}' || uname -o; } > "$tmpdir/os" 2>/dev/null &
+            { hostname -I 2>/dev/null | awk '{print $1}' || echo "N/A"; } > "$tmpdir/ip" &
+            if hash free 2>/dev/null; then
+                { free -h | awk '/^Mem:/{print $3 " used / " $2 " total"}'; } > "$tmpdir/mem" 2>/dev/null &
+            else
+                echo "N/A" > "$tmpdir/mem" &
+            fi
+        fi
+
+        wait
+    )
+
+    # Print collected data in order
     echo "\tSystem Status"
     echo "\t============="
-    echo -e "Hostname:\t\t"`hostname` "("`vserver=$(lscpu 2>/dev/null | grep Hypervisor | wc -l); if [ $vserver -gt 0 ]; then echo "VM"; else echo "Physical"; fi`")"
-    if [[ -f "/sys/class/dmi/id/chassis_vendor" ]]; then
-      echo -en "Laptop:\t\t\t"`cat /sys/class/dmi/id/chassis_vendor`
-      if [[ -f "/sys/class/dmi/id/product_name" ]]; then
-        echo " `cat /sys/class/dmi/id/product_name`"
-      else
-        echo
-      fi
-    fi
-    #echo -e "Version:\t\t"`cat /sys/class/dmi/id/product_version`
-    #echo -e "Serial Number:\t\t"`cat /sys/class/dmi/id/product_serial`
-    hash hostnamectl 2>/dev/null && echo -e "Operating System:\t"`hostnamectl | grep "Operating System" | cut -d ' ' -f5-`
-    echo -e "Kernel:\t\t\t"`uname -r` `arch`
-    [[ -f "/proc/cpuinfo" ]] && echo -e "Processor Name:\t\t"`awk -F':' '/^model name/ {print $2}' /proc/cpuinfo | uniq | sed -e 's/^[ \t]*//'`
-    #echo -e "Active User:\t\t"`w | cut -d ' ' -f1 | grep -v USER | xargs -n1`
+    echo -e "Hostname:\t\t$(cat $tmpdir/hostname)"
+    echo -e "OS:\t\t\t$([[ "$PLATFORM" == "Mac" ]] && echo "macOS $(cat $tmpdir/os)" || cat $tmpdir/os)"
+    echo -e "Kernel:\t\t\t$(cat $tmpdir/kernel) $(cat $tmpdir/arch)"
+    echo -e "CPU:\t\t\t$(cat $tmpdir/cpu)"
+    echo -e "Memory:\t\t\t$(cat $tmpdir/mem)"
     echo -e "Active User:\t\t${USER}"
-    echo -e "Up Since:\t\t"`uptime | awk '{print $3,$4}' | sed 's/,//'`
-    echo -e "System Main IP:\t\t"`hash ipconfig 2>/dev/null && ipconfig getifaddr en0 || hostname -I`
-    #echo ""
-    #echo -e "-------------------------------CPU/Memory Usage------------------------------"
-    if hash free 2>/dev/null; then
-      echo -e "Memory Usage:\t\tMain "`free | awk '/Mem/{printf("%.2f%"), $3/$2*100}' 2>/dev/null`"%" "and Swap "`free | awk '/Swap/{printf("%.2f%"), $3/$2*100}' 2>/dev/null`"%"
-      #echo -e "Swap Usage:\t\t"`free | awk '/Swap/{printf("%.2f%"), $3/$2*100}' 2>/dev/null`"%"
+    echo -e "Up Since:\t\t$(cat $tmpdir/uptime)"
+    echo -e "System Main IP:\t\t$(cat $tmpdir/ip)"
+
+    # Fortune cookie
+    local fortune_text=$(cat "$tmpdir/fortune")
+    if [[ -n "$fortune_text" ]]; then
+        echo ""
+        echo "Fortune Cookie:"
+        echo "$fortune_text"
     fi
-    [[ -f "/proc/stat" ]] && echo -e "CPU Usage:\t\t"`cat /proc/stat | awk '/cpu/{printf("%.2f%\n"), ($2+$4)*100/($2+$4+$5)}' 2>/dev/null |  awk '{print $0}' | head -1`"%"
-    #echo ""
-    #echo -e "-------------------------------Disk Usage >80%-------------------------------"
-    #df -Ph | sed s/%//g | awk '{ if($5 > 80) print $0;}'
-    #echo ""
-}
 
-print_system_status() {
-    echo -e "Status of $HOSTNAME: "
-
-    ##### Main Memory #####
-    echo -en "\t";
-    free -ht | head -3 | tail -n 1 | awk '{printf "Main Memory\t:\t" $3 " used & " $4 " free"}'
-    #free --old -ht | head -2 | tail -n 1 | awk '{printf " out of " $2}'; echo "";
-
-    ##### Storage #####
-    echo -e "";
-    echo -en "\t"; df -h / | tail -n 1 | awk '{print "Root " $1 "\t:\t" $5 " full & " $4 " still available."}' ;
-
-    ##### IP #####
-    #echo -en "\tIP Address \t:\t"; /sbin/ifconfig wlp3s0 | awk /'inet / {print $2}' | sed -e s/addr:/''/  || /sbin/ifconfig wlan0 || echo "" #dubious, gotta test
-    echo -en "\tIP Address \t:\t"; /sbin/ifconfig wlp3s0 | awk /'inet / {print $2}' | sed -e s/addr:/''/  || /sbin/ifconfig wlan0 || echo "" #dubious, gotta test
-
-    ##### Uptime #####
-    echo -en "\tThe system has been up for ";
-    perl -e 'my $uptime = `uptime`; if ($uptime =~ /^\s+\S+\s+up\s+(\S+\s+\S+,\s+\S+),/) { printf $1; } else { print "uptime gave me a weird format!"; }'
-    # echo -e "" #echo -ne "Up time:"; uptime | awk /'up/' #`uptime | awk {'print $3 $4'}`
+    command rm -rf "$tmpdir"
+    trap - EXIT
 }
 
 welcome_message() {
-    # customize this first message with a message of your choice.
-    # this will display the username, date, time, a calendar, the amount of users, and the up time.
-    # Gotta love ASCII art with figlet
     check_and_run figlet "Welcome, " $USER;
-    #echo -e "";
-
     print_date_cal
-
-    #if [[ "${PLATFORM}" == "Linux" ]]; then
-    #  print_system_status_linux
-    #else
-    #  print_system_status
-    #fi
-    echo -e "";
-    print_system_status_linux
-
-    echo "";
-    # check_and_run_bg ansiweather;
-    get_fortune_cookies
+    echo ""
+    print_system_status_fast
 }
 
 # Speaks a message on ios when a server comes back up
