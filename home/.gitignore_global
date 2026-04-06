@@ -44,3 +44,4 @@ Thumbs.db
 
 # Other Softwares
 .rake_tasks
+.envrc

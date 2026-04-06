@@ -89,6 +89,7 @@ antigen use oh-my-zsh
 antigen bundle brew
 #antigen bundle chruby
 antigen bundle chucknorris
+#antigen bundle direnv
 antigen bundle docker
 antigen bundle docker-compose
 #antigen bundle fortune
@@ -229,12 +230,11 @@ fi
 ###################
 ### Executables ###
 ###################
-[ -d $HOME/bin ] && export PATH=$HOME/bin:$PATH
-[ -d $HOME/.local/bin ] && export PATH=$PATH:$HOME/.local/bin
-
-#export PATH="/usr/local/bin:$PATH"
-[ -d "$HOME/.local/bin" ] && export PATH=$HOME/.local/bin:$PATH
+[ -d "/usr/local/bin" ] && export PATH=/usr/local/bin:$PATH
 [ -d "/usr/local/sbin" ] && export PATH=/usr/local/sbin:$PATH
+
+[ -d "$HOME/.local/bin" ] && export PATH=$HOME/.local/bin:$PATH
+[ -d $HOME/bin ] && export PATH=$HOME/bin:$PATH
 ##################################################################
 
 ###############################
@@ -300,7 +300,9 @@ export VISUAL=vi
 # added by travis gem
 [ -f ~/.travis/travis.sh ] && source ~/.travis/travis.sh
 
-[ -d "$HOME/Library/Python/3.7/bin" ] && export PATH="$HOME/Library/Python/3.7/bin":$PATH
+eval "$(direnv hook zsh)"
+
+[ -d "$HOME/Library/Python/3.9/bin" ] && export PATH=$PATH:"$HOME/Library/Python/3.9/bin"
 [ -d "$HOME/.pyenv" ] && export PATH="$HOME/.pyenv/bin:$PATH";
 if which pyenv > /dev/null; then eval "$(pyenv init -)"; eval "$(pyenv virtualenv-init -)"; fi
 

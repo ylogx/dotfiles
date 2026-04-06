@@ -29,6 +29,7 @@
       - coreutils
       - curl
       - diff-so-fancy
+      - direnv
       - diskus # Better du
       - eza # Better ls
       #- fasd
