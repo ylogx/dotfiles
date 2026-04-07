@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What This Repo Is
 
-A cross-platform dotfiles repository (macOS + Linux). Dotfiles are managed by [chezmoi](https://chezmoi.io) (source in `chezmoi/`). Ansible playbooks automate package installation and system setup. Legacy `home/` directory contains the original homeshick-era files.
+A cross-platform dotfiles repository (macOS + Linux). Dotfiles are managed by [chezmoi](https://chezmoi.io) (source in `home/`, using chezmoi's `dot_` naming convention). Ansible playbooks automate package installation and system setup.
 
 ## Key Commands
 
@@ -38,10 +38,9 @@ make build
 ## Architecture
 
 ### Dotfile Management
-- `chezmoi/` is the chezmoi source directory — files use chezmoi naming (`dot_zshrc`, `dot_gitconfig.tmpl`, etc.)
+- `home/` is the chezmoi source directory — files use chezmoi naming (`dot_zshrc`, `dot_gitconfig.tmpl`, etc.)
 - `chezmoi apply` writes managed files directly to `~` (no symlinks)
 - `.gitconfig` is a chezmoi template (`dot_gitconfig.tmpl`) — user/email/signingkey are populated from `~/.config/chezmoi/chezmoi.toml`
-- `home/` is the legacy homeshick source (kept for reference/ansible compatibility, not actively managed)
 
 ### Shell Startup Chain (ZSH)
 ```
