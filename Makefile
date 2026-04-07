@@ -6,7 +6,3 @@ build:
 
 apply:
 	chezmoi apply --verbose
-
-# Legacy homeshick link (deprecated - use 'make apply')
-link:
-	chezmoi apply --verbose

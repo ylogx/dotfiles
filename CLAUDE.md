@@ -67,7 +67,7 @@ playbooks/
   osx.yml        → roles: osx + common
   unix.yml       → roles: ubuntu + common
   roles/
-    common/tasks/ → ohmyzsh, homesick, plugins, ohmyfish, vim
+    common/tasks/ → ohmyzsh, chezmoi, plugins, ohmyfish, vim
     osx/tasks/    → homebrew packages/casks, macOS settings
     ubuntu/tasks/ → apt packages, hub, shell change
 ```

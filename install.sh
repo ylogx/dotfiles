@@ -19,7 +19,6 @@ fi
 cd ${HOLDING_LOCATION}
 
 if [[ -d ${HOLDING_LOCATION}/.git ]]; then
-    # if [[ ! -f ~/.dev_aliases ]]; then # TODO: Use better proxy to figure out if installation has finished.
     if [[ ! `git status --porcelain --untracked-files=no` ]]; then # No local git changes, can pull safely
         if [[ "$(git branch --show-current --quiet)" == "master" ]]; then
             echo "Switching from master to main branch"

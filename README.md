@@ -12,9 +12,18 @@ See [chaudhary.xyz/dotfiles](http://shubham.chaudhary.xyz/dotfiles) for more inf
 
 ## Updating dotfiles
 
-Easiest way to update dotfiles with lastest improvements and fixes is to use [homesick](https://github.com/andsens/homeshick) to sync dotfiles from this repo.
-Once you've finished automated installation of these dotfiles, you can run:
+Dotfiles are managed by [chezmoi](https://chezmoi.io). To update:
 
 ```sh
-hs pull
+cd ~/.homesick/repos/dotfiles && git pull
+chezmoi apply
+```
+
+## Adding or editing dotfiles
+
+```sh
+chezmoi edit ~/.zshrc       # edit a dotfile
+chezmoi add ~/.newconfig    # track a new file
+chezmoi diff                # preview changes before applying
+chezmoi apply               # deploy to ~
 ```

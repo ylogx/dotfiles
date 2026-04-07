@@ -1,6 +1,6 @@
 ---
 - include_tasks: ohmyzsh.yml
-- include_tasks: homesick.yml
+- include_tasks: manager.yml
 - include_tasks: plugins.yml
 - include_tasks: ohmyfish.yml
   tags: fish

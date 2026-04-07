@@ -1,0 +1,25 @@
+---
+# Dotfile management via chezmoi (replaces homeshick/homesick)
+
+- name: Clone dotfiles repo
+  git:
+    repo: "https://github.com/ylogx/dotfiles.git"
+    dest: "{{ ansible_env.HOME }}/.homesick/repos/dotfiles"
+    version: main
+    accept_hostkey: true
+    ssh_opts: -o StrictHostKeyChecking=no
+
+- name: Install chezmoi (macOS)
+  homebrew:
+    name: chezmoi
+    state: present
+  when: ansible_os_family == "Darwin"
+
+- name: Install chezmoi (Linux)
+  shell: sh -c "$(curl -fsLS get.chezmoi.io)" -- -b ~/.local/bin
+  args:
+    creates: "{{ ansible_env.HOME }}/.local/bin/chezmoi"
+  when: ansible_os_family != "Darwin"
+
+- name: Apply dotfiles with chezmoi
+  command: chezmoi apply --source="{{ ansible_env.HOME }}/.homesick/repos/dotfiles/home" --force
