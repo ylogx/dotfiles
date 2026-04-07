@@ -1,0 +1,7 @@
+#!/bin/bash
+# dot_tmux.conf hash: {{ include "dot_tmux.conf" | sha256sum }}
+# Re-runs automatically when .tmux.conf changes
+if [ -x ~/.tmux/plugins/tpm/bin/install_plugins ]; then
+    echo "Installing/updating Tmux plugins..."
+    ~/.tmux/plugins/tpm/bin/install_plugins
+fi

@@ -1,0 +1,12 @@
+{{- $name := promptStringOnce . "name" "Full name" -}}
+{{- $email := promptStringOnce . "email" "Email address" -}}
+{{- $signingkey := promptStringOnce . "signingkey" "GPG signing key (leave empty to skip)" -}}
+{{- $github_user := promptStringOnce . "github_user" "GitHub username" -}}
+
+sourceDir = {{ joinPath .chezmoi.homeDir ".homesick/repos/dotfiles" | quote }}
+
+[data]
+    name = {{ $name | quote }}
+    email = {{ $email | quote }}
+    signingkey = {{ $signingkey | quote }}
+    github_user = {{ $github_user | quote }}

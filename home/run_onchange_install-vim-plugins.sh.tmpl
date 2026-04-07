@@ -1,0 +1,7 @@
+#!/bin/bash
+# dot_vimrc hash: {{ include "dot_vimrc" | sha256sum }}
+# Re-runs automatically when .vimrc changes
+if command -v vim &>/dev/null && [ -d ~/.vim/bundle/vundle ]; then
+    echo "Installing/updating Vim plugins..."
+    vim +PluginInstall! +qall 2>/dev/null
+fi
