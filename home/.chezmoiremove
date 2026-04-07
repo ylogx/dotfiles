@@ -6,5 +6,8 @@
 .homesick
 .homesick/**
 
+# Old zsh aliases file (merged into ~/.zsh/05-aliases.zsh)
+.zsh_aliases
+
 # Stale zsh completion dumps (regenerated automatically)
 .zcompdump-*
