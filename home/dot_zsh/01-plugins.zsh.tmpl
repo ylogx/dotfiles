@@ -27,5 +27,11 @@ if [[ ! ${zsh_plugins}.zsh -nt ${zsh_plugins}.txt ]]; then
 fi
 source ${zsh_plugins}.zsh
 
+# Bind up/down arrows to history-substring-search (type prefix, then arrow to walk matches)
+bindkey "${terminfo[kcuu1]}" history-substring-search-up
+bindkey "${terminfo[kcud1]}" history-substring-search-down
+bindkey "^[[A" history-substring-search-up
+bindkey "^[[B" history-substring-search-down
+
 # Starship prompt (loaded directly, not through plugin manager)
 eval "$(starship init zsh)"
