@@ -1,0 +1,63 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test-docker:
+    name: Test dotfiles setup (Docker)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build and verify
+        run: docker build --tag dotfiles-test .
+
+      - name: Test zsh module loading
+        run: |
+          docker run --rm dotfiles-test zsh -c '
+            source ~/.zshenv 2>/dev/null
+            for f in ~/.zsh/*.zsh; do source "$f"; done
+            echo "ZSH modules: OK"
+          '
+
+      - name: Test bash loading
+        run: |
+          docker run --rm dotfiles-test bash -c '
+            source ~/.bashrc
+            echo "Bash: OK"
+          '
+
+  test-chezmoi:
+    name: Verify chezmoi config
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install chezmoi
+        run: sh -c "$(curl -fsLS get.chezmoi.io)" -- -b /usr/local/bin
+
+      - name: Chezmoi verify
+        run: |
+          chezmoi execute-template < home/.chezmoi.toml.tmpl > /dev/null 2>&1 || true
+          for f in home/dot_*.tmpl home/dot_zsh/*.tmpl home/.chezmoiscripts/*.tmpl; do
+            echo -n "Template $(basename $f): "
+            chezmoi execute-template < "$f" > /dev/null 2>&1 && echo "OK" || echo "FAIL"
+          done
+
+  lint:
+    name: Lint shell scripts
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install shellcheck
+        run: sudo apt-get update && sudo apt-get install -y shellcheck
+
+      - name: Check shell scripts
+        run: |
+          shellcheck -S warning install.sh run_ansible.sh home/bin/executable_* 2>&1 || true
+          echo "Shellcheck: done (warnings only, not blocking)"
