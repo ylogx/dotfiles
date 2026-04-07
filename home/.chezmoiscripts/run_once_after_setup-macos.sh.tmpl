@@ -1,0 +1,16 @@
+#!/bin/bash
+{{ if ne .chezmoi.os "darwin" -}}
+# Skip on non-macOS
+exit 0
+{{ end -}}
+set -eu
+
+echo "Configuring macOS settings..."
+
+# Save screenshots to ~/Pictures/ScreenShots
+mkdir -p ~/Pictures/ScreenShots
+defaults write com.apple.screencapture location ~/Pictures/ScreenShots
+
+# Show hidden files in Finder
+defaults write com.apple.finder AppleShowAllFiles -bool true
+killall Finder 2>/dev/null || true

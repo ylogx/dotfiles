@@ -1,0 +1,70 @@
+#!/bin/bash
+set -eu
+
+{{ if eq .chezmoi.os "darwin" -}}
+# Install Homebrew if missing
+if ! command -v brew &>/dev/null; then
+    echo "Installing Homebrew..."
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    eval "$(/opt/homebrew/bin/brew shellenv 2>/dev/null || /usr/local/bin/brew shellenv)"
+fi
+
+echo "Installing Homebrew packages..."
+brew bundle --file=/dev/stdin <<EOF
+brew "ack"
+brew "antidote"
+brew "ansible"
+brew "bat"
+brew "coreutils"
+brew "curl"
+brew "diff-so-fancy"
+brew "direnv"
+brew "diskus"
+brew "eza"
+brew "fd"
+brew "findutils"
+brew "fish"
+brew "fortune"
+brew "fzf"
+brew "git"
+brew "gnu-sed"
+brew "hexyl"
+brew "highlight"
+brew "htop"
+brew "hub"
+brew "macvim"
+brew "ncdu"
+brew "nmap"
+brew "noti"
+brew "openssl"
+brew "ponysay"
+brew "prettyping"
+brew "python3"
+brew "ripgrep"
+brew "starship"
+brew "tree"
+brew "tmux"
+brew "tldr"
+brew "watch"
+brew "wget"
+brew "xsv"
+brew "zoxide"
+brew "zsh"
+
+cask "font-hack"
+cask "font-meslo-for-powerline"
+cask "font-menlo-for-powerline"
+cask "rectangle"
+EOF
+
+{{ else if eq .chezmoi.os "linux" -}}
+echo "Installing packages..."
+sudo apt-get update -qq
+sudo apt-get install -y \
+    bash curl fish git highlight htop nmap python3 tmux tree vim wget zsh
+
+# These may not be available on all distros
+sudo apt-get install -y bat eza hexyl 2>/dev/null || true
+sudo apt-get install -y diskus fd-find 2>/dev/null || true
+
+{{ end -}}

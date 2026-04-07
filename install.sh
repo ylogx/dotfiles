@@ -1,43 +1,31 @@
 #!/usr/bin/env bash
 set -eu
+
 install_git_if_needed() {
-    SUDO_IF_NEEDED=''
-    if [[ $EUID > 0 ]]; then
-        SUDO_IF_NEEDED=sudo
-    fi
     if ! hash git 2>/dev/null; then
-        ${SUDO_IF_NEEDED} apt-get install --yes git
+        if [[ $EUID > 0 ]]; then
+            sudo apt-get install --yes git
+        else
+            apt-get install --yes git
+        fi
     fi
 }
 
-HOLDING_LOCATION="${HOME}/.dotfiles"
-
-if [[ ! -d ${HOLDING_LOCATION} ]]; then
-  install_git_if_needed
-  git clone --recursive https://github.com/ylogx/dotfiles.git ${HOLDING_LOCATION}
-fi
-cd ${HOLDING_LOCATION}
-
-if [[ -d ${HOLDING_LOCATION}/.git ]]; then
-    if [[ ! `git status --porcelain --untracked-files=no` ]]; then # No local git changes, can pull safely
-        if [[ "$(git branch --show-current --quiet)" == "master" ]]; then
-            echo "Switching from master to main branch"
-            if [[ ! $(git show-ref --verify --quiet "refs/heads/main") ]]; then
-                echo "Fetching latest main branch"
-                git fetch --all
-                git checkout main
-                git remote set-head origin main
-            fi
-            echo "Pulling latest changes for main branch from dotfiles repo."
-            git pull --set-upstream origin main
-        fi
-
-        if $(git show-ref --verify --quiet "refs/heads/main"); then
-            install_git_if_needed
-            echo "Pulling latest changes from dotfiles repo."
-            git pull origin main
-        fi
-    fi
+# Install chezmoi if missing
+if ! command -v chezmoi &>/dev/null; then
+    echo "Installing chezmoi..."
+    sh -c "$(curl -fsLS get.chezmoi.io)" -- -b ~/.local/bin
+    export PATH="$HOME/.local/bin:$PATH"
 fi
 
-./run_ansible.sh
+# Bootstrap: clone repo and apply dotfiles in one step
+if [ ! -d "${HOME}/.dotfiles" ]; then
+    install_git_if_needed
+    chezmoi init --apply ylogx
+else
+    # Repo already exists — just apply
+    chezmoi apply
+fi
+
+echo ""
+echo "Dotfiles applied. Run ./run_ansible.sh for system packages and settings."
