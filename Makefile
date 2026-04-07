@@ -4,5 +4,9 @@ lint:
 build:
 	sudo docker build --tag dotfiles .
 
+apply:
+	chezmoi apply --verbose
+
+# Legacy homeshick link (deprecated - use 'make apply')
 link:
-	~/.homesick/repos/homeshick/bin/homeshick link dotfiles --verbose
+	chezmoi apply --verbose
