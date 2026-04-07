@@ -1,0 +1,23 @@
+# Old plugin manager artifacts
+.antigen
+.antigen/**
+
+# Old dotfile manager
+.homesick
+.homesick/**
+
+# Old zsh aliases file (merged into ~/.zsh/05-aliases.zsh)
+.zsh_aliases
+
+# Dead dev aliases (was all commented out)
+.dev_aliases.sh
+
+# Old names (renamed to shell_aliases/shell_functions)
+.bash_aliases
+.bash_functions
+
+# Stale zsh completion dumps (regenerated automatically)
+.zcompdump-*
+
+# Travis CI local artifacts
+.travis

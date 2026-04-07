@@ -1,0 +1,22 @@
+# ~/.profile: executed by login shells
+
+if [ -e /usr/share/terminfo/x/xterm-256color ]; then
+    export TERM='xterm-256color'
+else
+    export TERM='xterm-color'
+fi
+
+{{ if eq .chezmoi.os "darwin" -}}
+if [ -x /usr/libexec/path_helper ]; then
+    eval "$(/usr/libexec/path_helper -s)"
+fi
+{{ end -}}
+
+if [ "${BASH-no}" != "no" ]; then
+    [ -r /etc/bashrc ] && . /etc/bashrc
+fi
+
+# Source shared environment
+[ -f "$HOME/.config/shell/env.sh" ] && . "$HOME/.config/shell/env.sh"
+
+source ~/.bashrc

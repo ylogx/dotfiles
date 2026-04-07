@@ -4,24 +4,29 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What This Repo Is
 
-A cross-platform dotfiles repository (macOS + Linux) managed by [homeshick](https://github.com/andsens/homeshick). Files under `home/` are symlinked to `~` via homeshick. Ansible playbooks automate package installation and system setup.
+A cross-platform dotfiles repository (macOS + Linux). Dotfiles are managed by [chezmoi](https://chezmoi.io) (source in `home/`, using chezmoi's `dot_` naming convention). Chezmoi handles package installation, tool setup, and system configuration via `run_once`/`run_onchange` scripts.
 
 ## Key Commands
 
 ```bash
-# Link dotfiles to home directory
-make link
-# or: ~/.homesick/repos/homeshick/bin/homeshick link dotfiles --verbose
+# Apply dotfiles to home directory
+chezmoi apply --verbose
+# or: make apply
 
-# Track a new dotfile
-homeshick track dotfiles ~/.some_config
+# Edit a dotfile (opens chezmoi source, applies on save)
+chezmoi edit ~/.zshrc
 
-# Run ansible provisioning (installs packages, configures system)
-./run_ansible.sh
+# Add a new dotfile to chezmoi
+chezmoi add ~/.some_config
 
-# Lint ansible playbooks
-make lint        # runs prettier
-./ci/lint.sh     # runs ansible-lint
+# See what chezmoi would change
+chezmoi diff
+
+# Bootstrap a fresh machine
+chezmoi init --apply ylogx
+
+# Update zsh plugins
+antidote update
 
 # Build Docker image for testing
 make build
@@ -30,44 +35,76 @@ make build
 ## Architecture
 
 ### Dotfile Management
-- `home/` mirrors `~` — homeshick creates symlinks from `~/.<file>` → `home/.<file>`
-- If a symlink breaks (e.g., cargo installer overwrites `~/.zshenv`), re-link with `homeshick link --force dotfiles`
+- `home/` is the chezmoi source directory — files use chezmoi naming (`dot_zshrc.tmpl`, `dot_gitconfig.tmpl`, etc.)
+- `.chezmoiroot` points chezmoi at `home/`
+- `chezmoi apply` writes managed files directly to `~` (no symlinks)
+- Platform-specific files use chezmoi templates (`.tmpl`) — resolved at apply time, not runtime
+- `.chezmoiexternal.toml` manages Vundle and TPM as git repos
+- `.chezmoiscripts/` contains `run_once`/`run_onchange` scripts for package install, plugin setup, macOS defaults
+
+### Shared Shell Config
+```
+~/.config/shell/env.sh  → POSIX-compatible env vars, PATH (sourced by all shells)
+~/.shell_aliases         → 150+ aliases (sourced by bash and zsh)
+~/.shell_functions       → welcome_message, utility functions (sourced by bash and zsh)
+~/.temp_aliases         → Machine-specific aliases, not tracked in git
+```
 
 ### Shell Startup Chain (ZSH)
 ```
-.zshenv          → brew shellenv + cargo env (runs for ALL zsh invocations)
-.zshrc           → antigen plugins, platform setup, PATH, tool inits
-  ├─ .zsh_aliases    → sources .bash_aliases (shared alias file)
-  │   ├─ .bash_aliases   → 150+ aliases, sources .dev_aliases.sh + .temp_aliases
-  │   └─ .bash_functions → welcome_message, utility functions
-  └─ welcome_message()  → parallelized system info display
+.zshenv              → brew shellenv, cargo env, sources env.sh
+.zshrc               → module loader (sources ~/.zsh/*.zsh)
+  ~/.zsh/
+    01-plugins.zsh   → antidote static load, starship prompt
+    02-platform.zsh  → platform-specific paths, coreutils/gnu-sed, SSH agent
+    03-path.zsh      → sources env.sh, platform-specific PATH (cuda, linuxbrew)
+    04-tools.zsh     → deferred inits: direnv, pyenv, fzf, zoxide, thefuck, gcloud
+    05-aliases.zsh   → sources .shell_aliases + .shell_functions, zsh-specific aliases
+    06-welcome.zsh   → welcome_message
 ```
 
 ### Shell Startup Chain (Bash)
 ```
-.profile         → TERM setup, sources .bashrc, cargo env
-  └─ .bashrc     → platform detection, history, prompt, completion
-      ├─ .bash_aliases
-      └─ .bash_functions
+.profile             → TERM setup, sources env.sh, sources .bashrc
+  └─ .bashrc         → history, prompt, starship, completion, direnv, zoxide
+      ├─ .shell_aliases
+      └─ .shell_functions
 ```
 
-### Ansible Structure
+### Shell Startup Chain (Fish)
+```
+~/.config/fish/config.fish → bass sources env.sh, starship, zoxide, direnv, common aliases
+```
+
+### Chezmoi Scripts (home/.chezmoiscripts/)
+```
+run_once_before_install-packages.sh.tmpl  → brew bundle (macOS) / apt (Linux)
+run_once_before_install-ohmyzsh.sh        → oh-my-zsh framework
+run_once_before_install-ohmyfish.sh.tmpl  → oh-my-fish (macOS only)
+run_once_after_setup-macos.sh.tmpl        → macOS defaults (screenshots, Finder)
+run_onchange_after_install-vim-plugins.sh.tmpl  → vim +PluginInstall (on vimrc change)
+run_onchange_after_install-tmux-plugins.sh.tmpl → tpm install (on tmux.conf change)
+```
+
+### Ansible (minimal — most tasks migrated to chezmoi)
 ```
 playbooks/
-  osx.yml        → roles: osx + common
+  osx.yml        → common role only
   unix.yml       → roles: ubuntu + common
   roles/
-    common/tasks/ → ohmyzsh, homesick, plugins, ohmyfish, vim
-    osx/tasks/    → homebrew packages/casks, macOS settings
-    ubuntu/tasks/ → apt packages, hub, shell change
+    common/tasks/ → chezmoi install + apply (manager.yml)
+    ubuntu/tasks/ → chsh to zsh (requires sudo)
 ```
 
 ## Important Conventions
 
-- **Shared config across machines**: This config runs on both macOS and Linux. Don't remove things just because they're absent on the current machine — use conditional checks instead (e.g., `(( $+commands[tool] ))` in zsh, `hash tool 2>/dev/null` in bash).
-- **Platform detection**: Use `$OSTYPE` (zsh builtin) or `$PLATFORM` variable, never raw `uname` subprocesses in hot paths. `$PLATFORM` is set to `Mac`, `Linux`, or `FreeBSD` early in `.zshrc`.
-- **Antigen plugin manager**: Plugins are loaded conditionally based on `$+commands[...]` checks. After changing the bundle list, delete `~/.antigen/init.zsh` to force cache rebuild.
-- **PATH deduplication**: `typeset -U path` at the end of `.zshrc` deduplicates. All PATH additions use `export PATH=...:$PATH` style (not the `path+=()` array style).
-- **Subprocess avoidance**: In shell startup, prefer zsh builtins over external commands. Use `read -r var < file` instead of `$(cat file)`, `$OSTYPE` instead of `$(uname)`, `(( $+commands[x] ))` instead of `which x`.
-- **welcome_message**: Uses parallel subshell (`( ... & ... & wait )`) to gather system info concurrently. Platform-aware: uses `sysctl`/`vm_stat`/`ipconfig` on Mac, `/proc/*`/`free`/`hostname -I` on Linux.
-- **`.temp_aliases`**: Machine-specific aliases not tracked in git (sourced by `.bash_aliases` if present).
+- **Shared config across machines**: This config runs on both macOS and Linux. Don't remove things just because they're absent on the current machine — use chezmoi templates for platform-specific code.
+- **Platform detection**: In chezmoi templates use `.chezmoi.os` (`darwin`/`linux`). All platform branching is resolved at `chezmoi apply` time — no runtime `$PLATFORM` variable or `uname` subprocesses needed.
+- **Shared env vars**: `EDITOR`, `GOPATH`, `FZF_DEFAULT_COMMAND`, `LC_ALL`, PATH entries — all live in `~/.config/shell/env.sh`. Don't duplicate in shell-specific files.
+- **Antidote plugin manager**: Plugins listed in `~/.zsh_plugins.txt`, compiled to a static `~/.zsh_plugins.zsh`. After editing the plugin list, delete `~/.zsh_plugins.zsh` to force regeneration.
+- **Deferred loading**: `direnv`, `zoxide`, `pyenv`, and `thefuck` are initialized via `zsh-defer` in zsh — they load after the prompt renders to avoid blocking startup.
+- **PATH deduplication**: `typeset -U path` at the end of `.zshrc` deduplicates.
+- **Subprocess avoidance**: In shell startup, prefer builtins over external commands. Use `read -r var < file` instead of `$(cat file)`, `(( $+commands[x] ))` instead of `which x`.
+- **welcome_message**: Uses parallel subshell (`( ... & ... & wait )`) to gather system info concurrently. Platform-aware. Defined in `.shell_functions`, called by both zsh and bash.
+- **chezmoi templates**: Use Go template syntax. Template data is in `~/.config/chezmoi/chezmoi.toml`. Platform branching: `{{ if eq .chezmoi.os "darwin" }}`.
+- **Fish parity**: Fish uses `bass` to source the shared POSIX env file. Common aliases are defined natively in `config.fish`.

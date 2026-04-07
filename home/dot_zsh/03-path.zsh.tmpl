@@ -1,0 +1,11 @@
+# Source shared environment (POSIX-compatible, shared with bash/fish)
+[ -f "$HOME/.config/shell/env.sh" ] && . "$HOME/.config/shell/env.sh"
+
+{{ if eq .chezmoi.os "linux" -}}
+# Cuda
+[ -d "/usr/local/cuda/bin" ] && export PATH=/usr/local/cuda/bin:$PATH
+[ -d "/usr/local/cuda/lib64" ] && export LD_LIBRARY_PATH=/usr/local/cuda/lib64:$LD_LIBRARY_PATH
+
+# Linuxbrew
+[ -d /home/linuxbrew/.linuxbrew/bin ] && export PATH=/home/linuxbrew/.linuxbrew/bin:$PATH
+{{ end -}}

@@ -1,0 +1,26 @@
+# Bass: source bash scripts from fish (for shared aliases/env)
+[".config/fish/functions/bass.fish"]
+    type = "file"
+    url = "https://raw.githubusercontent.com/edc/bass/master/functions/bass.fish"
+    refreshPeriod = "672h"
+
+[".config/fish/functions/__bass.py"]
+    type = "file"
+    url = "https://raw.githubusercontent.com/edc/bass/master/functions/__bass.py"
+    refreshPeriod = "672h"
+
+# Vim plugin manager
+[".vim/bundle/vundle"]
+    type = "git-repo"
+    url = "https://github.com/gmarik/Vundle.vim.git"
+    refreshPeriod = "168h"
+    clone.args = ["--depth", "1"]
+    pull.args = ["--ff-only"]
+
+# Tmux plugin manager
+[".tmux/plugins/tpm"]
+    type = "git-repo"
+    url = "https://github.com/tmux-plugins/tpm.git"
+    refreshPeriod = "168h"
+    clone.args = ["--depth", "1"]
+    pull.args = ["--ff-only"]

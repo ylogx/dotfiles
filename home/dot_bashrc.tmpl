@@ -1,0 +1,84 @@
+# ~/.bashrc: executed by bash(1) for non-login shells.
+
+# Source shared environment
+[ -f "$HOME/.config/shell/env.sh" ] && . "$HOME/.config/shell/env.sh"
+
+# If not running interactively, don't do anything
+[ -z "$PS1" ] && return
+
+# History
+HISTCONTROL=ignoredups:ignorespace
+shopt -s histappend
+HISTSIZE=100000
+HISTFILESIZE=200000
+
+# Check window size after each command
+shopt -s checkwinsize
+
+# Make less more friendly for non-text input files
+[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
+
+# Prompt
+force_color_prompt=yes
+if [ -n "$force_color_prompt" ]; then
+    if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
+        color_prompt=yes
+    else
+        color_prompt=
+    fi
+fi
+if [ "$color_prompt" = yes ]; then
+    PS1='\[\033[01;31m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+else
+    PS1='\u@\h:\w\$ '
+fi
+unset color_prompt force_color_prompt
+
+# Xterm title
+case "$TERM" in
+xterm*|rxvt*)
+    PS1="\[\e]0;\u@\h: \w\a\]$PS1"
+    ;;
+esac
+
+# Use starship prompt if available
+command -v starship >/dev/null && eval "$(starship init bash)"
+
+# Color support
+if [ -x /usr/bin/dircolors ]; then
+    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+    alias ls='ls --color=auto'
+    alias grep='grep --color=auto'
+    alias fgrep='fgrep --color=auto'
+    alias egrep='egrep --color=auto'
+fi
+
+# Bash completion
+if ! shopt -oq posix; then
+    if [ -f /usr/share/bash-completion/bash_completion ]; then
+        . /usr/share/bash-completion/bash_completion
+    elif [ -f /etc/bash_completion ]; then
+        . /etc/bash_completion
+    fi
+fi
+
+{{ if eq .chezmoi.os "linux" -}}
+# KDE integration
+[ -f ~/.kde-bashrc ] && . ~/.kde-bashrc
+if [ -d "$HOME/.kde" ]; then
+    export KDEDIRS="$HOME/.kde:$HOME/.local:$KDEDIRS"
+fi
+{{ end -}}
+
+# FZF
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+
+# Tool inits
+command -v direnv >/dev/null && eval "$(direnv hook bash)"
+command -v zoxide >/dev/null && eval "$(zoxide init bash)"
+
+# Aliases and functions (shared with zsh and fish)
+[ -f ~/.shell_aliases ] && . ~/.shell_aliases
+[ -f ~/.shell_functions ] && . ~/.shell_functions
+
+type welcome_message >/dev/null 2>&1 && welcome_message

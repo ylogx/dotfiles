@@ -1,6 +1,6 @@
 ---
-#- hosts: fleet_osx
+# macOS packages and settings are now managed by chezmoi run_once scripts.
+# This playbook only runs the common role (chezmoi install + apply).
 - hosts: all
   roles:
-    - role: osx
     - role: common

@@ -1,5 +1,0 @@
----
-- include_tasks: homebrew.yml
-  tags: brew
-- include_tasks: settings.yml
-  tags: settings

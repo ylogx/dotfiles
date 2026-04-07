@@ -1,0 +1,7 @@
+# Load modular zsh config (numbered files ensure order)
+for conf in ${ZDOTDIR:-$HOME}/.zsh/*.zsh(N); do
+  source "$conf"
+done
+
+# Deduplicate PATH (must be after all PATH modifications)
+typeset -U path
