@@ -128,34 +128,8 @@ welcome_message() {
     print_system_status_fast
 }
 
-# Speaks a message on ios when a server comes back up
+# Speaks a message when a server comes back up
 speakwhenup() { [ "$1" ] && PHOST="$1" || return 1; until ping -c1 -W2 $PHOST >/dev/null 2>&1; do sleep 5s; done; say "$PHOST is up" >/dev/null 2>&1; }
-
-# get IP adresses
-#function my_ip() # get IP adresses
-my_ip () {
-        MY_IP=$(/sbin/ifconfig wlan0 | awk "/inet/ { print $2 } " | sed -e s/addr://)
-                #/sbin/ifconfig | awk /'inet addr/ {print $2}'
-        MY_ISP=$(/sbin/ifconfig wlan0 | awk "/P-t-P/ { print $3 } " | sed -e s/P-t-P://)
-}
-
-# get current host related info
-ii () {
-    echo -e "\nYou are logged on ${red}$HOST"
-    echo -e "\nAdditionnal information:$NC " ; uname -a
-    echo -e "\n${red}Users logged on:$NC " ; w -h
-    echo -e "\n${red}Current date :$NC " ; date
-    echo -e "\n${red}Machine stats :$NC " ; uptime
-    echo -e "\n${red}Memory stats :$NC " ; free
-    echo -en "\n${red}Local IP Address :$NC" ; /sbin/ifconfig wlan0 | awk /'inet addr/ {print $2}' | sed -e s/addr:/' '/
-    #my_ip 2>&. ;
-    #my_ip 2>&1 ;
-    #echo -e "\n${RED}Local IP Address :$NC" ; echo ${MY_IP:."Not connected"}
-    #echo -e "\n${RED}ISP Address :$NC" ; echo ${MY_ISP:."Not connected"}
-    #echo -e "\n${RED}Local IP Address :$NC" ; echo ${MY_IP} #:."Not connected"}
-    #echo -e "\n${RED}ISP Address :$NC" ; echo ${MY_ISP} #:."Not connected"}
-    echo
-}
 
 
 # Easy extract
@@ -191,17 +165,22 @@ mkcdr () {
     cd $1
 }
 
-function countdown(){
-   date1=$((`date +%s` + $1));
-   while [ "$date1" -ne `date +%s` ]; do
-     echo -ne "$(date -u --date @$((`date +%s` - $date1)) +%H:%M:%S)\r";
-   done
+countdown() {
+  local secs=$(( $1 ))
+  while [ $secs -gt 0 ]; do
+    printf "\r%02d:%02d:%02d" $((secs/3600)) $(((secs%3600)/60)) $((secs%60))
+    sleep 1
+    secs=$(( secs - 1 ))
+  done
+  echo
 }
-function stopwatch(){
-  date1=`date +%s`;
-   while true; do
-    echo -ne "$(date -u --date @$((`date +%s` - $date1)) +%H:%M:%S)\r";
-   done
+stopwatch() {
+  local start=$(date +%s)
+  while true; do
+    local elapsed=$(( $(date +%s) - start ))
+    printf "\r%02d:%02d:%02d" $((elapsed/3600)) $(((elapsed%3600)/60)) $((elapsed%60))
+    sleep 1
+  done
 }
 
 function ooo(){

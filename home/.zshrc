@@ -90,47 +90,10 @@ fi
 ###############################
 ### SSH Agent and GPG Agent ###
 ###############################
-#eval "$(ssh-agent)" > /dev/null    # Naive approach, leaves a lot of orphan agents
-add_ssh_agent_safely() {
-  if [ ! -S ~/.ssh/ssh_auth_sock ]; then
-    echo "If you want to disable adding ssh key to agent, disable this block"
-    eval "$(ssh-agent)" > /dev/null
-    ln -sf "$SSH_AUTH_SOCK" ~/.ssh/ssh_auth_sock
-  fi
-  export SSH_AUTH_SOCK=~/.ssh/ssh_auth_sock
-  ssh-add -l > /dev/null || ssh-add
-}
-# Using gpg-agent to work as ssh-agent. See below where we export $SSH_AUTH_SOCK created by gpg-agent
-#add_ssh_agent_safely
-
-fresh_gpg_agent() {
-  eval $(gpg-agent --daemon --enable-ssh-support --sh --use-standard-socket --write-env-file $GPG_AGENT_INFO_FILENAME &> /dev/null)
-  touch $GPG_AGENT_INFO_FILENAME
-}
-
-add_gpg_agent_safely() {
-  #export GPG_TTY=$(tty)
-  # Following file will be created by gpg-agent plugin of oh my zsh
-  GPG_AGENT_INFO_FILENAME=${HOME}/.gnupg/gpg-agent.env
-  if [ ! -f "$GPG_AGENT_INFO_FILENAME" ]; then
-    fresh_gpg_agent
-  fi
-
-  #. $GPG_AGENT_INFO_FILENAME
-  #if [ ! -S "$SSH_AUTH_SOCK" ]; then
-    #fresh_gpg_agent
-  #fi
-  #. $GPG_AGENT_INFO_FILENAME
-  #export GPG_AGENT_INFO
-  #export SSH_AUTH_SOCK
-  #export SSH_AGENT_PID
-}
-if [ -f "$HOME/.gnupg" ]; then
-  add_gpg_agent_safely
-fi
-
+# GPG agent is managed by the gpg-agent oh-my-zsh plugin
+# SSH agent: only add keys if agent is already running (macOS Keychain or gpg-agent)
 if [ -S "$SSH_AUTH_SOCK" ]; then
-  ssh-add -l > /dev/null || ssh-add
+  ssh-add -l > /dev/null 2>&1 || ssh-add 2>/dev/null
 fi
 ##################################################################
 
@@ -138,91 +101,43 @@ fi
 #########################
 ### Software Specific ###
 #########################
-#Hierarchy Viewer Variable
-export ANDROID_HVPROTO=ddm
-
 export EDITOR=vi
 export VISUAL=vi
 
 ### Added by the Heroku Toolbelt
 [ -d '/usr/local/heroku/bin' ] && export PATH="/usr/local/heroku/bin:$PATH"
 
-# added by travis gem
-[ -f ~/.travis/travis.sh ] && source ~/.travis/travis.sh
+# Tool inits — deferred where possible to avoid blocking shell startup
+zsh-defer eval "$(direnv hook zsh)"
 
-eval "$(direnv hook zsh)"
-
-[ -d "$HOME/Library/Python/3.9/bin" ] && export PATH=$PATH:"$HOME/Library/Python/3.9/bin"
 [ -d "$HOME/.pyenv" ] && export PATH="$HOME/.pyenv/bin:$PATH";
-if (( $+commands[pyenv] )); then eval "$(pyenv init -)"; (( $+commands[pyenv-virtualenv-init] )) && eval "$(pyenv virtualenv-init -)"; fi
-
-# The next line enables shell command completion for gcloud.
-#if [ -f ~/google-cloud-sdk/completion.zsh.inc ]; then
-  #source '~/google-cloud-sdk/completion.zsh.inc'
-#fi
-
-# added by Anaconda3 4.2.0 installer
-[ -d "/opt/anaconda3/bin" ] && export PATH="/opt/anaconda3/bin:$PATH"
-[ -d "/opt/node-v4.2.1-linux-x64/bin/" ] && export PATH="/opt/node-v4.2.1-linux-x64/bin/:$PATH"
-[ -d "/usr/local/opt/node@8/bin" ] && export PATH="/usr/local/opt/node@8/bin:$PATH"
-
-# Cuda
-[ -d "/usr/local/cuda/bin" ] && export PATH=/usr/local/cuda/bin:$PATH
-[ -d "/usr/local/cuda/lib64" ] && export LD_LIBRARY_PATH=/usr/local/cuda/lib64:$LD_LIBRARY_PATH
+if (( $+commands[pyenv] )); then zsh-defer eval "$(pyenv init -)"; fi
 
 export GOPATH="$HOME/.cache/go"
 [ -d "$GOPATH/bin" ] && export PATH="$GOPATH/bin:$PATH"
 [ -d "$HOME/.cargo/bin" ] && export PATH="$HOME/.cargo/bin:$PATH"
 [ -d "$HOME/.pub-cache/bin" ] && export PATH="$PATH":"$HOME/.pub-cache/bin"
 
-hash thefuck 2>/dev/null && eval $(thefuck --alias)
+(( $+commands[thefuck] )) && zsh-defer eval "$(thefuck --alias)"
 
-#export PATH="/usr/local/opt/ruby/bin:$PATH"
-#source /usr/local/share/chruby/chruby.sh
-#source /usr/local/share/chruby/auto.sh
-#chruby 2.2.4
-#export ANDROID_SDK_ROOT="/usr/local/share/android-sdk"
-
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '~/sdk/google-cloud-sdk/path.zsh.inc' ]; then . '~/sdk/google-cloud-sdk/path.zsh.inc'; fi
-# The next line enables shell command completion for gcloud.
-if [ -f '~/sdk/google-cloud-sdk/completion.zsh.inc' ]; then . '~/sdk/google-cloud-sdk/completion.zsh.inc'; fi
+# Google Cloud SDK
+if [ -f "$HOME/sdk/google-cloud-sdk/path.zsh.inc" ]; then . "$HOME/sdk/google-cloud-sdk/path.zsh.inc"; fi
+if [ -f "$HOME/sdk/google-cloud-sdk/completion.zsh.inc" ]; then . "$HOME/sdk/google-cloud-sdk/completion.zsh.inc"; fi
 
 ### FZF ###
-# To install useful key bindings and fuzzy completion:
-# $(brew --prefix)/opt/fzf/install
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 [ -f /usr/share/doc/fzf/examples/key-bindings.zsh ] && source /usr/share/doc/fzf/examples/key-bindings.zsh
-#export FZF_DEFAULT_COMMAND='(git ls-tree -r --name-only HEAD || rg --files || find . -path "*/\.*" -prune -o -type f -print -o -type l -print | sed s/^..//) 2> /dev/null'
-export FZF_DEFAULT_COMMAND='(git ls-tree -r --name-only HEAD || rg --files || find . -path "*/\.*" -prune -o -type f -print -o -type l -print | sed s/^..//) 2> /dev/null'
-export FZF_DEFAULT_COMMAND='(git ls-tree -r --name-only HEAD || rg --files --no-ignore --hidden --follow --glob "!.git/*" || find . -path "*/\.*" -prune -o -type f -print -o -type l -print | sed s/^..//) 2> /dev/null'
-export FZF_DEFAULT_COMMAND='(rg --files --no-ignore --hidden --follow --glob "!.git/*" || find . -path "*/\.*" -prune -o -type f -print -o -type l -print | sed s/^..//) 2> /dev/null'
 export FZF_DEFAULT_COMMAND='(rg --files || find . -path "*/\.*" -prune -o -type f -print -o -type l -print | sed s/^..//) 2> /dev/null'
 
-hash jump 2>/dev/null && eval "$(jump shell)"
-hash zoxide 2>/dev/null && eval "$(zoxide init zsh)"
+hash zoxide 2>/dev/null && zsh-defer eval "$(zoxide init zsh)"
 
 [ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh
 
-#[ -d /opt/homebrew/bin ] && export PATH=/opt/homebrew/bin:$PATH # Taken care in .zprofile/.zshenv
-[ -d /home/linuxbrew/.linuxbrew/bin ] && export PATH=/home/linuxbrew/.linuxbrew/bin:$PATH
+# Cuda (if present)
+[ -d "/usr/local/cuda/bin" ] && export PATH=/usr/local/cuda/bin:$PATH
+[ -d "/usr/local/cuda/lib64" ] && export LD_LIBRARY_PATH=/usr/local/cuda/lib64:$LD_LIBRARY_PATH
 
-load_conda() {
-  # >>> conda initialize >>>
-  # !! Contents within this block are managed by 'conda init' !!
-  __conda_setup="$('/usr/local/anaconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-  if [ $? -eq 0 ]; then
-      eval "$__conda_setup"
-  else
-      if [ -f "/usr/local/anaconda3/etc/profile.d/conda.sh" ]; then
-          . "/usr/local/anaconda3/etc/profile.d/conda.sh"
-      else
-          export PATH="/usr/local/anaconda3/bin:$PATH"
-      fi
-  fi
-  unset __conda_setup
-  # <<< conda initialize <<<
-}
+[ -d /home/linuxbrew/.linuxbrew/bin ] && export PATH=/home/linuxbrew/.linuxbrew/bin:$PATH
 #################################################################
 
 ###############
