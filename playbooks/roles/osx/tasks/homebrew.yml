@@ -22,7 +22,7 @@
     state: present
     name:
       - ack
-      - antigen
+      - antidote
       - ansible
       - bat # Better cat
       # - binocle # cargo install binocle
