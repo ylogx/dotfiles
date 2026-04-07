@@ -15,7 +15,7 @@ See [chaudhary.xyz/dotfiles](http://shubham.chaudhary.xyz/dotfiles) for more inf
 Dotfiles are managed by [chezmoi](https://chezmoi.io). To update:
 
 ```sh
-cd ~/.homesick/repos/dotfiles && git pull
+cd ~/.dotfiles && git pull
 chezmoi apply
 ```
 

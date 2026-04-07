@@ -3,7 +3,7 @@
 {{- $signingkey := promptStringOnce . "signingkey" "GPG signing key (leave empty to skip)" -}}
 {{- $github_user := promptStringOnce . "github_user" "GitHub username" -}}
 
-sourceDir = {{ joinPath .chezmoi.homeDir ".homesick/repos/dotfiles" | quote }}
+sourceDir = {{ joinPath .chezmoi.homeDir ".dotfiles" | quote }}
 
 [data]
     name = {{ $name | quote }}

@@ -10,7 +10,7 @@ install_git_if_needed() {
     fi
 }
 
-HOLDING_LOCATION="${HOME}/.homesick/repos/dotfiles"
+HOLDING_LOCATION="${HOME}/.dotfiles"
 
 if [[ ! -d ${HOLDING_LOCATION} ]]; then
   install_git_if_needed
