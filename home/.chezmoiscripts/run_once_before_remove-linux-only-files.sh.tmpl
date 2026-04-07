@@ -1,0 +1,10 @@
+#!/bin/bash
+# Remove Linux-only dotfiles on macOS, but only if they are homeshick symlinks
+{{ if ne .chezmoi.os "linux" }}
+for f in "$HOME/.lynxrc" "$HOME/.kde-bashrc" "$HOME/.gntrc"; do
+    target="$(readlink "$f" 2>/dev/null)"
+    case "$target" in
+        *".homesick/repos/dotfiles/"*) rm -f "$f" ;;
+    esac
+done
+{{ end }}

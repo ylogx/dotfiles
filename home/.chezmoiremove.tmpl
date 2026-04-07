@@ -21,3 +21,10 @@
 
 # Travis CI local artifacts
 .travis
+
+# Linux-only files — remove on macOS
+{{ if ne .chezmoi.os "linux" }}
+.lynxrc
+.kde-bashrc
+.gntrc
+{{ end }}
