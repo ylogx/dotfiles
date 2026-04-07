@@ -86,46 +86,50 @@ antigen use oh-my-zsh
 #antigen bundle lein
 #antigen bundle command-not-found
 
-antigen bundle brew
-#antigen bundle chruby
-antigen bundle chucknorris
-antigen bundle docker
-antigen bundle docker-compose
-#antigen bundle fortune
+# Always-useful bundles (not tied to a specific tool)
 antigen bundle git
 antigen bundle git-extras
-antigen bundle github
-antigen bundle git-flow
 antigen bundle gnu-utils
-antigen bundle golang
-antigen bundle gpg-agent
-#antigen bundle #gradle
-antigen bundle heroku
 antigen bundle history-substring-search
-antigen bundle jruby
-antigen bundle kubectl
 antigen bundle last-working-dir
-#antigen bundle #lol
-antigen bundle macos
-antigen bundle pip
-antigen bundle pylint
-antigen bundle python
-#antigen bundle #rails
-antigen bundle rake
-antigen bundle rake-fast
-antigen bundle redis-cli
-antigen bundle ruby
-antigen bundle rust
-antigen bundle sublime
 antigen bundle sudo
-antigen bundle ufw
 antigen bundle web-search
+
+# Conditionally load bundles only when the tool is installed
+(( $+commands[brew] ))            && antigen bundle brew
+(( $+commands[docker] ))          && antigen bundle docker
+(( $+commands[docker-compose] || $+commands[docker] )) && antigen bundle docker-compose
+(( $+commands[go] ))              && antigen bundle golang
+(( $+commands[gpg] ))             && antigen bundle gpg-agent
+(( $+commands[heroku] ))          && antigen bundle heroku
+(( $+commands[hub] ))             && antigen bundle github
+(( $+commands[git-flow] ))        && antigen bundle git-flow
+(( $+commands[jruby] ))           && antigen bundle jruby
+(( $+commands[kubectl] ))         && antigen bundle kubectl
+(( $+commands[pip] || $+commands[pip3] )) && antigen bundle pip
+(( $+commands[pylint] ))          && antigen bundle pylint
+(( $+commands[rake] ))            && antigen bundle rake && antigen bundle rake-fast
+(( $+commands[redis-cli] ))       && antigen bundle redis-cli
+(( $+commands[ruby] ))            && antigen bundle ruby
+(( $+commands[rustc] ))           && antigen bundle rust
+(( $+commands[subl] ))            && antigen bundle sublime
+(( $+commands[ufw] ))             && antigen bundle ufw
+(( $+commands[uv] ))              && antigen bundle uv
+(( $+commands[yum] ))             && antigen bundle yum
+#antigen bundle chruby
+#antigen bundle direnv
+#antigen bundle fortune
+#antigen bundle #gradle
+#antigen bundle #lol
+#antigen bundle python
+#antigen bundle #rails
 #antigen bundle #tmux
-antigen bundle yum
 #antigen bundle zsh-completions
-#antigen bundle zsh-syntax-highlighting
 #antigen bundle zsh-wakatime
 #antigen bundle jeffreytse/zsh-vi-mode
+
+# Platform-specific bundles ($OSTYPE avoids uname subprocess)
+[[ "$OSTYPE" == darwin* ]] && antigen bundle macos && antigen bundle chucknorris
 
 # Syntax highlighting bundle.
 antigen bundle zsh-users/zsh-syntax-highlighting
@@ -181,12 +185,11 @@ antigen apply
 ### Platform Specific ###
 #########################
 PLATFORM='Unknown'
-unamestr=`uname`
-if [[ "$unamestr" == 'Linux' ]]; then
+if [[ "$OSTYPE" == linux* ]]; then
    PLATFORM='Linux'
-elif [[ "$unamestr" == 'Darwin' ]]; then
+elif [[ "$OSTYPE" == darwin* ]]; then
    PLATFORM='Mac'
-elif [[ "$unamestr" == 'FreeBSD' ]]; then
+elif [[ "$OSTYPE" == freebsd* ]]; then
    PLATFORM='FreeBSD'
 fi
 
@@ -229,12 +232,11 @@ fi
 ###################
 ### Executables ###
 ###################
-[ -d $HOME/bin ] && export PATH=$HOME/bin:$PATH
-[ -d $HOME/.local/bin ] && export PATH=$PATH:$HOME/.local/bin
-
-#export PATH="/usr/local/bin:$PATH"
-[ -d "$HOME/.local/bin" ] && export PATH=$HOME/.local/bin:$PATH
+[ -d "/usr/local/bin" ] && export PATH=/usr/local/bin:$PATH
 [ -d "/usr/local/sbin" ] && export PATH=/usr/local/sbin:$PATH
+
+[ -d "$HOME/.local/bin" ] && export PATH=$HOME/.local/bin:$PATH
+[ -d $HOME/bin ] && export PATH=$HOME/bin:$PATH
 ##################################################################
 
 ###############################
@@ -300,9 +302,11 @@ export VISUAL=vi
 # added by travis gem
 [ -f ~/.travis/travis.sh ] && source ~/.travis/travis.sh
 
-[ -d "$HOME/Library/Python/3.7/bin" ] && export PATH="$HOME/Library/Python/3.7/bin":$PATH
+eval "$(direnv hook zsh)"
+
+[ -d "$HOME/Library/Python/3.9/bin" ] && export PATH=$PATH:"$HOME/Library/Python/3.9/bin"
 [ -d "$HOME/.pyenv" ] && export PATH="$HOME/.pyenv/bin:$PATH";
-if which pyenv > /dev/null; then eval "$(pyenv init -)"; eval "$(pyenv virtualenv-init -)"; fi
+if (( $+commands[pyenv] )); then eval "$(pyenv init -)"; (( $+commands[pyenv-virtualenv-init] )) && eval "$(pyenv virtualenv-init -)"; fi
 
 # The next line enables shell command completion for gcloud.
 #if [ -f ~/google-cloud-sdk/completion.zsh.inc ]; then
@@ -398,3 +402,6 @@ load_aliases # Doing this at the end, so that $PATH is properly filled
 ### Welcome to home! <3 ###
 ###########################
 type welcome_message >/dev/null && welcome_message
+
+# Deduplicate PATH (must be after all PATH modifications)
+typeset -U path
