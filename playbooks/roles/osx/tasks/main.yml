@@ -1,5 +1,3 @@
 ---
-- include_tasks: homebrew.yml
-  tags: brew
-- include_tasks: settings.yml
-  tags: settings
+# Homebrew packages and macOS settings are now managed by chezmoi run_once scripts.
+# See home/.chezmoiscripts/ for: install-packages.sh and setup-macos.sh

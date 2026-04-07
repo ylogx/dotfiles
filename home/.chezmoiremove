@@ -1,0 +1,10 @@
+# Old plugin manager artifacts
+.antigen
+.antigen/**
+
+# Old dotfile manager
+.homesick
+.homesick/**
+
+# Stale zsh completion dumps (regenerated automatically)
+.zcompdump-*

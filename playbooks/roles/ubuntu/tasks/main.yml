@@ -1,5 +1,6 @@
 ---
-- include_tasks: package.yml
+# Packages are now managed by chezmoi run_once scripts.
+# See home/.chezmoiscripts/run_once_before_install-packages.sh.tmpl
 
 - name: Change shell to ZSH
   become: true

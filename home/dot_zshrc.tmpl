@@ -4,15 +4,21 @@
 # Static plugin loading via antidote (replaces antigen)
 # Plugin list: ~/.zsh_plugins.txt
 # To update plugins: antidote update
+{{- if eq .chezmoi.os "darwin" }}
 if [ -f "/opt/homebrew/share/antidote/antidote.zsh" ]; then
     source /opt/homebrew/share/antidote/antidote.zsh
 elif [ -f "/usr/local/share/antidote/antidote.zsh" ]; then
     source /usr/local/share/antidote/antidote.zsh
-elif [ -d "${ZDOTDIR:-~}/.antidote" ]; then
-    source ${ZDOTDIR:-~}/.antidote/antidote.zsh
 else
     echo "Antidote not found. Install via: brew install antidote"
 fi
+{{- else }}
+if [ -d "${ZDOTDIR:-~}/.antidote" ]; then
+    source ${ZDOTDIR:-~}/.antidote/antidote.zsh
+else
+    echo "Antidote not found. Install via: git clone https://github.com/mattmc3/antidote ~/.antidote"
+fi
+{{- end }}
 
 ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern cursor)
 DISABLE_AUTO_UPDATE=true  # Skip oh-my-zsh upgrade check on every shell start
@@ -32,45 +38,38 @@ eval "$(starship init zsh)"
 #########################
 ### Platform Specific ###
 #########################
-PLATFORM='Unknown'
-if [[ "$OSTYPE" == linux* ]]; then
-   PLATFORM='Linux'
-elif [[ "$OSTYPE" == darwin* ]]; then
-   PLATFORM='Mac'
-elif [[ "$OSTYPE" == freebsd* ]]; then
-   PLATFORM='FreeBSD'
-fi
-
 # Dotfiles managed by chezmoi: chezmoi apply
-
-if [[ $PLATFORM == 'Linux' ]]; then
-    [ -d $HOME/kde/bin ] && export PATH=$PATH:$HOME/kde/bin
-    [ -d ~/kde/src/kdesrc-build ] && export PATH=~/kde/src/kdesrc-build:$PATH
-    #[ -d /etc/alternatives/java_sdk ] && export JAVA_HOME=/etc/alternatives/java_sdk
-    [ -d $JAVA_HOME/bin ] && export PATH=$JAVA_HOME/bin:$PATH
-    export ANDROID_HOME=$HOME/sdk/android-sdk
-    [ -d $ANDROID_HOME/platform-tools ] && export PATH=$PATH:$ANDROID_HOME/platform-tools
-    [ -d $ANDROID_HOME/tools ] && export PATH=$PATH:$ANDROID_HOME/tools
-    hash xdg-open 2>/dev/null && alias open='xdg-open'
-elif [[ $PLATFORM == 'Mac' ]]; then
-    export LC_ALL=en_US.UTF-8
-    export LANG=en_US.UTF-8
-    if [ "$TERM" != "dumb" ]; then
-        export LS_OPTIONS='--color=auto'
-    fi
-    alias ls="ls $LS_OPTIONS"
-    export ANDROID_HOME=$HOME/sdk/android-sdk
-    [ -d $ANDROID_HOME/platform-tools ] && export PATH=$PATH:$ANDROID_HOME/platform-tools
-    [ -d $ANDROID_HOME/tools ] && export PATH=$PATH:$ANDROID_HOME/tools
-    [ -d /usr/local/opt/coreutils/libexec/gnubin ] && export PATH=/usr/local/opt/coreutils/libexec/gnubin:$PATH
-    [ -d /usr/local/opt/coreutils/libexec/gnubin ] && export PATH=$PATH:/usr/local/opt/go/libexec/bin
-    [ -d /usr/local/opt/gnu-sed/libexec/gnubin ] && export PATH="/usr/local/opt/gnu-sed/libexec/gnubin:$PATH"
-    [ -d /usr/local/share/npm/bin ] && export PATH="/usr/local/share/npm/bin:$PATH"
-    [ -d /usr/local/opt/coreutils/libexec/gnuman ] && export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
-    #export JAVA_HOME=`/usr/libexec/java_home`
-    #export IDEA_HOME=$JAVA_HOME
-    #export PATH=$JAVA_HOME/bin:$PATH
+{{ if eq .chezmoi.os "linux" -}}
+PLATFORM='Linux'
+[ -d $HOME/kde/bin ] && export PATH=$PATH:$HOME/kde/bin
+[ -d ~/kde/src/kdesrc-build ] && export PATH=~/kde/src/kdesrc-build:$PATH
+[ -d $JAVA_HOME/bin ] && export PATH=$JAVA_HOME/bin:$PATH
+export ANDROID_HOME=$HOME/sdk/android-sdk
+[ -d $ANDROID_HOME/platform-tools ] && export PATH=$PATH:$ANDROID_HOME/platform-tools
+[ -d $ANDROID_HOME/tools ] && export PATH=$PATH:$ANDROID_HOME/tools
+hash xdg-open 2>/dev/null && alias open='xdg-open'
+{{ else if eq .chezmoi.os "darwin" -}}
+PLATFORM='Mac'
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
+if [ "$TERM" != "dumb" ]; then
+    export LS_OPTIONS='--color=auto'
 fi
+alias ls="ls $LS_OPTIONS"
+export ANDROID_HOME=$HOME/sdk/android-sdk
+[ -d $ANDROID_HOME/platform-tools ] && export PATH=$PATH:$ANDROID_HOME/platform-tools
+[ -d $ANDROID_HOME/tools ] && export PATH=$PATH:$ANDROID_HOME/tools
+# GNU coreutils/sed (Homebrew)
+[ -d /usr/local/opt/coreutils/libexec/gnubin ] && export PATH=/usr/local/opt/coreutils/libexec/gnubin:$PATH
+[ -d /opt/homebrew/opt/coreutils/libexec/gnubin ] && export PATH=/opt/homebrew/opt/coreutils/libexec/gnubin:$PATH
+[ -d /usr/local/opt/gnu-sed/libexec/gnubin ] && export PATH="/usr/local/opt/gnu-sed/libexec/gnubin:$PATH"
+[ -d /opt/homebrew/opt/gnu-sed/libexec/gnubin ] && export PATH="/opt/homebrew/opt/gnu-sed/libexec/gnubin:$PATH"
+[ -d /usr/local/share/npm/bin ] && export PATH="/usr/local/share/npm/bin:$PATH"
+[ -d /usr/local/opt/coreutils/libexec/gnuman ] && export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
+[ -d /opt/homebrew/opt/coreutils/libexec/gnuman ] && export MANPATH="/opt/homebrew/opt/coreutils/libexec/gnuman:$MANPATH"
+{{ else -}}
+PLATFORM='Unknown'
+{{ end -}}
 ##################################################################
 
 ###################
@@ -122,18 +121,22 @@ if [ -f "$HOME/sdk/google-cloud-sdk/completion.zsh.inc" ]; then . "$HOME/sdk/goo
 
 ### FZF ###
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+{{ if eq .chezmoi.os "linux" -}}
 [ -f /usr/share/doc/fzf/examples/key-bindings.zsh ] && source /usr/share/doc/fzf/examples/key-bindings.zsh
+{{ end -}}
 export FZF_DEFAULT_COMMAND='(rg --files || find . -path "*/\.*" -prune -o -type f -print -o -type l -print | sed s/^..//) 2> /dev/null'
 
 hash zoxide 2>/dev/null && zsh-defer eval "$(zoxide init zsh)"
 
 [ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh
 
+{{ if eq .chezmoi.os "linux" -}}
 # Cuda (if present)
 [ -d "/usr/local/cuda/bin" ] && export PATH=/usr/local/cuda/bin:$PATH
 [ -d "/usr/local/cuda/lib64" ] && export LD_LIBRARY_PATH=/usr/local/cuda/lib64:$LD_LIBRARY_PATH
 
 [ -d /home/linuxbrew/.linuxbrew/bin ] && export PATH=/home/linuxbrew/.linuxbrew/bin:$PATH
+{{ end -}}
 #################################################################
 
 ###############
