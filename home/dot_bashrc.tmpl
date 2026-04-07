@@ -85,8 +85,8 @@ fi
 command -v direnv >/dev/null && eval "$(direnv hook bash)"
 command -v zoxide >/dev/null && eval "$(zoxide init bash)"
 
-# Aliases and functions (shared with zsh)
-[ -f ~/.bash_aliases ] && . ~/.bash_aliases
-[ -f ~/.bash_functions ] && . ~/.bash_functions
+# Aliases and functions (shared with zsh and fish)
+[ -f ~/.shell_aliases ] && . ~/.shell_aliases
+[ -f ~/.shell_functions ] && . ~/.shell_functions
 
 type welcome_message >/dev/null 2>&1 && welcome_message

@@ -45,8 +45,8 @@ make build
 ### Shared Shell Config
 ```
 ~/.config/shell/env.sh  → POSIX-compatible env vars, PATH (sourced by all shells)
-~/.bash_aliases         → 150+ aliases (sourced by bash and zsh)
-~/.bash_functions       → welcome_message, utility functions (sourced by bash and zsh)
+~/.shell_aliases         → 150+ aliases (sourced by bash and zsh)
+~/.shell_functions       → welcome_message, utility functions (sourced by bash and zsh)
 ~/.temp_aliases         → Machine-specific aliases, not tracked in git
 ```
 
@@ -59,7 +59,7 @@ make build
     02-platform.zsh  → $PLATFORM, coreutils/gnu-sed paths
     03-path.zsh      → sources env.sh, platform-specific PATH (cuda, linuxbrew)
     04-tools.zsh     → deferred inits: direnv, pyenv, fzf, zoxide, thefuck, gcloud
-    05-aliases.zsh   → sources .bash_aliases + .bash_functions, zsh-specific aliases
+    05-aliases.zsh   → sources .shell_aliases + .shell_functions, zsh-specific aliases
     06-welcome.zsh   → welcome_message
 ```
 
@@ -67,8 +67,8 @@ make build
 ```
 .profile             → TERM setup, sources env.sh, sources .bashrc
   └─ .bashrc         → history, prompt, starship, completion, direnv, zoxide
-      ├─ .bash_aliases
-      └─ .bash_functions
+      ├─ .shell_aliases
+      └─ .shell_functions
 ```
 
 ### Shell Startup Chain (Fish)
@@ -105,6 +105,6 @@ playbooks/
 - **Deferred loading**: `direnv`, `zoxide`, `pyenv`, and `thefuck` are initialized via `zsh-defer` in zsh — they load after the prompt renders to avoid blocking startup.
 - **PATH deduplication**: `typeset -U path` at the end of `.zshrc` deduplicates.
 - **Subprocess avoidance**: In shell startup, prefer builtins over external commands. Use `read -r var < file` instead of `$(cat file)`, `(( $+commands[x] ))` instead of `which x`.
-- **welcome_message**: Uses parallel subshell (`( ... & ... & wait )`) to gather system info concurrently. Platform-aware. Defined in `.bash_functions`, called by both zsh and bash.
+- **welcome_message**: Uses parallel subshell (`( ... & ... & wait )`) to gather system info concurrently. Platform-aware. Defined in `.shell_functions`, called by both zsh and bash.
 - **chezmoi templates**: Use Go template syntax. Template data is in `~/.config/chezmoi/chezmoi.toml`. Platform branching: `{{ if eq .chezmoi.os "darwin" }}`.
 - **Fish parity**: Fish uses `bass` to source the shared POSIX env file. Common aliases are defined natively in `config.fish`.

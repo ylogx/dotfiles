@@ -1,8 +1,8 @@
-# Source shared aliases and functions (also used by bash)
-[ -f ~/.bash_aliases ] && . ~/.bash_aliases
-[ -f ~/.bash_functions ] && . ~/.bash_functions
+# Source shared aliases and functions (also used by bash and fish)
+[ -f ~/.shell_aliases ] && . ~/.shell_aliases
+[ -f ~/.shell_functions ] && . ~/.shell_functions
 
-# Zsh-specific aliases
+# Zsh-specific overrides
 alias reload='reset; source ~/.zshrc'
 alias reloads='source ~/.zshrc &> /dev/null'
 

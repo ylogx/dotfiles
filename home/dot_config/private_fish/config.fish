@@ -2,7 +2,7 @@ if status is-interactive
     # Source shared environment via bass (POSIX -> fish bridge)
     if type -q bass
         bass source ~/.config/shell/env.sh
-        bass source ~/.bash_aliases 2>/dev/null
+        bass source ~/.shell_aliases 2>/dev/null
     end
 
     # Starship prompt

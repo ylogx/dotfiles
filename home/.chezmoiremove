@@ -12,6 +12,10 @@
 # Dead dev aliases (was all commented out)
 .dev_aliases.sh
 
+# Old names (renamed to shell_aliases/shell_functions)
+.bash_aliases
+.bash_functions
+
 # Stale zsh completion dumps (regenerated automatically)
 .zcompdump-*
 

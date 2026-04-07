@@ -1,0 +1,211 @@
+# vim: set filetype=shell
+# Shared aliases — sourced by bash, zsh, and fish (via bass)
+# Shell-specific overrides (reload, suffix aliases) are in:
+#   zsh: ~/.zsh/05-aliases.zsh
+#   bash: these are the defaults
+# Reorder note: most-used aliases first (based on zsh_history analysis)
+
+##########
+### ls ###  (l: 73 hits, la: 5)
+##########
+alias l='d; ls -ltrFhH'
+alias la='d; ls -lAtrFhH'
+alias ll='ls -alF'
+alias lla='ls -a'
+alias lsd='ls -l | grep "^d"'
+alias nf='ls | wc -l'
+hash eza 2>/dev/null && alias l='eza -lsnew'
+hash eza 2>/dev/null && alias leza='d; eza -bghHlS -s modified --git'
+
+#################
+### File View ###  (c: 24 hits)
+#################
+alias less='less -R'
+alias catlatest='cat `ls -t|head -1`'
+alias wcl='wc -l'
+
+# Progressive cat: cat → pygmentize → bat (last match wins)
+alias c='temp_c() {[[ -d "$1" ]] && ls -ltrFhH "$1" || cat "$1"}; temp_c'
+hash pygmentize 2>/dev/null && alias c='temp_c() {[[ -d "$1" ]] && ls -ltrFhH "$1" || pygmentize -g "$1"}; temp_c'
+hash bat 2>/dev/null && alias c='temp_c() {[[ -d "$1" ]] && ls -ltrFhH "$1" || bat "$1"}; temp_c'
+hash bat 2>/dev/null && alias bp='temp_c() {[[ -d "$1" ]] && ls -ltrFhH "$1" || bat -P "$1"}; temp_c'
+hash highlight 2>/dev/null && alias cats='highlight -O ansi'
+
+#################
+### Searching ###  (rg: 10 hits)
+#################
+alias rg='rg --hidden'
+alias grepi='grep -i'
+
+###########
+### Git ###  (gcsc: 38 hits — the only custom git alias that sees use; omz git plugin handles the rest)
+###########
+alias gcsc='auto_commit staged commit'
+
+############
+### Misc ###  (cm: 9, rm: 4, watch: 3)
+############
+alias cm='chezmoi'
+alias rm='rm -v'
+alias watch='watch --color'
+alias cl='clear'
+alias p='pwd'
+alias d='date'
+alias wget='wget -c'
+alias sudoh='sudo -H'
+alias df='df -h'
+alias du='du -h -c'
+alias serve='python3 -m http.server'
+alias py='python3'
+
+#################
+### Core/Shell ##  (reloads: 2)
+#################
+alias reload='reset; source ~/.bashrc'
+alias reloads='source ~/.bashrc &> /dev/null'
+
+hash tree 2>/dev/null && alias t='tree -Csh'
+hash tree 2>/dev/null && alias t2='tree -Csh -L 2' && alias t3='tree -Csh -L 3'
+hash tree 2>/dev/null && alias t4='tree -Csh -L 4' && alias t5='tree -Csh -L 5'
+hash tmux 2>/dev/null && alias ta='tmux attach'
+hash ncdu 2>/dev/null && alias ncdu='ncdu --color dark -rr -x --exclude .git --exclude node_modules'
+hash docker 2>/dev/null && alias ctop='sudo docker run --rm -it --name=ctop -v /var/run/docker.sock:/var/run/docker.sock quay.io/vektorlab/ctop:latest'
+hash aria2c 2>/dev/null && alias a='aria2c -c -x 16'
+
+#####################
+### File/Dir Mgmt ###
+#####################
+alias cd..='cd ..'
+alias cdw='cd ./`ls -td * | head -1`'
+alias mkdirs='temp_c() {mkdir $1; cd $1}; temp_c'
+
+# cd shortcuts — resolved at chezmoi apply time (only dirs that exist get aliases)
+{{ if stat (joinPath .chezmoi.homeDir "code") -}}
+alias cdd='cd ~/code'
+{{ end -}}
+{{ if stat (joinPath .chezmoi.homeDir "Downloads") -}}
+alias cddw='cd ~/Downloads'
+{{ end -}}
+{{ if stat (joinPath .chezmoi.homeDir "code/work") -}}
+alias cdz='cd ~/code/work'
+{{ end -}}
+{{ if stat (joinPath .chezmoi.homeDir "code/python") -}}
+alias cdpy='cd ~/code/python'
+{{ end -}}
+{{ if stat (joinPath .chezmoi.homeDir "code/go") -}}
+alias cdgo='cd ~/code/go'
+{{ end -}}
+{{ if stat (joinPath .chezmoi.homeDir "code/rust") -}}
+alias cdru='cd ~/code/rust'
+{{ end -}}
+{{ if stat (joinPath .chezmoi.homeDir "code/ai") -}}
+alias cdai='cd ~/code/ai'
+{{ end -}}
+{{ if stat (joinPath .chezmoi.homeDir "code/ai/ml") -}}
+alias cdml='cd ~/code/ai/ml'
+{{ end -}}
+{{ if stat (joinPath .chezmoi.homeDir "code/me") -}}
+alias cdme='cd ~/code/me'
+{{ end -}}
+{{ if stat (joinPath .chezmoi.homeDir "code/scripts") -}}
+alias cdsc='cd ~/code/scripts'
+{{ end -}}
+{{ if stat (joinPath .chezmoi.homeDir "Vault") -}}
+alias cdv='cd ~/Vault'
+{{ end -}}
+{{ if stat (joinPath .chezmoi.homeDir "Dropbox") -}}
+alias cddb='cd ~/Dropbox'
+{{ end -}}
+
+################
+### FZF ###
+################
+hash fzf 2>/dev/null && alias fzfp='fzf --preview '"'"'[[ $(file --mime {}) =~ binary ]] && echo {} is a binary file || (bat --style=numbers --color=always {} || highlight -O ansi -l {} || coderay {} || rougify {} || cat {}) 2> /dev/null | head -500'"'"''
+
+#####################
+### SSH ###
+#####################
+alias sshc='ssh -o "controlmaster=auto" -o "controlpath=/tmp/ssh-$USER-%r@%h:%p"'
+
+#####################
+### Linux-only ###
+#####################
+hash notify-send 2>/dev/null && alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
+[[ -d "$HOME/.local/share/Trash/files" ]] && alias trash='mv -t ~/.local/share/Trash/files'
+hash xdg-open 2>/dev/null && alias x='xdg-open'
+
+#####################
+### Vault/Crypto ###
+#####################
+{{ if stat (joinPath .chezmoi.homeDir "Documents/Vault/data") -}}
+alias von='gocryptfs -info ~/Documents/Vault/data && gocryptfs ~/Documents/Vault/data ~/Documents/Vault/files'
+alias voff='umount ~/Documents/Vault/files'
+alias vofff='umount -f ~/Documents/Vault/files'
+{{ end -}}
+
+########################################
+### Low usage on this machine ###
+### (kept for other machines/scripts) ##
+########################################
+
+# Git (0 hits here — omz git plugin covers these, but useful on bash-only machines)
+alias g='git'
+alias gbl='git blame -wMC'
+alias gdf='git diff --name-only'
+alias gds='git diff --stat'
+alias gflff='git flow feature finish `git rev-parse --abbrev-ref HEAD | sed "s/feature\///"`'
+alias gflfs='git flow feature start'
+alias glm='git l --all'
+alias glof='git log --pretty=fuller --stat --decorate --graph --show-signature'
+alias gsf='git show --pretty=fuller --show-signature'
+alias gtop='git rev-parse --show-toplevel'
+alias gyolo='git yolo || git commit -m"$(curl -s whatthecommit.com/index.txt)"'
+
+# Python
+alias py2='python2'
+alias py3='python3'
+alias pyd='pydoc3'
+alias pyl="PYTHONPATH='.' python3"
+alias act='[ -d venv ] && source venv/bin/activate || echo "No environment directory found in venv"'
+hash ipython3 2>/dev/null && alias ipy='ipython3'
+hash ipython3 2>/dev/null && alias ipy3='ipython3'
+
+# SSH tunnels
+alias sshb='ssh -nNT -o "ServerAliveInterval 10" -o "ServerAliveCountMax 3" -v -D'
+alias sshba='autossh -M 0 -nNT -o "ServerAliveInterval 10" -o "ServerAliveCountMax 3" -v -D'
+alias sshbac='autossh -M 0 -nNTC -o "ServerAliveInterval 10" -o "ServerAliveCountMax 3" -v -D'
+
+# ls variants
+alias lsize='ls --sort=size -lhr'
+alias lx='ls -lXB'
+alias lk='ls -lSr'
+alias lr='ls -lR'
+
+# File/dir utilities
+alias biggest='BLOCKSIZE=1048576; du -x | sort -nr | head -10'
+alias sourcef='source ~/.shell_aliases ~/.shell_functions'
+alias wcall='wc `ls -tr`'
+alias wcld='for f in `ls`; do echo $f: `ls $f | wc -l`; done'
+alias dn='OPTIONS=$(\ls -F | grep /$); select s in $OPTIONS; do cd $PWD/$s; break;done'
+alias rcd='temp_c() {pushd $1; ${@:2}; popd}; temp_c'
+alias tf="find . -print | sed -e 's;[^/]*/;|____;g;s;____|; |;g'"
+alias dfh='df -h'
+alias dfs='df -h | sort -n'
+
+# Vim (open most recent file by type)
+alias vp='vim `ls -t *.@(py|pl|cgi)| head -1 `'
+alias vc='vim `ls -t *.@(c|cpp|h)| head -1 `'
+alias vew='vim `ls -t * | head -1 `'
+
+# FZF with height
+hash fzf 2>/dev/null && alias fzfph='fzf --height 60% --preview '"'"'[[ $(file --mime {}) =~ binary ]] && echo {} is a binary file || (bat --style=numbers --color=always {} || highlight -O ansi -l {} || coderay {} || rougify {} || cat {}) 2> /dev/null | head -500'"'"''
+
+# Misc
+alias acki='ack --ignore-dir=build --ignore-dir=doc'
+hash aria2c 2>/dev/null && alias aria2cm='aria2c -c -x 16'
+hash xdg-open 2>/dev/null && alias xew='xdg-open "`ls -t * | head -1 `"'
+
+############################
+### Machine-specific ###
+############################
+[ -f ~/.temp_aliases ] && . ~/.temp_aliases
