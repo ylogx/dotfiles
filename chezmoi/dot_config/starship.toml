@@ -1,0 +1,26 @@
+[line_break]
+disabled = false
+
+[directory]
+fish_style_pwd_dir_length = 1
+
+#[golang]
+#format = 'via [🏎💨 $version](bold cyan) '
+
+#[os]
+#disabled = true
+
+#[jobs]
+#disabled = false
+
+#[package]
+#disabled = false
+
+[status]
+disabled = false
+
+[localip]
+disabled = false
+
+#[hostname]
+#disabled = false

@@ -1,0 +1,70 @@
+#!/bin/bash
+
+# Bash script to compress PDFs using Ghostscript
+# Usage: ./compress_pdf.sh input.pdf
+
+input_file=$1
+
+# Check if input file is provided
+if [ -z "$input_file" ]; then
+    echo "Usage: ./compress_pdf.sh input.pdf"
+    exit 1
+fi
+
+# Get the base filename without extension
+filename=$(basename -- "$input_file")
+extension="${filename##*.}"
+filename="${filename%.*}"
+
+# Compression options
+echo "Select compression level:"
+echo "1) High Quality (300 dpi, good for printing) -> output: ${filename}-compressed-high.pdf"
+echo "2) Medium Quality (150 dpi, balanced) -> output: ${filename}-compressed-medium.pdf"
+echo "3) Standard Compression (72 dpi, ebook) -> output: ${filename}-compressed-standard.pdf"
+echo "4) Aggressive Compression (screen, low dpi) -> output: ${filename}-compressed-aggressive.pdf"
+echo "5) Create All -> outputs: ${filename}-compressed-high.pdf, ${filename}-compressed-medium.pdf, ${filename}-compressed-standard.pdf, ${filename}-compressed-aggressive.pdf"
+
+read -p "Enter choice [1-5]: " choice
+
+# Function to apply compression based on PDF settings
+compress_pdf() {
+    local pdf_setting=$1
+    local output_suffix=$2
+    local resolution=$3
+    output_file="${filename}-compressed-${output_suffix}.pdf"
+    
+    gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 "$pdf_setting" \
+       -dColorImageResolution="$resolution" -dGrayImageResolution="$resolution" -dMonoImageResolution="$resolution" \
+       -dNOPAUSE -dQUIET -dBATCH -sOutputFile="$output_file" "$input_file"
+       
+    echo "Compression applied: $output_suffix. Output: $output_file"
+}
+
+# Define the output file based on compression level
+case "$choice" in
+    1)
+        compress_pdf "-dPDFSETTINGS=/printer" "high" 300
+        ;;
+    2)
+        compress_pdf "-dPDFSETTINGS=/ebook" "medium" 150
+        ;;
+    3)
+        compress_pdf "-dPDFSETTINGS=/screen" "standard" 72
+        ;;
+    4)
+        compress_pdf "-dPDFSETTINGS=/screen" "aggressive" 50
+        ;;
+    5)
+        echo "Creating all versions..."
+        compress_pdf "-dPDFSETTINGS=/printer" "high" 300
+        compress_pdf "-dPDFSETTINGS=/ebook" "medium" 150
+        compress_pdf "-dPDFSETTINGS=/screen" "standard" 72
+        compress_pdf "-dPDFSETTINGS=/screen" "aggressive" 50
+        ;;
+    *)
+        echo "Invalid choice. Exiting."
+        exit 1
+        ;;
+esac
+
+echo "Compression completed."
