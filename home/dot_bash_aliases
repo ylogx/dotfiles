@@ -192,10 +192,6 @@ hash xdg-open 2>/dev/null && alias x='xdg-open'
 #name vg
 #vi.exe $(grep -isl $1 *) &
 
-if [ -f ~/.dev_aliases.sh ]; then
-    . ~/.dev_aliases.sh
-fi
-
 if [ -f ~/.temp_aliases ]; then
     . ~/.temp_aliases
 fi
