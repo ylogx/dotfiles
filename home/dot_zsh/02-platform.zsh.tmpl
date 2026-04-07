@@ -3,21 +3,13 @@ PLATFORM='Linux'
 [ -d $HOME/kde/bin ] && export PATH=$PATH:$HOME/kde/bin
 [ -d ~/kde/src/kdesrc-build ] && export PATH=~/kde/src/kdesrc-build:$PATH
 [ -d $JAVA_HOME/bin ] && export PATH=$JAVA_HOME/bin:$PATH
-export ANDROID_HOME=$HOME/sdk/android-sdk
-[ -d $ANDROID_HOME/platform-tools ] && export PATH=$PATH:$ANDROID_HOME/platform-tools
-[ -d $ANDROID_HOME/tools ] && export PATH=$PATH:$ANDROID_HOME/tools
 hash xdg-open 2>/dev/null && alias open='xdg-open'
 {{ else if eq .chezmoi.os "darwin" -}}
 PLATFORM='Mac'
-export LC_ALL=en_US.UTF-8
-export LANG=en_US.UTF-8
 if [ "$TERM" != "dumb" ]; then
     export LS_OPTIONS='--color=auto'
 fi
 alias ls="ls $LS_OPTIONS"
-export ANDROID_HOME=$HOME/sdk/android-sdk
-[ -d $ANDROID_HOME/platform-tools ] && export PATH=$PATH:$ANDROID_HOME/platform-tools
-[ -d $ANDROID_HOME/tools ] && export PATH=$PATH:$ANDROID_HOME/tools
 # GNU coreutils/sed (Homebrew)
 [ -d /usr/local/opt/coreutils/libexec/gnubin ] && export PATH=/usr/local/opt/coreutils/libexec/gnubin:$PATH
 [ -d /opt/homebrew/opt/coreutils/libexec/gnubin ] && export PATH=/opt/homebrew/opt/coreutils/libexec/gnubin:$PATH
