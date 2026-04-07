@@ -3,19 +3,25 @@
 # Shell-specific overrides (reload, suffix aliases) are in:
 #   zsh: ~/.zsh/05-aliases.zsh
 #   bash: these are the defaults
-# Reorder note: most-used aliases first (based on zsh_history analysis)
+#
+# Tool checks (hash/lookPath) are resolved at chezmoi apply time.
+# Re-run `chezmoi apply` after installing new tools to pick up aliases.
+# Aliases ordered by usage frequency (based on zsh_history analysis).
 
 ##########
 ### ls ###  (l: 73 hits, la: 5)
 ##########
+{{ if lookPath "eza" -}}
+alias l='eza -lsnew'
+alias leza='d; eza -bghHlS -s modified --git'
+{{ else -}}
 alias l='d; ls -ltrFhH'
+{{ end -}}
 alias la='d; ls -lAtrFhH'
 alias ll='ls -alF'
 alias lla='ls -a'
 alias lsd='ls -l | grep "^d"'
 alias nf='ls | wc -l'
-hash eza 2>/dev/null && alias l='eza -lsnew'
-hash eza 2>/dev/null && alias leza='d; eza -bghHlS -s modified --git'
 
 #################
 ### File View ###  (c: 24 hits)
@@ -23,13 +29,17 @@ hash eza 2>/dev/null && alias leza='d; eza -bghHlS -s modified --git'
 alias less='less -R'
 alias catlatest='cat `ls -t|head -1`'
 alias wcl='wc -l'
-
-# Progressive cat: cat → pygmentize → bat (last match wins)
+{{ if lookPath "bat" -}}
+alias c='temp_c() {[[ -d "$1" ]] && ls -ltrFhH "$1" || bat "$1"}; temp_c'
+alias bp='temp_c() {[[ -d "$1" ]] && ls -ltrFhH "$1" || bat -P "$1"}; temp_c'
+{{ else if lookPath "pygmentize" -}}
+alias c='temp_c() {[[ -d "$1" ]] && ls -ltrFhH "$1" || pygmentize -g "$1"}; temp_c'
+{{ else -}}
 alias c='temp_c() {[[ -d "$1" ]] && ls -ltrFhH "$1" || cat "$1"}; temp_c'
-hash pygmentize 2>/dev/null && alias c='temp_c() {[[ -d "$1" ]] && ls -ltrFhH "$1" || pygmentize -g "$1"}; temp_c'
-hash bat 2>/dev/null && alias c='temp_c() {[[ -d "$1" ]] && ls -ltrFhH "$1" || bat "$1"}; temp_c'
-hash bat 2>/dev/null && alias bp='temp_c() {[[ -d "$1" ]] && ls -ltrFhH "$1" || bat -P "$1"}; temp_c'
-hash highlight 2>/dev/null && alias cats='highlight -O ansi'
+{{ end -}}
+{{ if lookPath "highlight" -}}
+alias cats='highlight -O ansi'
+{{ end -}}
 
 #################
 ### Searching ###  (rg: 10 hits)
@@ -38,7 +48,7 @@ alias rg='rg --hidden'
 alias grepi='grep -i'
 
 ###########
-### Git ###  (gcsc: 38 hits — the only custom git alias that sees use; omz git plugin handles the rest)
+### Git ###  (gcsc: 38 hits)
 ###########
 alias gcsc='auto_commit staged commit'
 
@@ -63,14 +73,25 @@ alias py='python3'
 #################
 alias reload='reset; source ~/.bashrc'
 alias reloads='source ~/.bashrc &> /dev/null'
-
-hash tree 2>/dev/null && alias t='tree -Csh'
-hash tree 2>/dev/null && alias t2='tree -Csh -L 2' && alias t3='tree -Csh -L 3'
-hash tree 2>/dev/null && alias t4='tree -Csh -L 4' && alias t5='tree -Csh -L 5'
-hash tmux 2>/dev/null && alias ta='tmux attach'
-hash ncdu 2>/dev/null && alias ncdu='ncdu --color dark -rr -x --exclude .git --exclude node_modules'
-hash docker 2>/dev/null && alias ctop='sudo docker run --rm -it --name=ctop -v /var/run/docker.sock:/var/run/docker.sock quay.io/vektorlab/ctop:latest'
-hash aria2c 2>/dev/null && alias a='aria2c -c -x 16'
+{{ if lookPath "tree" -}}
+alias t='tree -Csh'
+alias t2='tree -Csh -L 2'
+alias t3='tree -Csh -L 3'
+alias t4='tree -Csh -L 4'
+alias t5='tree -Csh -L 5'
+{{ end -}}
+{{ if lookPath "tmux" -}}
+alias ta='tmux attach'
+{{ end -}}
+{{ if lookPath "ncdu" -}}
+alias ncdu='ncdu --color dark -rr -x --exclude .git --exclude node_modules'
+{{ end -}}
+{{ if lookPath "docker" -}}
+alias ctop='sudo docker run --rm -it --name=ctop -v /var/run/docker.sock:/var/run/docker.sock quay.io/vektorlab/ctop:latest'
+{{ end -}}
+{{ if lookPath "aria2c" -}}
+alias a='aria2c -c -x 16'
+{{ end -}}
 
 #####################
 ### File/Dir Mgmt ###
@@ -120,7 +141,9 @@ alias cddb='cd ~/Dropbox'
 ################
 ### FZF ###
 ################
-hash fzf 2>/dev/null && alias fzfp='fzf --preview '"'"'[[ $(file --mime {}) =~ binary ]] && echo {} is a binary file || (bat --style=numbers --color=always {} || highlight -O ansi -l {} || coderay {} || rougify {} || cat {}) 2> /dev/null | head -500'"'"''
+{{ if lookPath "fzf" -}}
+alias fzfp='fzf --preview '"'"'[[ $(file --mime {}) =~ binary ]] && echo {} is a binary file || (bat --style=numbers --color=always {} || highlight -O ansi -l {} || coderay {} || rougify {} || cat {}) 2> /dev/null | head -500'"'"''
+{{ end -}}
 
 #####################
 ### SSH ###
@@ -130,9 +153,15 @@ alias sshc='ssh -o "controlmaster=auto" -o "controlpath=/tmp/ssh-$USER-%r@%h:%p"
 #####################
 ### Linux-only ###
 #####################
-hash notify-send 2>/dev/null && alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
-[[ -d "$HOME/.local/share/Trash/files" ]] && alias trash='mv -t ~/.local/share/Trash/files'
-hash xdg-open 2>/dev/null && alias x='xdg-open'
+{{ if lookPath "notify-send" -}}
+alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
+{{ end -}}
+{{ if stat (joinPath .chezmoi.homeDir ".local/share/Trash/files") -}}
+alias trash='mv -t ~/.local/share/Trash/files'
+{{ end -}}
+{{ if lookPath "xdg-open" -}}
+alias x='xdg-open'
+{{ end -}}
 
 #####################
 ### Vault/Crypto ###
@@ -148,7 +177,7 @@ alias vofff='umount -f ~/Documents/Vault/files'
 ### (kept for other machines/scripts) ##
 ########################################
 
-# Git (0 hits here — omz git plugin covers these, but useful on bash-only machines)
+# Git (omz git plugin covers these, but useful on bash-only machines)
 alias g='git'
 alias gbl='git blame -wMC'
 alias gdf='git diff --name-only'
@@ -167,8 +196,10 @@ alias py3='python3'
 alias pyd='pydoc3'
 alias pyl="PYTHONPATH='.' python3"
 alias act='[ -d venv ] && source venv/bin/activate || echo "No environment directory found in venv"'
-hash ipython3 2>/dev/null && alias ipy='ipython3'
-hash ipython3 2>/dev/null && alias ipy3='ipython3'
+{{ if lookPath "ipython3" -}}
+alias ipy='ipython3'
+alias ipy3='ipython3'
+{{ end -}}
 
 # SSH tunnels
 alias sshb='ssh -nNT -o "ServerAliveInterval 10" -o "ServerAliveCountMax 3" -v -D'
@@ -197,13 +228,18 @@ alias vp='vim `ls -t *.@(py|pl|cgi)| head -1 `'
 alias vc='vim `ls -t *.@(c|cpp|h)| head -1 `'
 alias vew='vim `ls -t * | head -1 `'
 
-# FZF with height
-hash fzf 2>/dev/null && alias fzfph='fzf --height 60% --preview '"'"'[[ $(file --mime {}) =~ binary ]] && echo {} is a binary file || (bat --style=numbers --color=always {} || highlight -O ansi -l {} || coderay {} || rougify {} || cat {}) 2> /dev/null | head -500'"'"''
+{{ if lookPath "fzf" -}}
+alias fzfph='fzf --height 60% --preview '"'"'[[ $(file --mime {}) =~ binary ]] && echo {} is a binary file || (bat --style=numbers --color=always {} || highlight -O ansi -l {} || coderay {} || rougify {} || cat {}) 2> /dev/null | head -500'"'"''
+{{ end -}}
 
 # Misc
 alias acki='ack --ignore-dir=build --ignore-dir=doc'
-hash aria2c 2>/dev/null && alias aria2cm='aria2c -c -x 16'
-hash xdg-open 2>/dev/null && alias xew='xdg-open "`ls -t * | head -1 `"'
+{{ if lookPath "aria2c" -}}
+alias aria2cm='aria2c -c -x 16'
+{{ end -}}
+{{ if lookPath "xdg-open" -}}
+alias xew='xdg-open "`ls -t * | head -1 `"'
+{{ end -}}
 
 ############################
 ### Machine-specific ###
