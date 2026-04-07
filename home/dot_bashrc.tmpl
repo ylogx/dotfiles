@@ -3,14 +3,6 @@
 # Source shared environment
 [ -f "$HOME/.config/shell/env.sh" ] && . "$HOME/.config/shell/env.sh"
 
-{{ if eq .chezmoi.os "linux" -}}
-PLATFORM='Linux'
-{{ else if eq .chezmoi.os "darwin" -}}
-PLATFORM='Mac'
-{{ else -}}
-PLATFORM='Unknown'
-{{ end -}}
-
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
 

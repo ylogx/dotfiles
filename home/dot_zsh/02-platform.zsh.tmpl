@@ -1,11 +1,9 @@
 {{ if eq .chezmoi.os "linux" -}}
-PLATFORM='Linux'
 [ -d $HOME/kde/bin ] && export PATH=$PATH:$HOME/kde/bin
 [ -d ~/kde/src/kdesrc-build ] && export PATH=~/kde/src/kdesrc-build:$PATH
 [ -d $JAVA_HOME/bin ] && export PATH=$JAVA_HOME/bin:$PATH
 hash xdg-open 2>/dev/null && alias open='xdg-open'
 {{ else if eq .chezmoi.os "darwin" -}}
-PLATFORM='Mac'
 if [ "$TERM" != "dumb" ]; then
     export LS_OPTIONS='--color=auto'
 fi
@@ -18,8 +16,6 @@ alias ls="ls $LS_OPTIONS"
 [ -d /usr/local/share/npm/bin ] && export PATH="/usr/local/share/npm/bin:$PATH"
 [ -d /usr/local/opt/coreutils/libexec/gnuman ] && export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
 [ -d /opt/homebrew/opt/coreutils/libexec/gnuman ] && export MANPATH="/opt/homebrew/opt/coreutils/libexec/gnuman:$MANPATH"
-{{ else -}}
-PLATFORM='Unknown'
 {{ end -}}
 
 # SSH agent: only add keys if agent is already running (macOS Keychain or gpg-agent)

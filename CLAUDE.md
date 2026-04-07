@@ -56,7 +56,7 @@ make build
 .zshrc               → module loader (sources ~/.zsh/*.zsh)
   ~/.zsh/
     01-plugins.zsh   → antidote static load, starship prompt
-    02-platform.zsh  → $PLATFORM, coreutils/gnu-sed paths
+    02-platform.zsh  → platform-specific paths, coreutils/gnu-sed, SSH agent
     03-path.zsh      → sources env.sh, platform-specific PATH (cuda, linuxbrew)
     04-tools.zsh     → deferred inits: direnv, pyenv, fzf, zoxide, thefuck, gcloud
     05-aliases.zsh   → sources .shell_aliases + .shell_functions, zsh-specific aliases
@@ -99,7 +99,7 @@ playbooks/
 ## Important Conventions
 
 - **Shared config across machines**: This config runs on both macOS and Linux. Don't remove things just because they're absent on the current machine — use chezmoi templates for platform-specific code.
-- **Platform detection**: In chezmoi templates use `.chezmoi.os` (`darwin`/`linux`). At runtime use `$PLATFORM` variable (set in `02-platform.zsh` / `.bashrc`). Never use raw `uname` subprocesses in hot paths.
+- **Platform detection**: In chezmoi templates use `.chezmoi.os` (`darwin`/`linux`). All platform branching is resolved at `chezmoi apply` time — no runtime `$PLATFORM` variable or `uname` subprocesses needed.
 - **Shared env vars**: `EDITOR`, `GOPATH`, `FZF_DEFAULT_COMMAND`, `LC_ALL`, PATH entries — all live in `~/.config/shell/env.sh`. Don't duplicate in shell-specific files.
 - **Antidote plugin manager**: Plugins listed in `~/.zsh_plugins.txt`, compiled to a static `~/.zsh_plugins.zsh`. After editing the plugin list, delete `~/.zsh_plugins.zsh` to force regeneration.
 - **Deferred loading**: `direnv`, `zoxide`, `pyenv`, and `thefuck` are initialized via `zsh-defer` in zsh — they load after the prompt renders to avoid blocking startup.
