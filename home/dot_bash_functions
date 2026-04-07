@@ -100,8 +100,8 @@ print_system_status_fast() {
     v_fortune=$(<"$tmpdir/fortune")
 
     # Print collected data in order
-    echo "\tSystem Status"
-    echo "\t============="
+    echo -e "\tSystem Status"
+    echo -e "\t============="
     echo -e "Hostname:\t\t${v_hostname}"
     echo -e "OS:\t\t\t$([[ "$PLATFORM" == "Mac" ]] && echo "macOS ${v_os}" || echo "${v_os}")"
     echo -e "Kernel:\t\t\t${v_kernel} ${v_arch}"

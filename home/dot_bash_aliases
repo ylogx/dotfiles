@@ -74,6 +74,7 @@ alias_cd_if_exists cdh "$HOME/code/hacking"
 alias_cd_if_exists cdv "$HOME/Vault"
 alias cdw='cd ./`ls -td * | head -1`' # Go to most recently modified directory
 alias_cd_if_exists cdz "$HOME/code/work"
+alias cm='chezmoi'
 #alias cmk='mkdir $1 && cd ./$1'
 alias cl='clear'
 hash docker 2>/dev/null && alias ctop='sudo docker run --rm -it --name=ctop -v /var/run/docker.sock:/var/run/docker.sock quay.io/vektorlab/ctop:latest'
