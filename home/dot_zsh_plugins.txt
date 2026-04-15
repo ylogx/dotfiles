@@ -1,8 +1,8 @@
 # Oh-My-Zsh framework library
 getantidote/use-omz
 
-# OMZ lib: key bindings (Up/Down prefix search, Home/End, etc.)
-ohmyzsh/ohmyzsh path:lib/key-bindings.zsh
+## OMZ lib: key bindings (Up/Down prefix search, Home/End, etc.)
+#ohmyzsh/ohmyzsh path:lib/key-bindings.zsh
 
 # Core plugins (always loaded)
 ohmyzsh/ohmyzsh path:plugins/git
