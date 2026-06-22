@@ -5,8 +5,14 @@ elif [ -x "/usr/local/bin/brew" ]; then
     eval "$(/usr/local/bin/brew shellenv)"
 fi
 
-# Cargo env
-[ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"
+# Cargo / Rust — Homebrew rustup puts shims in opt/rustup/bin, not ~/.cargo/bin
+if [ -d "/opt/homebrew/opt/rustup/bin" ]; then
+    export PATH="/opt/homebrew/opt/rustup/bin:$HOME/.cargo/bin:$PATH"
+elif [ -d "/usr/local/opt/rustup/bin" ]; then
+    export PATH="/usr/local/opt/rustup/bin:$HOME/.cargo/bin:$PATH"
+elif [ -f "$HOME/.cargo/env" ]; then
+    . "$HOME/.cargo/env"
+fi
 
 # Shared environment (POSIX-compatible, shared with bash/fish)
 [ -f "$HOME/.config/shell/env.sh" ] && . "$HOME/.config/shell/env.sh"
