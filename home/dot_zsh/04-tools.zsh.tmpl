@@ -10,14 +10,22 @@ if [ -f "$HOME/sdk/google-cloud-sdk/path.zsh.inc" ]; then . "$HOME/sdk/google-cl
 if [ -f "$HOME/sdk/google-cloud-sdk/completion.zsh.inc" ]; then . "$HOME/sdk/google-cloud-sdk/completion.zsh.inc"; fi
 
 # FZF
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-{{ if eq .chezmoi.os "linux" -}}
-[ -f /usr/share/doc/fzf/examples/key-bindings.zsh ] && source /usr/share/doc/fzf/examples/key-bindings.zsh
-{{ end -}}
+if [ -f ~/.fzf.zsh ]; then
+    source ~/.fzf.zsh
+{{- if eq .chezmoi.os "darwin" }}
+elif [ -f "/opt/homebrew/opt/fzf/shell/key-bindings.zsh" ]; then
+    source "/opt/homebrew/opt/fzf/shell/key-bindings.zsh"
+elif [ -f "/usr/local/opt/fzf/shell/key-bindings.zsh" ]; then
+    source "/usr/local/opt/fzf/shell/key-bindings.zsh"
+{{- else }}
+elif [ -f /usr/share/doc/fzf/examples/key-bindings.zsh ]; then
+    source /usr/share/doc/fzf/examples/key-bindings.zsh
+{{- end }}
+fi
 # FZF_DEFAULT_COMMAND is set in ~/.config/shell/env.sh
 # Use fzf for Up arrow history search (pre-fills with current input)
-bindkey '^[[A' fzf-history-widget
-bindkey '^[OA' fzf-history-widget
+(( $+functions[fzf-history-widget] )) && bindkey '^[[A' fzf-history-widget
+(( $+functions[fzf-history-widget] )) && bindkey '^[OA' fzf-history-widget
 
 # Zoxide
 hash zoxide 2>/dev/null && zsh-defer eval "$(zoxide init zsh)"
