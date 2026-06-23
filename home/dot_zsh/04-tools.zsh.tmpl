@@ -23,8 +23,8 @@ elif [ -f /usr/share/doc/fzf/examples/key-bindings.zsh ]; then
 {{- end }}
 fi
 # FZF_DEFAULT_COMMAND is set in ~/.config/shell/env.sh
-# Up arrow opens fzf history and immediately runs the selected command.
-# Buffer comparison detects Escape (no change = no run).
+# Up arrow: fzf history search, lands in buffer for editing.
+# Ctrl-R: fzf history search, auto-executes the selection.
 if (( $+functions[fzf-history-widget] )); then
     fzf-history-run-widget() {
         local prev_buffer="$BUFFER"
@@ -32,8 +32,9 @@ if (( $+functions[fzf-history-widget] )); then
         [[ "$BUFFER" != "$prev_buffer" && -n "$BUFFER" ]] && zle accept-line
     }
     zle -N fzf-history-run-widget
-    bindkey '^[[A' fzf-history-run-widget
-    bindkey '^[OA' fzf-history-run-widget
+    bindkey '^[[A' fzf-history-widget
+    bindkey '^[OA' fzf-history-widget
+    bindkey '^R' fzf-history-run-widget
 fi
 
 # Zoxide
