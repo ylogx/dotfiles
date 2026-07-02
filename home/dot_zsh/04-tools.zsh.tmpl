@@ -38,4 +38,4 @@ if (( $+functions[fzf-history-widget] )); then
 fi
 
 # Zoxide
-hash zoxide 2>/dev/null && zsh-defer eval "$(zoxide init zsh)"
+(( $+commands[zoxide] )) && zsh-defer eval "$(zoxide init zsh)"

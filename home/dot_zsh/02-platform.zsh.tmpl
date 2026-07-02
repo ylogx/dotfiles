@@ -1,6 +1,6 @@
 {{ if eq .chezmoi.os "linux" -}}
 [ -d $JAVA_HOME/bin ] && export PATH=$JAVA_HOME/bin:$PATH
-hash xdg-open 2>/dev/null && alias open='xdg-open'
+(( $+commands[xdg-open] )) && alias open='xdg-open'
 {{ else if eq .chezmoi.os "darwin" -}}
 if [ "$TERM" != "dumb" ]; then
     export LS_OPTIONS='--color=auto'

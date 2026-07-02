@@ -27,10 +27,10 @@ print_date_cal() {
     echo "Today is ${now#* }"
     local dm=${now%% *}
     if [[ "$dm" == "0101" ]]; then
-        hash figlet 2>/dev/null && figlet "Happy New Year"
+        command -v figlet >/dev/null 2>&1 && figlet "Happy New Year"
         echo "$USER"
     elif [[ "$dm" == "2603" ]]; then
-        hash figlet 2>/dev/null && figlet "Happy Birthday"
+        command -v figlet >/dev/null 2>&1 && figlet "Happy Birthday"
     fi
 }
 
@@ -56,9 +56,9 @@ print_system_status_fast() {
         }'; } > "$tmpdir/mem" 2>/dev/null &
 {{ else }}
         { [[ -f /proc/cpuinfo ]] && awk -F: '/^model name/{gsub(/^[ \t]+/,"",$2); print $2; exit}' /proc/cpuinfo || echo "Unknown"; } > "$tmpdir/cpu" 2>/dev/null &
-        { hash hostnamectl 2>/dev/null && hostnamectl | awk -F: '/Operating System/{gsub(/^[ \t]+/,"",$2); print $2}' || uname -o; } > "$tmpdir/os" 2>/dev/null &
+        { command -v hostnamectl >/dev/null 2>&1 && hostnamectl | awk -F: '/Operating System/{gsub(/^[ \t]+/,"",$2); print $2}' || uname -o; } > "$tmpdir/os" 2>/dev/null &
         { hostname -I 2>/dev/null | awk '{print $1}' || echo "N/A"; } > "$tmpdir/ip" &
-        if hash free 2>/dev/null; then
+        if command -v free >/dev/null 2>&1; then
             { free -h | awk '/^Mem:/{print $3 " used / " $2 " total"}'; } > "$tmpdir/mem" 2>/dev/null &
         else
             echo "N/A" > "$tmpdir/mem" &
@@ -104,7 +104,7 @@ print_system_status_fast() {
 }
 
 welcome_message() {
-    hash figlet 2>/dev/null && figlet "Welcome, " $USER
+    command -v figlet >/dev/null 2>&1 && figlet "Welcome, " $USER
     print_date_cal
     echo ""
     print_system_status_fast
@@ -145,7 +145,7 @@ mkcdr() {
 
 dush() {
     find "${1:-.}" -mindepth 1 -maxdepth 1 -not -name '.*' -print0 | while IFS= read -r -d '' i; do
-        if hash diskus 2>/dev/null; then
+        if command -v diskus >/dev/null 2>&1; then
             printf "%s\t\t%s\n" "$(diskus "$i")" "$i"
         else
             du -s "$i" | head -1
@@ -161,11 +161,11 @@ about() {
     if [ -f "${1}" ]; then
         file -pk "${1}"
         my_hex_dump "${1}"
-        if hash eza 2>/dev/null; then eza -lsnew "${1}"; else ls -ltrha --color "${1}"; fi
+        if command -v eza >/dev/null 2>&1; then eza -lsnew "${1}"; else ls -ltrha --color "${1}"; fi
     else
         type "$1"
         local bin
-        if hash where 2>/dev/null; then
+        if command -v where >/dev/null 2>&1; then
             bin="$(where "${1}" 2>/dev/null | tail -1)"
         else
             bin="$(which "${1}" 2>/dev/null)"
@@ -173,14 +173,14 @@ about() {
         if [ -n "$bin" ] && [ -f "$bin" ]; then
             file -pk "$bin"
             my_hex_dump "$bin"
-            hash bat 2>/dev/null && bat -r 1:25 "$bin"
-            if hash eza 2>/dev/null; then eza -lsnew "$bin"; else ls -ltrha --color "$bin"; fi
+            command -v bat >/dev/null 2>&1 && bat -r 1:25 "$bin"
+            if command -v eza >/dev/null 2>&1; then eza -lsnew "$bin"; else ls -ltrha --color "$bin"; fi
         fi
     fi
 }
 
 my_hex_dump() {
-    if hash hexyl 2>/dev/null; then
+    if command -v hexyl >/dev/null 2>&1; then
         hexyl -n=256 "$1"
         hexyl -s=-128 "$1"
     else
