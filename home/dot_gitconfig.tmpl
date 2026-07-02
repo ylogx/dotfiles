@@ -44,11 +44,6 @@
 	insteadOf = g:
 [url "git://github.com/"]
 	insteadOf = gh:
-#[url "git://anongit.kde.org/"]
-[url "https://anongit.kde.org/"]
-	insteadOf = kde:
-[url "ssh://git@git.kde.org/"]
-	pushInsteadOf = kde:
 
 ### Diff ###
 [diff]
@@ -141,8 +136,6 @@
 	clean = git media clean %f
 	smudge = git media smudge %f
 	required = true
-[url "git@git.kde.org:"]
-	pushInsteadOf = kde:
 [filter "lfs"]
 	clean = git-lfs clean %f
 	smudge = git-lfs smudge %f
