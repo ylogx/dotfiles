@@ -2,13 +2,4 @@
 {{ if ne .chezmoi.os "darwin" }}
 .config/fish
 .config/fish/**
-.oh-my-zsh
-.oh-my-zsh/**
-{{ end }}
-
-# Linux-only files — skip on macOS
-{{ if ne .chezmoi.os "linux" }}
-.kde-bashrc
-.gntrc
-.lynxrc
 {{ end }}

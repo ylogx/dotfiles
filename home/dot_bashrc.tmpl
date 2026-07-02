@@ -62,14 +62,6 @@ if ! shopt -oq posix; then
     fi
 fi
 
-{{ if eq .chezmoi.os "linux" -}}
-# KDE integration
-[ -f ~/.kde-bashrc ] && . ~/.kde-bashrc
-if [ -d "$HOME/.kde" ]; then
-    export KDEDIRS="$HOME/.kde:$HOME/.local:$KDEDIRS"
-fi
-{{ end -}}
-
 # FZF
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 

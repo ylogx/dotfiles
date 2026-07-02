@@ -1,6 +1,4 @@
 {{ if eq .chezmoi.os "linux" -}}
-[ -d $HOME/kde/bin ] && export PATH=$PATH:$HOME/kde/bin
-[ -d ~/kde/src/kdesrc-build ] && export PATH=~/kde/src/kdesrc-build:$PATH
 [ -d $JAVA_HOME/bin ] && export PATH=$JAVA_HOME/bin:$PATH
 hash xdg-open 2>/dev/null && alias open='xdg-open'
 {{ else if eq .chezmoi.os "darwin" -}}
