@@ -10,18 +10,19 @@ if [ -f "$HOME/sdk/google-cloud-sdk/path.zsh.inc" ]; then . "$HOME/sdk/google-cl
 if [ -f "$HOME/sdk/google-cloud-sdk/completion.zsh.inc" ]; then . "$HOME/sdk/google-cloud-sdk/completion.zsh.inc"; fi
 
 # FZF
-if [ -f ~/.fzf.zsh ]; then
+# Prefer sourcing straight from the Homebrew keg — portable across Intel/Apple
+# Silicon and avoids depending on ~/.fzf.zsh, which bakes in an absolute path
+# from whichever machine last ran fzf's install script (doesn't survive
+# migrating to a Mac with a different Homebrew prefix).
+if [ -n "$HOMEBREW_PREFIX" ] && [ -f "$HOMEBREW_PREFIX/opt/fzf/shell/completion.zsh" ]; then
+    source "$HOMEBREW_PREFIX/opt/fzf/shell/completion.zsh"
+    source "$HOMEBREW_PREFIX/opt/fzf/shell/key-bindings.zsh"
+elif [ -f ~/.fzf.zsh ]; then
     source ~/.fzf.zsh
-{{- if eq .chezmoi.os "darwin" }}
-elif [ -f "/opt/homebrew/opt/fzf/shell/key-bindings.zsh" ]; then
-    source "/opt/homebrew/opt/fzf/shell/key-bindings.zsh"
-elif [ -f "/usr/local/opt/fzf/shell/key-bindings.zsh" ]; then
-    source "/usr/local/opt/fzf/shell/key-bindings.zsh"
-{{- else }}
-elif [ -f /usr/share/doc/fzf/examples/key-bindings.zsh ]; then
-    source /usr/share/doc/fzf/examples/key-bindings.zsh
-{{- end }}
 fi
+{{ if eq .chezmoi.os "linux" -}}
+[ -f /usr/share/doc/fzf/examples/key-bindings.zsh ] && source /usr/share/doc/fzf/examples/key-bindings.zsh
+{{ end -}}
 # FZF_DEFAULT_COMMAND is set in ~/.config/shell/env.sh
 # Up arrow: fzf history search, lands in buffer for editing.
 # Ctrl-R: fzf history search, auto-executes the selection.

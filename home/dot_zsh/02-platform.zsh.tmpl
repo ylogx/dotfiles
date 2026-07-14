@@ -6,14 +6,13 @@ if [ "$TERM" != "dumb" ]; then
     export LS_OPTIONS='--color=auto'
 fi
 alias ls="ls $LS_OPTIONS"
-# GNU coreutils/sed (Homebrew)
-[ -d /usr/local/opt/coreutils/libexec/gnubin ] && export PATH=/usr/local/opt/coreutils/libexec/gnubin:$PATH
-[ -d /opt/homebrew/opt/coreutils/libexec/gnubin ] && export PATH=/opt/homebrew/opt/coreutils/libexec/gnubin:$PATH
-[ -d /usr/local/opt/gnu-sed/libexec/gnubin ] && export PATH="/usr/local/opt/gnu-sed/libexec/gnubin:$PATH"
-[ -d /opt/homebrew/opt/gnu-sed/libexec/gnubin ] && export PATH="/opt/homebrew/opt/gnu-sed/libexec/gnubin:$PATH"
-[ -d /usr/local/share/npm/bin ] && export PATH="/usr/local/share/npm/bin:$PATH"
-[ -d /usr/local/opt/coreutils/libexec/gnuman ] && export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
-[ -d /opt/homebrew/opt/coreutils/libexec/gnuman ] && export MANPATH="/opt/homebrew/opt/coreutils/libexec/gnuman:$MANPATH"
+# GNU coreutils/sed (Homebrew) — $HOMEBREW_PREFIX comes from `brew shellenv`
+# in .zshenv, so this follows whichever prefix is active (/usr/local on
+# Intel, /opt/homebrew on Apple Silicon) instead of hardcoding both.
+[ -n "$HOMEBREW_PREFIX" ] && [ -d "$HOMEBREW_PREFIX/opt/coreutils/libexec/gnubin" ] && export PATH="$HOMEBREW_PREFIX/opt/coreutils/libexec/gnubin:$PATH"
+[ -n "$HOMEBREW_PREFIX" ] && [ -d "$HOMEBREW_PREFIX/opt/gnu-sed/libexec/gnubin" ] && export PATH="$HOMEBREW_PREFIX/opt/gnu-sed/libexec/gnubin:$PATH"
+[ -n "$HOMEBREW_PREFIX" ] && [ -d "$HOMEBREW_PREFIX/share/npm/bin" ] && export PATH="$HOMEBREW_PREFIX/share/npm/bin:$PATH"
+[ -n "$HOMEBREW_PREFIX" ] && [ -d "$HOMEBREW_PREFIX/opt/coreutils/libexec/gnuman" ] && export MANPATH="$HOMEBREW_PREFIX/opt/coreutils/libexec/gnuman:$MANPATH"
 {{ end -}}
 
 # SSH agent: only add keys if agent is already running (macOS Keychain or gpg-agent)

@@ -35,5 +35,8 @@ export ANDROID_HOME="$HOME/sdk/android-sdk"
 [ -d "$HOME/.cargo/bin" ] && PATH="$HOME/.cargo/bin:$PATH"
 [ -d "$HOME/.pub-cache/bin" ] && PATH="$PATH:$HOME/.pub-cache/bin"
 [ -d "$HOME/.pyenv/bin" ] && PATH="$HOME/.pyenv/bin:$PATH"
+# Heroku's own standalone installer (not a Homebrew formula), historically
+# Intel-only at /usr/local/heroku; checked defensively in case that changes.
 [ -d "/usr/local/heroku/bin" ] && PATH="/usr/local/heroku/bin:$PATH"
+[ -d "/opt/homebrew/heroku/bin" ] && PATH="/opt/homebrew/heroku/bin:$PATH"
 export PATH
