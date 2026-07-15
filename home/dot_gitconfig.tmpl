@@ -8,8 +8,6 @@
 	excludesfile = ~/.gitignore_global
 	attributesfile = ~/.gitattributes
 	autocrlf = input
-	;pager = diff-so-fancy | less --tabs=4 -RFX
-	;pager=most
 #[commit]
 #	gpgsign = true
 [credential]
@@ -48,9 +46,24 @@
 ### Diff ###
 [diff]
 	indentHeuristic = true
-;[core]
+
+[core]
+	pager = delta
+	;pager = diff-so-fancy | less --tabs=4 -RFX
+	;pager=most
 	;pager = /usr/local/share/git-core/contrib/diff-highlight/diff-highlight | less
 	;pager = perl /usr/share/doc/git/contrib/diff-highlight/diff-highlight | less
+
+[interactive]
+	diffFilter = delta --color-only
+
+[delta]
+	navigate = true  # use n and N to move between diff sections
+	dark = true      # or light = true, or omit for auto-detection
+
+[merge]
+	conflictStyle = zdiff3
+
 [color]
 	ui = always
 [color "diff-highlight"]
