@@ -224,6 +224,10 @@ alias dfh='df -h'
 alias dfs='df -h | sort -n'
 
 # Vim (open most recent file by type)
+{{ if lookPath "nvim" -}}
+alias vim='nvim'
+alias vi='nvim'
+{{ end -}}
 alias vp='vim `ls -t *.@(py|pl|cgi)| head -1 `'
 alias vc='vim `ls -t *.@(c|cpp|h)| head -1 `'
 alias vew='vim `ls -t * | head -1 `'

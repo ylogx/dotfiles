@@ -158,7 +158,11 @@
 #[http]
 #	proxy = http://ishubhamch:chaudhary@192.168.60.10:3128
 [merge]
+{{- if lookPath "nvim" }}
+	tool = nvimdiff
+{{- else }}
 	tool = vimdiff
+{{- end }}
 ;[mergetool "vimdiff"]
 	;cmd = vimdiff -c 'set diffopt+=iwhite'
 [init]

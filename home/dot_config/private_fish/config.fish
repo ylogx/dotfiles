@@ -1,8 +1,16 @@
 if status is-interactive
     # Source shared environment via bass (POSIX -> fish bridge)
+    # Note: bass only diffs exported env vars/functions from the bash
+    # subprocess, not aliases, so ~/.shell_aliases doesn't come across this
+    # way — fish aliases are defined natively below instead.
     if type -q bass
         bass source ~/.config/shell/env.sh
-        bass source ~/.shell_aliases 2>/dev/null
+    end
+
+    # Editor aliases (prefer nvim when installed)
+    if type -q nvim
+        alias vim nvim
+        alias vi nvim
     end
 
     # Starship prompt
