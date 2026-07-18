@@ -1,102 +1,80 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Vundle {
+" vim-plug {
     " This must be first, because it changes other options as a side effect.
     set nocompatible               " be iMproved
     filetype off                   " required!
 
-    set rtp+=~/.vim/bundle/vundle/  " set runtimepath
-    call vundle#rc()
-
-    " let Vundle manage Vundle
-    " required!
-    Plugin 'gmarik/vundle'
-    " Use ssh to connect instead of 'https'
-    let g:vundle_default_git_proto = 'git'
+    call plug#begin('~/.vim/plugged')
 
     " My Bundles here:
     " Original repos on github
     "
     " Git wrapper
-    Plugin 'tpope/vim-fugitive'
-    Plugin 'Lokaltog/vim-easymotion'
-    " Compile and find error
-    Plugin 'scrooloose/syntastic'
-    " Auto complete
-    Plugin 'Shougo/neocomplcache.vim'
-    "Plugin 'ycm-core/YouCompleteMe'
-    "Plugin 'zxqfl/tabnine-vim'
-    "if has('nvim')
-      "Plugin 'Shougo/neocomplcache.vim'
-    "else
-      "Plugin 'zxqfl/tabnine-vim'
-    "endif
+    Plug 'tpope/vim-fugitive'
+    Plug 'Lokaltog/vim-easymotion'
     " Tree mapped below at <F9>
-    Plugin 'scrooloose/nerdtree'
+    Plug 'scrooloose/nerdtree'
     " Surround with brackets etc: Add cst", Remove ds", Change cs"', Full line yss(, Current word ysiw{, Visual V select S<p>
-    Plugin 'tpope/vim-surround'
+    Plug 'tpope/vim-surround'
     " Read tags and highlighten them
     " Plugin 'skroll/vim-taghighlight'
     " Plugin 'vim-scripts/TagHighlight'
-    Plugin 'abudden/taghighlight-automirror'
+    Plug 'abudden/taghighlight-automirror'
     " Abreviate :Abolish {despa,sepe}rat{e,es,ed,ing,ely,ion,ions,or} {despe,sepa}rat{},
     " Substitute :%Subvert/child{,ren}/adult{,s}/g,
     " Coercion crs, crm
-    Plugin 'tpope/vim-abolish'
+    Plug 'tpope/vim-abolish'
     " <Leader>cc <Leader>c<space>
-    Plugin 'scrooloose/nerdcommenter'
+    Plug 'scrooloose/nerdcommenter'
     " gcc, gc, gcmotion, gcvisual, :g/TODO/Commentary
     " Plugin 'tpope/vim-commentary'
     " <F5> to show undo/redo tree
-    Plugin 'sjl/gundo.vim'
+    Plug 'sjl/gundo.vim'
     " <F9> to show tagbar C-], C-t
-    Plugin 'majutsushi/tagbar'
+    Plug 'majutsushi/tagbar'
     " Better Status line
-    Plugin 'vim-airline/vim-airline'
+    Plug 'vim-airline/vim-airline'
     " Ruby on Rails plugin
-    Plugin 'tpope/vim-rails'
+    Plug 'tpope/vim-rails'
     " GoLang plugin
-    Plugin 'fatih/vim-go'
+    Plug 'fatih/vim-go'
     " sleuth.vim: Heuristically set buffer options like shiftwidth, expandtab...
-    Plugin 'tpope/vim-sleuth'
+    Plug 'tpope/vim-sleuth'
     " Show python code coverage
-    Plugin 'alfredodeza/coveragepy.vim'
+    Plug 'alfredodeza/coveragepy.vim'
     " WakaTime programming time calculator
-    Plugin 'wakatime/vim-wakatime'
+    Plug 'wakatime/vim-wakatime'
     " Vim - TMux Navigation using Ctrl-h,j,k,l,\
-    Plugin 'christoomey/vim-tmux-navigator'
+    Plug 'christoomey/vim-tmux-navigator'
     " Android in Vim
-    Plugin 'hsanson/vim-android'
+    Plug 'hsanson/vim-android'
     " Transparent gpg file editing
-    Plugin 'jamessan/vim-gnupg'
+    Plug 'jamessan/vim-gnupg'
     " Async Linting
     if v:version >= 800 || has('nvim')
-      Plugin 'w0rp/ale'
+      Plug 'w0rp/ale'
     endif
     " Semantic Highlight
-    Plugin 'jaxbot/semantic-highlight.vim'
+    Plug 'jaxbot/semantic-highlight.vim'
     " EditorConfig support
-    Plugin 'editorconfig/editorconfig-vim'
+    Plug 'editorconfig/editorconfig-vim'
     " Fuzzy Finder : set rtp+=/usr/local/opt/fzf
-    Plugin 'junegunn/fzf'
-    Plugin 'junegunn/fzf.vim'
+    Plug 'junegunn/fzf'
+    Plug 'junegunn/fzf.vim'
     " Vim Slime to copy paste from vim to tmux: C-c, C-c; :SlimeConfig Pane Syntax :i.j
-    Plugin 'jpalardy/vim-slime'
+    Plug 'jpalardy/vim-slime'
     " Vim Git Gutter ,hn ,hp ]c [c
-    Plugin 'airblade/vim-gitgutter'
+    Plug 'airblade/vim-gitgutter'
     " Rainbow Parenthesis
-    Plugin 'luochen1990/rainbow'
-    " Monokai Theme
-    Plugin 'patstockwell/vim-monokai-tasty'
-    Plugin 'sickill/vim-monokai'
-    "Plugin 'crusoexia/vim-monokai'
-    Plugin 'ErichDonGubler/vim-sublime-monokai'
-    "Plugin 'fatih/vim-go'
-    Plugin 'rudes/vim-java'
+    Plug 'luochen1990/rainbow'
+    " Monokai Theme (colorscheme actually set below: vim-monokai-tasty)
+    Plug 'patstockwell/vim-monokai-tasty'
+    Plug 'rudes/vim-java'
     " Auto read files when they change outside and are unchanged in vim
-    Plugin 'djoshea/vim-autoread'
-    "Plugin ''
+    Plug 'djoshea/vim-autoread'
 
-    " Enable file type detection. Do this after Vundle calls.
+    call plug#end()
+    " Enable file type detection. Do this after plug#end() calls.
 " }
 
 " Pathogen {
@@ -245,7 +223,7 @@
     "nnoremap <C-l> <C-w>l
 
     " Clear search highlights
-    "noremap <silent><Leader>h :nohls<CR> " Done below map <leader>r :SyntasticReset<CR> :nohls<CR>
+    "noremap <silent><Leader>h :nohls<CR>
 
     " Sane regex
     "nnoremap / /\v
@@ -322,21 +300,6 @@
     set laststatus=2
     let g:airline_powerline_fonts = 1
 "}
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Syntastic Plugin {
-    " Clear search highlights
-    map <leader>r :SyntasticReset<CR> :nohls<CR>
-    "map <leader>sr :SyntasticReset<CR>
-    " Make C++11 work
-    let g:syntastic_cpp_compiler = 'clang++'
-    let g:syntastic_cpp_compiler_options = ' -std=c++11'
-    " Make python3 work " TODO: Make it toggle
-    let g:syntastic_python_python_exec = 'python3'
-    "let g:syntastic_python_checkers = ['pylint', 'python3-pylint', 'python']
-    "let g:syntastic_python_pylint_exec = '/usr/local/bin/pylint'
-
-" }
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Tagbar Plugin {
@@ -543,10 +506,7 @@ if has('nvim')
 "    let g:go_highlight_variable_declarations = 1
 "
 "    set termguicolors "set t_Co=256
-"    colorscheme sublimemonokai
-"    let g:sublimemonokai_term_italic = 1
 else
-    colorscheme monokai
     colorscheme vim-monokai-tasty
     let g:airline_theme='monokai_tasty'
 endif

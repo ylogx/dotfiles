@@ -10,12 +10,10 @@
     refreshPeriod = "672h"
 
 # Vim plugin manager
-[".vim/bundle/vundle"]
-    type = "git-repo"
-    url = "https://github.com/gmarik/Vundle.vim.git"
+[".vim/autoload/plug.vim"]
+    type = "file"
+    url = "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
     refreshPeriod = "168h"
-    clone.args = ["--depth", "1"]
-    pull.args = ["--ff-only"]
 
 # Tmux plugin manager
 [".tmux/plugins/tpm"]
