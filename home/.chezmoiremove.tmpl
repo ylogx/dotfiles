@@ -22,6 +22,10 @@
 # Travis CI local artifacts
 .travis
 
+# oh-my-fish (unmaintained, install endpoint offline — see
+# oh-my-fish/oh-my-fish#947); unconditional source broke fish startup
+.config/fish/conf.d/omf.fish
+
 # Linux-only files — remove on macOS
 {{ if ne .chezmoi.os "linux" }}
 .lynxrc
