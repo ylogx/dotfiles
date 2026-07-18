@@ -120,7 +120,10 @@
     set tabstop=4 " an indentation every four columns
     set softtabstop=4 " let backspace delete indent
     "set matchpairs+=<:> " match, to be used with %
-    set pastetoggle=<F10> " pastetoggle (sane indentation on pastes)
+    " Neovim removed 'paste'/'pastetoggle' (bracketed paste made it obsolete)
+    if !has('nvim')
+        set pastetoggle=<F10> " pastetoggle (sane indentation on pastes)
+    endif
     "set comments=sl:/*,mb:*,elx:*/ " auto format comment blocks
     " Remove trailing whitespaces and ^M chars
     autocmd FileType c,cpp,java,php,js,python,twig,vim,xml,yml,matlab autocmd BufWritePre <buffer> :call setline(1,map(getline(1,"$"),'substitute(v:val,"\\s\\+$","","")'))
