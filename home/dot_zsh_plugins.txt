@@ -17,6 +17,15 @@ ohmyzsh/ohmyzsh path:lib/termsupport.zsh
 ## plus hist_ignore_dups, hist_verify, extended_history timestamps)
 ohmyzsh/ohmyzsh path:lib/history.zsh
 
+# Quality-of-life plugins (no aliases/functions of ours to collide with)
+ohmyzsh/ohmyzsh path:plugins/colored-man-pages
+ohmyzsh/ohmyzsh path:plugins/copypath
+ohmyzsh/ohmyzsh path:plugins/copybuffer
+ohmyzsh/ohmyzsh path:plugins/dirhistory
+ohmyzsh/ohmyzsh path:plugins/alias-finder
+ohmyzsh/ohmyzsh path:plugins/safe-paste
+# vi-mode, urltools/jsontools/encode64
+
 # Core plugins (always loaded)
 ohmyzsh/ohmyzsh path:plugins/git
 ohmyzsh/ohmyzsh path:plugins/git-extras
