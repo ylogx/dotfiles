@@ -15,6 +15,13 @@ alias ls="ls $LS_OPTIONS"
 [ -n "$HOMEBREW_PREFIX" ] && [ -d "$HOMEBREW_PREFIX/opt/coreutils/libexec/gnuman" ] && export MANPATH="$HOMEBREW_PREFIX/opt/coreutils/libexec/gnuman:$MANPATH"
 {{ end -}}
 
+# History (explicit — must be set after /etc/zshrc, which on macOS sets its
+# own HISTSIZE=2000/SAVEHIST=1000 and would otherwise win; Linux has no
+# equivalent /etc/zshrc default so this also gives us cross-platform parity)
+HISTFILE="$HOME/.zsh_history"
+HISTSIZE=100000
+SAVEHIST=100000
+
 # SSH agent: only add keys if agent is already running (macOS Keychain or gpg-agent)
 if [ -S "$SSH_AUTH_SOCK" ]; then
   ssh-add -l > /dev/null 2>&1 || ssh-add 2>/dev/null

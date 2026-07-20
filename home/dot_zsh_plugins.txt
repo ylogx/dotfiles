@@ -7,6 +7,16 @@ getantidote/use-omz
 ## OMZ lib: completion (case-insensitive tab completion, menu select)
 ohmyzsh/ohmyzsh path:lib/completion.zsh
 
+## OMZ lib: directories (auto_cd, auto_pushd, .. / ... / .... globals, cd -N)
+ohmyzsh/ohmyzsh path:lib/directories.zsh
+
+## OMZ lib: termsupport (sets terminal tab/window title to cwd/running command)
+ohmyzsh/ohmyzsh path:lib/termsupport.zsh
+
+## OMZ lib: history (share_history — live history sync across panes/sessions,
+## plus hist_ignore_dups, hist_verify, extended_history timestamps)
+ohmyzsh/ohmyzsh path:lib/history.zsh
+
 # Core plugins (always loaded)
 ohmyzsh/ohmyzsh path:plugins/git
 ohmyzsh/ohmyzsh path:plugins/git-extras
