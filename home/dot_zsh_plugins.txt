@@ -17,15 +17,6 @@ ohmyzsh/ohmyzsh path:lib/termsupport.zsh
 ## plus hist_ignore_dups, hist_verify, extended_history timestamps)
 ohmyzsh/ohmyzsh path:lib/history.zsh
 
-# Quality-of-life plugins (no aliases/functions of ours to collide with)
-ohmyzsh/ohmyzsh path:plugins/colored-man-pages
-ohmyzsh/ohmyzsh path:plugins/copypath
-ohmyzsh/ohmyzsh path:plugins/copybuffer
-ohmyzsh/ohmyzsh path:plugins/dirhistory
-ohmyzsh/ohmyzsh path:plugins/alias-finder
-ohmyzsh/ohmyzsh path:plugins/safe-paste
-# vi-mode, urltools/jsontools/encode64
-
 # Core plugins (always loaded)
 ohmyzsh/ohmyzsh path:plugins/git
 ohmyzsh/ohmyzsh path:plugins/git-extras
@@ -54,6 +45,20 @@ ohmyzsh/ohmyzsh path:plugins/chucknorris
 # on Linux, only the darwin brew bundle does, so this avoids a raw
 # "command not found" eval error on Linux boxes without it)
 ohmyzsh/ohmyzsh path:plugins/starship
+
+# Zoxide (guarded init, same as the starship plugin; deferred like the
+# previous manual line so it loads after the prompt renders)
+ohmyzsh/ohmyzsh path:plugins/zoxide kind:defer
+
+# Quality-of-life plugins (no aliases/functions of ours to collide with)
+ohmyzsh/ohmyzsh path:plugins/chezmoi
+ohmyzsh/ohmyzsh path:plugins/colored-man-pages
+ohmyzsh/ohmyzsh path:plugins/copypath
+ohmyzsh/ohmyzsh path:plugins/copybuffer
+ohmyzsh/ohmyzsh path:plugins/dirhistory
+ohmyzsh/ohmyzsh path:plugins/alias-finder
+ohmyzsh/ohmyzsh path:plugins/safe-paste
+# vi-mode, urltools/jsontools/encode64
 
 # Syntax highlighting (deferred — loads after prompt renders)
 zsh-users/zsh-syntax-highlighting kind:defer

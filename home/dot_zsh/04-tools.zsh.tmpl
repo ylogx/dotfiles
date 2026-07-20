@@ -37,6 +37,3 @@ if (( $+functions[fzf-history-widget] )); then
     bindkey '^[OA' fzf-history-widget
     bindkey '^R' fzf-history-run-widget
 fi
-
-# Zoxide
-(( $+commands[zoxide] )) && zsh-defer eval "$(zoxide init zsh)"
