@@ -7,20 +7,10 @@ if (( $+commands[pyenv] )); then zsh-defer eval "$(pyenv init -)"; fi
 if [ -f "$HOME/sdk/google-cloud-sdk/path.zsh.inc" ]; then . "$HOME/sdk/google-cloud-sdk/path.zsh.inc"; fi
 if [ -f "$HOME/sdk/google-cloud-sdk/completion.zsh.inc" ]; then . "$HOME/sdk/google-cloud-sdk/completion.zsh.inc"; fi
 
-# FZF
-# Prefer sourcing straight from the Homebrew keg — portable across Intel/Apple
-# Silicon and avoids depending on ~/.fzf.zsh, which bakes in an absolute path
-# from whichever machine last ran fzf's install script (doesn't survive
-# migrating to a Mac with a different Homebrew prefix).
-if [ -n "$HOMEBREW_PREFIX" ] && [ -f "$HOMEBREW_PREFIX/opt/fzf/shell/completion.zsh" ]; then
-    source "$HOMEBREW_PREFIX/opt/fzf/shell/completion.zsh"
-    source "$HOMEBREW_PREFIX/opt/fzf/shell/key-bindings.zsh"
-elif [ -f ~/.fzf.zsh ]; then
-    source ~/.fzf.zsh
-fi
-{{ if eq .chezmoi.os "linux" -}}
-[ -f /usr/share/doc/fzf/examples/key-bindings.zsh ] && source /usr/share/doc/fzf/examples/key-bindings.zsh
-{{ end -}}
+# FZF: completion + key-bindings loaded by the OMZ plugin (see
+# dot_zsh_plugins.txt) — on this fzf version it resolves to `eval "$(fzf
+# --zsh)"`, which is fzf's own officially recommended integration and
+# handles Homebrew-keg-path portability for us.
 # FZF_DEFAULT_COMMAND is set in ~/.config/shell/env.sh
 # Up arrow: fzf history search, lands in buffer for editing.
 # Ctrl-R: fzf history search, auto-executes the selection.
