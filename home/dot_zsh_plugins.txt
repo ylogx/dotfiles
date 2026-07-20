@@ -50,5 +50,10 @@ ohmyzsh/ohmyzsh path:plugins/uv
 ohmyzsh/ohmyzsh path:plugins/macos
 ohmyzsh/ohmyzsh path:plugins/chucknorris
 
+# Prompt (guards on `starship` being installed — apt-get doesn't install it
+# on Linux, only the darwin brew bundle does, so this avoids a raw
+# "command not found" eval error on Linux boxes without it)
+ohmyzsh/ohmyzsh path:plugins/starship
+
 # Syntax highlighting (deferred — loads after prompt renders)
 zsh-users/zsh-syntax-highlighting kind:defer

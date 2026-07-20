@@ -30,6 +30,3 @@ if [[ ! ${zsh_plugins}.zsh -nt ${zsh_plugins}.txt ]] || [[ -z "$(command ls -A "
     antidote bundle <${zsh_plugins}.txt >${zsh_plugins}.zsh
 fi
 source ${zsh_plugins}.zsh
-
-# Starship prompt (loaded directly, not through plugin manager)
-eval "$(starship init zsh)"
