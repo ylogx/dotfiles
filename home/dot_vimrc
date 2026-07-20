@@ -43,7 +43,7 @@
     " Show python code coverage
     Plug 'alfredodeza/coveragepy.vim'
     " WakaTime programming time calculator
-    Plug 'wakatime/vim-wakatime'
+    "Plug 'wakatime/vim-wakatime'
     " Vim - TMux Navigation using Ctrl-h,j,k,l,\
     Plug 'christoomey/vim-tmux-navigator'
     " Android in Vim

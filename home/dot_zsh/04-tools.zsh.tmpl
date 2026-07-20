@@ -1,6 +1,4 @@
 # Tool inits — deferred where possible to avoid blocking shell startup
-zsh-defer eval "$(direnv hook zsh)"
-
 if (( $+commands[pyenv] )); then zsh-defer eval "$(pyenv init -)"; fi
 
 (( $+commands[thefuck] )) && zsh-defer eval "$(thefuck --alias)"

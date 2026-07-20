@@ -27,9 +27,12 @@ ohmyzsh/ohmyzsh path:plugins/sudo
 ohmyzsh/ohmyzsh path:plugins/web-search
 
 # Tool-specific plugins (lightweight — safe to load even if tool not installed)
+ohmyzsh/ohmyzsh path:plugins/ansible
 ohmyzsh/ohmyzsh path:plugins/brew
+ohmyzsh/ohmyzsh path:plugins/chezmoi
 ohmyzsh/ohmyzsh path:plugins/docker
 ohmyzsh/ohmyzsh path:plugins/docker-compose
+ohmyzsh/ohmyzsh path:plugins/eza
 ohmyzsh/ohmyzsh path:plugins/golang
 ohmyzsh/ohmyzsh path:plugins/gpg-agent
 ohmyzsh/ohmyzsh path:plugins/github
@@ -50,8 +53,11 @@ ohmyzsh/ohmyzsh path:plugins/starship
 # previous manual line so it loads after the prompt renders)
 ohmyzsh/ohmyzsh path:plugins/zoxide kind:defer
 
+# Direnv (same _direnv_hook logic as the manual `direnv hook zsh` line, just
+# guarded; deferred so it loads after the prompt renders)
+ohmyzsh/ohmyzsh path:plugins/direnv kind:defer
+
 # Quality-of-life plugins (no aliases/functions of ours to collide with)
-ohmyzsh/ohmyzsh path:plugins/chezmoi
 ohmyzsh/ohmyzsh path:plugins/colored-man-pages
 ohmyzsh/ohmyzsh path:plugins/copypath
 ohmyzsh/ohmyzsh path:plugins/copybuffer
