@@ -4,6 +4,9 @@ getantidote/use-omz
 ## OMZ lib: key bindings (Up/Down prefix search, Home/End, etc.)
 #ohmyzsh/ohmyzsh path:lib/key-bindings.zsh
 
+## OMZ lib: completion (case-insensitive tab completion, menu select)
+ohmyzsh/ohmyzsh path:lib/completion.zsh
+
 # Core plugins (always loaded)
 ohmyzsh/ohmyzsh path:plugins/git
 ohmyzsh/ohmyzsh path:plugins/git-extras
