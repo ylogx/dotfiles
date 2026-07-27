@@ -8,8 +8,8 @@
 	excludesfile = ~/.gitignore_global
 	attributesfile = ~/.gitattributes
 	autocrlf = input
-#[commit]
-#	gpgsign = true
+[commit]
+	gpgsign = {{ if .signingkey }}true{{ else }}false{{ end }}
 [credential]
 	helper = cache --timeout=360000
 [push]
