@@ -44,4 +44,5 @@ export ANDROID_HOME="$HOME/sdk/android-sdk"
 # Intel-only at /usr/local/heroku; checked defensively in case that changes.
 [ -d "/usr/local/heroku/bin" ] && PATH="/usr/local/heroku/bin:$PATH"
 [ -d "/opt/homebrew/heroku/bin" ] && PATH="/opt/homebrew/heroku/bin:$PATH"
+[ -d "$HOME/.rd/bin" ] && PATH="$HOME/.rd/bin:$PATH"
 export PATH

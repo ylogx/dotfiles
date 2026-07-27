@@ -1,9 +1,6 @@
 # Source shared environment (POSIX-compatible, shared with bash/fish)
 [ -f "$HOME/.config/shell/env.sh" ] && . "$HOME/.config/shell/env.sh"
 
-# Rancher Desktop k8s
-[ -d "$HOME/.rd/bin" ] && export PATH="$HOME/.rd/bin:$PATH"
-
 {{ if eq .chezmoi.os "linux" -}}
 # Cuda
 [ -d "/usr/local/cuda/bin" ] && export PATH=/usr/local/cuda/bin:$PATH
