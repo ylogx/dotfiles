@@ -5,8 +5,8 @@
 # you should only be prompted once per cache window, not once per shell.
 # The cache still resets whenever the agent itself restarts (reboot, logout,
 # or an explicit `gpgconf --kill gpg-agent`).
-default-cache-ttl 43200
-max-cache-ttl 86400
+default-cache-ttl 604800
+max-cache-ttl 2592000
 {{ if eq .chezmoi.os "darwin" -}}
 {{   $pinentryMac := lookPath "pinentry-mac" -}}
 {{   if $pinentryMac }}
