@@ -2,6 +2,7 @@
 {{- $email := promptStringOnce . "email" "Email address" -}}
 {{- $signingkey := promptStringOnce . "signingkey" "GPG signing key (leave empty to skip)" -}}
 {{- $github_user := promptStringOnce . "github_user" "GitHub username" -}}
+{{- $headless := promptBoolOnce . "headless" "Headless machine (server accessed over SSH, no local GUI session)" false -}}
 
 sourceDir = {{ joinPath .chezmoi.homeDir ".dotfiles" | quote }}
 
@@ -10,3 +11,4 @@ sourceDir = {{ joinPath .chezmoi.homeDir ".dotfiles" | quote }}
     email = {{ $email | quote }}
     signingkey = {{ $signingkey | quote }}
     github_user = {{ $github_user | quote }}
+    headless = {{ $headless }}

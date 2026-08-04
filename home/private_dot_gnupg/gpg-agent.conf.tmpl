@@ -7,11 +7,14 @@
 # or an explicit `gpgconf --kill gpg-agent`).
 default-cache-ttl 604800
 max-cache-ttl 2592000
-{{ if eq .chezmoi.os "darwin" -}}
+{{ if and (eq .chezmoi.os "darwin") (not .headless) -}}
 {{   $pinentryMac := lookPath "pinentry-mac" -}}
 {{   if $pinentryMac }}
 # GUI pinentry: not tied to a specific terminal's TTY, so it works no
-# matter which shell/tab triggers the prompt.
+# matter which shell/tab triggers the prompt. Only used on interactive
+# machines — headless boxes fall through to the default TTY-aware
+# pinentry, which (thanks to GPG_TTY in env.sh) prompts right in the
+# SSH session instead of popping a GUI dialog nobody's watching.
 pinentry-program {{ $pinentryMac }}
 {{   end -}}
 {{ end -}}
