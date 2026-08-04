@@ -33,9 +33,10 @@ export GOPATH="$HOME/.cache/go"
 export FZF_DEFAULT_COMMAND='(rg --files || find . -path "*/\.*" -prune -o -type f -print -o -type l -print | sed s/^..//) 2> /dev/null'
 
 # Android SDK
-export ANDROID_HOME="$HOME/sdk/android-sdk"
+export ANDROID_HOME="/opt/homebrew/share/android-commandlinetools"
+export ANDROID_SDK_ROOT="$ANDROID_HOME"
+[ -d "$ANDROID_HOME/cmdline-tools/latest/bin" ] && PATH="$PATH:$ANDROID_HOME/cmdline-tools/latest/bin"
 [ -d "$ANDROID_HOME/platform-tools" ] && PATH="$PATH:$ANDROID_HOME/platform-tools"
-[ -d "$ANDROID_HOME/tools" ] && PATH="$PATH:$ANDROID_HOME/tools"
 
 # Core PATH additions
 [ -d "/usr/local/bin" ] && PATH="/usr/local/bin:$PATH"
