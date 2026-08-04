@@ -1,0 +1,17 @@
+# Managed by chezmoi (see .chezmoiscripts/run_onchange_after_reload-gpg-agent.sh.tmpl)
+#
+# gpg-agent is a single background daemon shared by every shell/terminal on
+# this machine, so a passphrase cached here is available to all of them —
+# you should only be prompted once per cache window, not once per shell.
+# The cache still resets whenever the agent itself restarts (reboot, logout,
+# or an explicit `gpgconf --kill gpg-agent`).
+default-cache-ttl 43200
+max-cache-ttl 86400
+{{ if eq .chezmoi.os "darwin" -}}
+{{   $pinentryMac := lookPath "pinentry-mac" -}}
+{{   if $pinentryMac }}
+# GUI pinentry: not tied to a specific terminal's TTY, so it works no
+# matter which shell/tab triggers the prompt.
+pinentry-program {{ $pinentryMac }}
+{{   end -}}
+{{ end -}}

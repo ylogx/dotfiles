@@ -27,6 +27,7 @@ brew "fzf"
 brew "git"
 brew "git-delta"
 brew "gnu-sed"
+brew "gnupg"
 brew "hexyl"
 brew "highlight"
 brew "htop"
@@ -36,6 +37,7 @@ brew "ncdu"
 brew "nmap"
 brew "noti"
 brew "openssl"
+brew "pinentry-mac"
 brew "ponysay"
 brew "prettyping"
 brew "python3"
@@ -60,7 +62,7 @@ EOF
 echo "Installing packages..."
 sudo apt-get update -qq
 sudo apt-get install -y \
-    bash curl fish git highlight htop nmap python3 tmux tree vim wget zsh
+    bash curl fish git gnupg highlight htop nmap pinentry-curses python3 tmux tree vim wget zsh
 
 # These may not be available on all distros
 sudo apt-get install -y bat eza hexyl 2>/dev/null || true

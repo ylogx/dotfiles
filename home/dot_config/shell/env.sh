@@ -20,6 +20,12 @@ fi
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 
+# GPG: tell gpg-agent which terminal owns this shell, so its (possibly
+# TTY-based) pinentry can prompt in the right place instead of failing
+# and re-prompting.
+GPG_TTY=$(tty)
+export GPG_TTY
+
 # Go
 export GOPATH="$HOME/.cache/go"
 

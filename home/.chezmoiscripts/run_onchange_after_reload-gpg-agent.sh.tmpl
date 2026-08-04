@@ -1,0 +1,8 @@
+#!/bin/bash
+# gpg-agent.conf hash: {{ include "private_dot_gnupg/gpg-agent.conf.tmpl" | sha256sum }}
+# Re-runs automatically when gpg-agent.conf changes, so new settings
+# (cache TTL, pinentry-program) take effect without a manual restart.
+if command -v gpgconf >/dev/null 2>&1; then
+    echo "Reloading gpg-agent..."
+    gpgconf --kill gpg-agent 2>/dev/null || true
+fi
