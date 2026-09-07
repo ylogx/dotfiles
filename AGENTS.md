@@ -26,7 +26,7 @@ antidote update         # refresh zsh plugins (after editing ~/.zsh_plugins.txt)
 - Template data comes from `home/.chezmoi.toml.tmpl` prompts (`name`, `email`, `signingkey`, `github_user`, `headless`), stored in `~/.config/chezmoi/chezmoi.toml`. `headless` gates GUI packages (e.g. pinentry-mac).
 - `home/.chezmoiignore` excludes fish config on Linux; `home/.chezmoiremove.tmpl` deletes legacy files (antigen, homesick, `.zsh_aliases`, …) and Linux-only files on macOS — don't recreate them.
 - `home/.chezmoiversion` pins chezmoi >= 2.50.0 — avoid newer-version-only features.
-- `home/.chezmoiexternal.toml` fetches external deps: bass (fish), vim-plug (not Vundle), TPM. Neovim config (`~/.config/nvim`) is a symlink to `~/.vim`.
+- `home/.chezmoiexternal.toml` fetches external deps: bass (fish), vim-plug (not Vundle), TPM. Neovim (`~/.config/nvim`) is an independent Lua config (lazy.nvim, lockfile at `home/dot_config/nvim/lazy-lock.json`); terminal vim still uses `dot_vimrc` + vim-plug. Update plugin keys via `:Lazy` / `:PlugInstall`.
 
 ## Chezmoi Scripts (home/.chezmoiscripts/)
 
@@ -34,7 +34,8 @@ antidote update         # refresh zsh plugins (after editing ~/.zsh_plugins.txt)
 run_once_before_install-packages.sh.tmpl         → brew bundle (macOS, honors headless) / apt (Linux)
 run_once_before_remove-linux-only-files.sh.tmpl  → removes homeshick-symlinked Linux dotfiles on macOS
 run_once_after_setup-macos.sh.tmpl               → macOS defaults
-run_onchange_after_install-vim-plugins.sh.tmpl   → vim +PlugInstall (on .vimrc hash change)
+run_onchange_after_install-vim-plugins.sh.tmpl   → vim +PlugInstall/+PlugClean (on .vimrc hash change)
+run_onchange_after_install-nvim-plugins.sh.tmpl  → nvim +Lazy! sync (on hash of every nvim lua file)
 run_onchange_after_install-tmux-plugins.sh.tmpl  → tpm install (on .tmux.conf hash change)
 run_onchange_after_reload-gpg-agent.sh.tmpl      → gpgconf --kill gpg-agent (on gpg-agent.conf hash change)
 ```
