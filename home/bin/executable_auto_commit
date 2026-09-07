@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# Requires shell-gpt (pip install shell-gpt) and OPENAI_API_KEY in the env.
 set -eu
 
 PROMPT="Based on the changes above, generate an expertly crafted concise commit message following best practices.

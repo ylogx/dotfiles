@@ -14,6 +14,7 @@ brew bundle --file=/dev/stdin <<EOF
 brew "antidote"
 brew "ansible"
 brew "bat"
+brew "btop"
 brew "coreutils"
 brew "curl"
 brew "direnv"
@@ -24,16 +25,19 @@ brew "findutils"
 brew "fish"
 brew "fortune"
 brew "fzf"
+brew "gh"
 brew "git"
 brew "git-delta"
 brew "gnu-sed"
 brew "gnupg"
+brew "ghostscript"
 brew "hexyl"
 brew "highlight"
 brew "htop"
-brew "hub"
-brew "macvim"
+brew "lazygit"
 brew "ncdu"
+{{ if not .headless }}brew "macvim"
+{{ end -}}
 brew "nmap"
 brew "neovim"
 brew "noti"
@@ -43,12 +47,13 @@ brew "openssl"
 brew "ponysay"
 brew "prettyping"
 brew "python"
+brew "reattach-to-user-namespace"
 brew "ripgrep"
 brew "starship"
 brew "tree"
 brew "tree-sitter-cli"
 brew "tmux"
-brew "tldr"
+brew "tlrc"
 brew "universal-ctags"
 brew "watch"
 brew "wget"
@@ -56,21 +61,24 @@ brew "xsv"
 brew "zoxide"
 brew "zsh"
 
+{{ if not .headless -}}
 cask "font-hack"
 cask "font-meslo-for-powerline"
 cask "font-menlo-for-powerline"
 cask "rectangle"
+{{ end -}}
 EOF
 
 {{ else if eq .chezmoi.os "linux" -}}
 echo "Installing packages..."
 sudo apt-get update -qq
 sudo apt-get install -y \
-    bash curl fish git gnupg highlight htop neovim nmap pinentry-curses python3 tmux tree universal-ctags vim wget zsh
+    bash curl direnv fish fzf git gnupg ghostscript highlight htop neovim nmap pinentry-curses python3 ripgrep tmux tree universal-ctags vim wget zsh
 
 # These may not be available on all distros
 sudo apt-get install -y bat eza hexyl 2>/dev/null || true
 sudo apt-get install -y diskus fd-find 2>/dev/null || true
 sudo apt-get install -y tree-sitter-cli 2>/dev/null || true
+sudo apt-get install -y lazygit 2>/dev/null || true
 
 {{ end -}}
