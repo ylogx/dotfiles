@@ -228,4 +228,14 @@ stopwatch() {
     done
 }
 
+#####################
+### Shell config ###
+#####################
+# Re-source the shared shell config (alias form was broken: `source a b`
+# only sources a, passing b as a positional parameter)
+sourcef() {
+    source ~/.shell_aliases
+    source ~/.shell_functions
+}
+
 # vim: set ft=shell:

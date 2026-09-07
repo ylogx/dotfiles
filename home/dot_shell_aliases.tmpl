@@ -157,7 +157,16 @@ alias sshc='ssh -o "controlmaster=auto" -o "controlpath=/tmp/ssh-$USER-%r@%h:%p"
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 {{ end -}}
 {{ if stat (joinPath .chezmoi.homeDir ".local/share/Trash/files") -}}
-alias trash='mv -t ~/.local/share/Trash/files'
+# Move to the freedesktop trash dir. GNU mv -t when available (gmv from
+# coreutils, present even when gnubin isn't on PATH), plain mv otherwise.
+trash() {
+    local trash_dir="$HOME/.local/share/Trash/files"
+    if command -v gmv >/dev/null 2>&1; then
+        gmv -t "$trash_dir" "$@"
+    else
+        mv "$@" "$trash_dir"
+    fi
+}
 {{ end -}}
 {{ if lookPath "xdg-open" -}}
 alias x='xdg-open'
@@ -191,7 +200,6 @@ alias gtop='git rev-parse --show-toplevel'
 alias gyolo='git yolo || git commit -m"$(curl -s whatthecommit.com/index.txt)"'
 
 # Python
-alias py2='python2'
 alias py3='python3'
 alias pyd='pydoc3'
 alias pyl="PYTHONPATH='.' python3"
@@ -206,15 +214,24 @@ alias sshb='ssh -nNT -o "ServerAliveInterval 10" -o "ServerAliveCountMax 3" -v -
 alias sshba='autossh -M 0 -nNT -o "ServerAliveInterval 10" -o "ServerAliveCountMax 3" -v -D'
 alias sshbac='autossh -M 0 -nNTC -o "ServerAliveInterval 10" -o "ServerAliveCountMax 3" -v -D'
 
-# ls variants
+# ls variants — GNU-only flags, so reference GNU ls explicitly on macOS
+# (works in bash/fish too, where gnubin isn't on PATH) and plain ls on Linux
+{{ if eq .chezmoi.os "darwin" -}}
+{{ if lookPath "gls" -}}
+alias lsize='gls --sort=size -lhr'
+alias lx='gls -lXB'
+alias lk='gls -lSr'
+alias lr='gls -lR'
+{{ end -}}
+{{ else -}}
 alias lsize='ls --sort=size -lhr'
 alias lx='ls -lXB'
 alias lk='ls -lSr'
 alias lr='ls -lR'
+{{ end -}}
 
 # File/dir utilities
 alias biggest='BLOCKSIZE=1048576; du -x | sort -nr | head -10'
-alias sourcef='source ~/.shell_aliases ~/.shell_functions'
 alias wcall='wc `ls -tr`'
 alias wcld='for f in `ls`; do echo $f: `ls $f | wc -l`; done'
 alias dn='OPTIONS=$(\ls -F | grep /$); select s in $OPTIONS; do cd $PWD/$s; break;done'
