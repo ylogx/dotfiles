@@ -8,7 +8,7 @@ Cross-platform (macOS + Linux) dotfiles managed by [chezmoi](https://chezmoi.io)
 
 ```bash
 make apply   # chezmoi apply --verbose
-make test    # docker build (Ubuntu 24.04) — this repo's test suite
+make test    # container build (Ubuntu 24.04) — this repo's test suite; docker, falls back to nerdctl (Rancher Desktop)
 make lint    # shellcheck -S warning install.sh run_ansible.sh home/bin/executable_*
 chezmoi diff            # preview before applying
 chezmoi add ~/.file     # start tracking a file
@@ -17,7 +17,7 @@ chezmoi init --apply ylogx   # bootstrap a fresh machine
 antidote update         # refresh zsh plugins (after editing ~/.zsh_plugins.txt)
 ```
 
-- No test framework exists; the Docker build is the verification. It applies with `--exclude=scripts` (run_once package installs are NOT exercised), asserts key files exist, no unresolved `{{` templates, and that bash can parse aliases/functions. CI (`.github/workflows/ci.yml`) runs the same plus `chezmoi execute-template < <file>` on every `.tmpl` — use that as a fast template syntax check. Lint is warnings-only and non-blocking in CI.
+- No test framework exists; the Docker build is the verification. It applies with `--exclude=scripts` (run_once package installs are NOT exercised) using the CI fixture config (`.github/chezmoi-testdata.toml`), then asserts: no drift (`chezmoi diff` empty), key files exist, no unresolved `{{` templates, bash parses aliases/functions, vimrc parses under vim (plugins installed first), tmux.conf parses, and every nvim lua file passes `luac -p`. CI (`.github/workflows/ci.yml`) runs that image plus zsh/bash/nvim-boot smoke tests, renders every `.tmpl` with the fixture on both ubuntu and macos runners, and shellchecks repo scripts AND rendered `.chezmoiscripts` (blocking). Template rendering needs `--source "$PWD" --config .github/chezmoi-testdata.toml` when run outside a configured machine; `.chezmoi.toml.tmpl` itself is covered by `chezmoi init --dry-run` (promptStringOnce only exists there).
 
 ## Chezmoi Gotchas
 

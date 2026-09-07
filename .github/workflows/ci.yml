@@ -2,18 +2,18 @@ name: CI
 
 on:
   push:
-    branches: [main]
+    branches: [main, "feature/**"]
   pull_request:
     branches: [main]
 
 jobs:
   test-docker:
-    name: Test dotfiles setup (Docker)
+    name: Apply, drift check, parse smoke tests (Docker)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
-      - name: Build and verify
+      - name: Build (apply + drift + vim/tmux/lua parse)
         run: docker build --tag dotfiles-test .
 
       - name: Test zsh module loading
@@ -31,8 +31,16 @@ jobs:
             echo "Bash: OK"
           '
 
-  test-chezmoi:
-    name: Verify chezmoi config
+      - name: Test nvim config (sync plugins, then boot with colorscheme assert)
+        run: |
+          docker run --rm dotfiles-test nvim --headless "+Lazy! sync" +qa
+          docker run --rm dotfiles-test nvim --headless \
+            "+lua assert(vim.g.colors_name == 'vim-monokai-tasty', 'colorscheme not loaded: ' .. tostring(vim.g.colors_name))" \
+            +qa
+          echo "Nvim: OK"
+
+  test-templates-linux:
+    name: Render every template (linux)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -40,24 +48,74 @@ jobs:
       - name: Install chezmoi
         run: sh -c "$(curl -fsLS get.chezmoi.io)" -- -b /usr/local/bin
 
-      - name: Chezmoi verify
+      - name: Render all templates with fixture data
         run: |
-          chezmoi execute-template < home/.chezmoi.toml.tmpl > /dev/null 2>&1 || true
-          for f in home/dot_*.tmpl home/dot_zsh/*.tmpl home/.chezmoiscripts/*.tmpl; do
-            echo -n "Template $(basename $f): "
-            chezmoi execute-template < "$f" > /dev/null 2>&1 && echo "OK" || echo "FAIL"
-          done
+          set -euo pipefail
+          failed=0
+          while IFS= read -r -d '' f; do
+            # .chezmoi.toml.tmpl is the config template: promptStringOnce is
+            # only defined for chezmoi init, covered by the dry-run below
+            [ "$f" = "home/.chezmoi.toml.tmpl" ] && continue
+            chezmoi execute-template --source "$GITHUB_WORKSPACE" \
+              --config "$GITHUB_WORKSPACE/.github/chezmoi-testdata.toml" \
+              < "$f" > /dev/null || { echo "FAIL: $f"; failed=1; }
+          done < <(find home -name '*.tmpl' -print0)
+          chezmoi init --source "$GITHUB_WORKSPACE" \
+            --config "$GITHUB_WORKSPACE/.github/chezmoi-testdata.toml" \
+            --dry-run && echo "OK: home/.chezmoi.toml.tmpl (init --dry-run)"
+          [ "$failed" -eq 0 ] && echo "All templates render OK"
+
+  test-templates-macos:
+    name: Render every template (macOS branches)
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install chezmoi
+        run: sh -c "$(curl -fsLS get.chezmoi.io)" -- -b /usr/local/bin
+
+      - name: Render all templates with fixture data
+        run: |
+          set -euo pipefail
+          failed=0
+          while IFS= read -r -d '' f; do
+            [ "$f" = "home/.chezmoi.toml.tmpl" ] && continue
+            chezmoi execute-template --source "$GITHUB_WORKSPACE" \
+              --config "$GITHUB_WORKSPACE/.github/chezmoi-testdata.toml" \
+              < "$f" > /dev/null || { echo "FAIL: $f"; failed=1; }
+          done < <(find home -name '*.tmpl' -print0)
+          chezmoi init --source "$GITHUB_WORKSPACE" \
+            --config "$GITHUB_WORKSPACE/.github/chezmoi-testdata.toml" \
+            --dry-run && echo "OK: home/.chezmoi.toml.tmpl (init --dry-run)"
+          [ "$failed" -eq 0 ] && echo "All templates render OK"
 
   lint:
-    name: Lint shell scripts
+    name: Lint shell scripts (blocking)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install shellcheck
-        run: sudo apt-get update && sudo apt-get install -y shellcheck
-
-      - name: Check shell scripts
+      - name: Install shellcheck + chezmoi
         run: |
-          shellcheck -S warning install.sh run_ansible.sh home/bin/executable_* 2>&1 || true
-          echo "Shellcheck: done (warnings only, not blocking)"
+          sudo apt-get update -qq
+          sudo apt-get install -y shellcheck
+          sh -c "$(curl -fsLS get.chezmoi.io)" -- -b /usr/local/bin
+
+      - name: Shellcheck repo scripts
+        run: |
+          set -euo pipefail
+          shellcheck -S warning install.sh run_ansible.sh \
+            $(find home/bin -name 'executable_*' ! -name '*.py')
+          echo "Repo scripts: OK"
+
+      - name: Shellcheck rendered chezmoi scripts
+        run: |
+          set -euo pipefail
+          for f in home/.chezmoiscripts/*.tmpl; do
+            chezmoi execute-template --source "$GITHUB_WORKSPACE" \
+              --config "$GITHUB_WORKSPACE/.github/chezmoi-testdata.toml" \
+              < "$f" > /tmp/rendered.sh
+            echo "--- $f"
+            shellcheck -S warning -s bash /tmp/rendered.sh
+          done
+          echo "Rendered scripts: OK"
