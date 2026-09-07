@@ -4,7 +4,7 @@ set -eu
 
 install_ansible() {
     SUDO_IF_NEEDED=''
-    if [[ $EUID > 0 ]]; then
+    if (( EUID > 0 )); then
         SUDO_IF_NEEDED=sudo
     fi
     if ! hash gcc 2>/dev/null; then
@@ -26,7 +26,7 @@ case "${OSTYPE}" in
   linux*)   PLAYBOOK_NAME="unix"  ;;
   #bsd*)     echo "BSD" ;;
   #msys*)    echo "WINDOWS" ;;
-  *)        echo "Unknown OS: ${OSTYPE}" && exit -1 ;;
+  *)        echo "Unknown OS: ${OSTYPE}" && exit 1 ;;
 esac
 echo "Running playbook for ${PLAYBOOK_NAME} os."
 

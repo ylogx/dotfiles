@@ -56,13 +56,23 @@ done
 # Initialize combined content variable
 combined_content=""
 
-# Iterate through each file in the directory structure
-for filepath in $(find . -type f); do
+# Check whether an extension is in the include list
+extension_included() {
+    local extension=$1 ext
+    for ext in "${include_extensions[@]}"; do
+        [[ "$extension" == "$ext" ]] && return 0
+    done
+    return 1
+}
+
+# Iterate through each file in the directory structure (null-delimited so
+# filenames with spaces survive)
+while IFS= read -r -d '' filepath; do
     filename=$(basename -- "$filepath")
     extension="${filename##*.}"
-    
+
     # Check if the file has an extension or is a Dockerfile
-    if [[ " ${include_extensions[@]} " =~ " ${extension} " ]] || [[ "$filename" == "Dockerfile" ]]; then
+    if extension_included "$extension" || [[ "$filename" == "Dockerfile" ]]; then
         echo "$filepath"
         if $print_content; then
             print_file_content "$filepath"
@@ -71,7 +81,7 @@ for filepath in $(find . -type f); do
             combined_content+=$(collect_file_content "$filepath")
         fi
     fi
-done
+done < <(find . -type f -print0)
 
 if $copy_content; then
     copy_combined_content_to_clipboard
