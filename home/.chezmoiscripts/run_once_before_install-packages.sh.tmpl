@@ -35,18 +35,21 @@ brew "hub"
 brew "macvim"
 brew "ncdu"
 brew "nmap"
+brew "neovim"
 brew "noti"
 brew "openssl"
 {{ if not .headless }}brew "pinentry-mac"
 {{ end -}}
 brew "ponysay"
 brew "prettyping"
-brew "python3"
+brew "python"
 brew "ripgrep"
 brew "starship"
 brew "tree"
+brew "tree-sitter-cli"
 brew "tmux"
 brew "tldr"
+brew "universal-ctags"
 brew "watch"
 brew "wget"
 brew "xsv"
@@ -63,10 +66,11 @@ EOF
 echo "Installing packages..."
 sudo apt-get update -qq
 sudo apt-get install -y \
-    bash curl fish git gnupg highlight htop nmap pinentry-curses python3 tmux tree vim wget zsh
+    bash curl fish git gnupg highlight htop neovim nmap pinentry-curses python3 tmux tree universal-ctags vim wget zsh
 
 # These may not be available on all distros
 sudo apt-get install -y bat eza hexyl 2>/dev/null || true
 sudo apt-get install -y diskus fd-find 2>/dev/null || true
+sudo apt-get install -y tree-sitter-cli 2>/dev/null || true
 
 {{ end -}}
