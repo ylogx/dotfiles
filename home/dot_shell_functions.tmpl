@@ -104,10 +104,34 @@ print_system_status_fast() {
 }
 
 welcome_message() {
-    command -v figlet >/dev/null 2>&1 && figlet "Welcome, " $USER
-    print_date_cal
-    echo ""
-    print_system_status_fast
+    # Cached: figlet + the parallel status probes cost real time on every
+    # shell start, so reuse output for WELCOME_TTL seconds (default 5 min).
+    # `welcome` (below) forces a refresh.
+    local cache_dir="${XDG_CACHE_HOME:-$HOME/.cache}/shell"
+    local cache_file="$cache_dir/welcome.txt"
+    local stamp_file="$cache_dir/welcome.stamp"
+    local now last
+
+    mkdir -p "$cache_dir" 2>/dev/null
+    now=$(date +%s)
+    last=0
+    [ -f "$stamp_file" ] && read -r last < "$stamp_file"
+
+    if [ "$1" = "--force" ] || [ ! -s "$cache_file" ] || [ $((now - last)) -ge "${WELCOME_TTL:-300}" ]; then
+        {
+            command -v figlet >/dev/null 2>&1 && figlet "Welcome, " $USER
+            print_date_cal
+            echo ""
+            print_system_status_fast
+        } > "$cache_file" 2>/dev/null
+        echo "$now" > "$stamp_file"
+    fi
+    [ -s "$cache_file" ] && cat "$cache_file"
+}
+
+# Force-refresh the welcome banner
+welcome() {
+    welcome_message --force
 }
 
 #####################
