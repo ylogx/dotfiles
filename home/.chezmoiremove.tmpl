@@ -19,6 +19,10 @@
 # Stale zsh completion dumps (regenerated automatically)
 .zcompdump-*
 
+# nvim has its own Lua config (~/.config/nvim) — no longer sources ~/.vimrc
+# through the ~/.config/nvim -> ~/.vim symlink
+.vim/init.vim
+
 # Travis CI local artifacts
 .travis
 

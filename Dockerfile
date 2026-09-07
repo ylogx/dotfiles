@@ -29,6 +29,8 @@ RUN test -f /root/.zshrc \
     && test -f /root/.zsh/01-plugins.zsh \
     && test -f /root/.tmux.conf \
     && test -f /root/.vimrc \
+    && test -f /root/.config/nvim/init.lua \
+    && test -f /root/.config/nvim/lua/plugins/lsp.lua \
     && test -f /root/.gitconfig \
     && echo "VERIFY: all managed files present"
 

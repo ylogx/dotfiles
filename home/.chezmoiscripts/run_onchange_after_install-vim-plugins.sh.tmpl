@@ -4,4 +4,6 @@
 if command -v vim &>/dev/null && [ -f ~/.vim/autoload/plug.vim ]; then
     echo "Installing/updating Vim plugins..."
     vim +PlugInstall! +qall 2>/dev/null
+    # Remove plugins dropped from .vimrc
+    vim +PlugClean! +qall 2>/dev/null
 fi
