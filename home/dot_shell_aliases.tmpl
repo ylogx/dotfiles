@@ -13,7 +13,7 @@
 ##########
 {{ if lookPath "eza" -}}
 alias l='eza -lsnew'
-alias leza='d; eza -bghHlS -s modified --git'
+alias leza='d; eza -bghHl --git -s modified'
 {{ else -}}
 alias l='d; ls -ltrFhH'
 {{ end -}}
