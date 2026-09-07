@@ -13,6 +13,8 @@ make lint    # shellcheck -S warning install.sh run_ansible.sh home/bin/executab
 chezmoi diff            # preview before applying
 chezmoi add ~/.file     # start tracking a file
 chezmoi edit ~/.zshrc   # edit chezmoi source, re-applies on save
+chezmoi init --apply ylogx   # bootstrap a fresh machine
+antidote update         # refresh zsh plugins (after editing ~/.zsh_plugins.txt)
 ```
 
 - No test framework exists; the Docker build is the verification. It applies with `--exclude=scripts` (run_once package installs are NOT exercised), asserts key files exist, no unresolved `{{` templates, and that bash can parse aliases/functions. CI (`.github/workflows/ci.yml`) runs the same plus `chezmoi execute-template < <file>` on every `.tmpl` — use that as a fast template syntax check. Lint is warnings-only and non-blocking in CI.
@@ -26,10 +28,51 @@ chezmoi edit ~/.zshrc   # edit chezmoi source, re-applies on save
 - `home/.chezmoiversion` pins chezmoi >= 2.50.0 — avoid newer-version-only features.
 - `home/.chezmoiexternal.toml` fetches external deps: bass (fish), vim-plug (not Vundle), TPM. Neovim config (`~/.config/nvim`) is a symlink to `~/.vim`.
 
+## Chezmoi Scripts (home/.chezmoiscripts/)
+
+```
+run_once_before_install-packages.sh.tmpl         → brew bundle (macOS, honors headless) / apt (Linux)
+run_once_before_remove-linux-only-files.sh.tmpl  → removes homeshick-symlinked Linux dotfiles on macOS
+run_once_after_setup-macos.sh.tmpl               → macOS defaults
+run_onchange_after_install-vim-plugins.sh.tmpl   → vim +PlugInstall (on .vimrc hash change)
+run_onchange_after_install-tmux-plugins.sh.tmpl  → tpm install (on .tmux.conf hash change)
+run_onchange_after_reload-gpg-agent.sh.tmpl      → gpgconf --kill gpg-agent (on gpg-agent.conf hash change)
+```
+
 ## Shell Config
 
 - Shared by all shells: `~/.config/shell/env.sh` (POSIX env vars + PATH — the single source of truth, don't duplicate into shell-specific files), `~/.shell_aliases`, `~/.shell_functions` (sourced by bash and zsh; fish reuses env via `bass`).
-- ZSH chain: `.zshenv` (brew/cargo PATH, sources env.sh) → `.zshrc` sources `~/.zsh/0N-*.zsh` in numbered order — renumbering changes load order.
+
+### Shell Startup Chains
+
+ZSH:
+```
+.zshenv              → brew shellenv, cargo PATH (before everything), sources env.sh
+.zshrc               → sources ~/.zsh/0N-*.zsh in numbered order (renumbering changes load), then `typeset -U path`
+  ~/.zsh/
+    01-plugins.zsh   → antidote static load, generates ~/.zsh_plugins.zsh (new plugins → ~/.zsh_plugins.txt, not here)
+    02-platform.zsh  → darwin/linux branches: GNU coreutils/sed paths, ls colors, ssh-add-if-agent-running (macOS);
+                       JAVA_HOME, `open`→xdg-open (Linux)
+    03-path.zsh      → sources env.sh, then platform-specific PATH (cuda, linuxbrew on Linux)
+    04-tools.zsh     → tool inits, deferred where slow: pyenv/thefuck (zsh-defer), gcloud, fzf history widgets
+    05-aliases.zsh   → sources .shell_aliases + .shell_functions, zsh-specific aliases (suffix aliases, `reload`)
+    06-welcome.zsh   → welcome_message
+```
+
+Bash:
+```
+.profile             → TERM setup, path_helper (macOS), sources env.sh, sources .bashrc
+  └─ .bashrc         → history, PS1, starship, fzf, direnv, zoxide
+      ├─ .shell_aliases
+      └─ .shell_functions
+```
+
+Fish (macOS only — `.chezmoiignore` skips it on Linux):
+```
+~/.config/fish/config.fish → bass sources env.sh, starship, zoxide, direnv (each guarded), native aliases
+```
+
+- Placement rule: env vars/PATH → `env.sh`; tool init → `04-tools`; aliases/functions → `.shell_aliases`/`.shell_functions`; zsh-only tweaks → `05-aliases`.
 - Plugins via antidote: list in `~/.zsh_plugins.txt`, compiled to a static `~/.zsh_plugins.zsh` by `01-plugins.zsh` (regenerates when the txt is newer OR the antidote clone cache is empty — deleting the `.zsh` also forces regen). starship/zoxide/direnv load via OMZ plugins in that list (zoxide/direnv `kind:defer`); only pyenv and thefuck are deferred with manual `zsh-defer`.
 - Startup-performance conventions: prefer builtins over external commands (`read -r var < file` not `$(cat file)`, `(( $+commands[x] ))` not `which x`), guard every tool init on command existence, and `typeset -U path` at the end of `.zshrc` dedupes PATH.
 - `~/.temp_aliases` (untracked, machine-local) is sourced at the end of `.shell_aliases`.
