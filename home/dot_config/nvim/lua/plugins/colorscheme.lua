@@ -1,24 +1,14 @@
 return {
+  -- Same monokai as terminal vim (~/.vimrc) for visual consistency
   {
-    "catppuccin/nvim",
-    name = "catppuccin",
+    "patstockwell/vim-monokai-tasty",
     lazy = false,
     priority = 1000,
-    opts = {
-      flavour = "mocha",
-      integrations = {
-        cmp = true,
-        gitsigns = true,
-        mini = true,
-        native_lsp = { enabled = true },
-        neotree = true,
-        telescope = true,
-        which_key = true,
-      },
-    },
-    config = function(_, opts)
-      require("catppuccin").setup(opts)
-      vim.cmd.colorscheme("catppuccin")
+    init = function()
+      vim.g.vim_monokai_tasty_italic = 1
+    end,
+    config = function()
+      vim.cmd.colorscheme("vim-monokai-tasty")
     end,
   },
 }

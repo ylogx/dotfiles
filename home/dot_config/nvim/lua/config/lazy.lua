@@ -16,7 +16,7 @@ vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup("plugins", {
   defaults = { lazy = true },
-  install = { colorscheme = { "catppuccin" } },
+  install = { colorscheme = { "vim-monokai-tasty" } },
   checker = { enabled = false },
   performance = {
     rtp = {
