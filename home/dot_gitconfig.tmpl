@@ -4,18 +4,23 @@
 	signingkey = {{ .signingkey }}
 	logallrefupdates=true
 [core]
-	editor = vim
+	editor = {{ if lookPath "nvim" }}nvim{{ else }}vim{{ end }}
 	excludesfile = ~/.gitignore_global
 	attributesfile = ~/.gitattributes
 	autocrlf = input
+	pager = delta
 [commit]
 	gpgsign = {{ if .signingkey }}true{{ else }}false{{ end }}
 [credential]
+{{ if eq .chezmoi.os "darwin" -}}
+	helper = osxkeychain
+{{ else -}}
 	helper = cache --timeout=360000
+{{ end -}}
 [push]
 	default = current
 [color]
-	ui = true
+	ui = always
 	diff = true
 	branch = true
 	pager = true
@@ -24,15 +29,13 @@
 	linenumber = true
 [status]
 	relativePaths=true
-[github]
-	user = {{ .github_user }}
 [i18n]
 	commitencoding = utf-8
 
 [sendemail]
-	from = Shubham Chaudhary <shubhamchaudhary92@gmail.com>
+	from = {{ .name }} <{{ .email }}>
 	smtpserver = smtp.gmail.com
-	smtpuser = shubhamchaudhary92@gmail.com
+	smtpuser = {{ .email }}
 	smtpencryption = tls
 	smtppass =
 	chainreplyto = false
@@ -46,40 +49,16 @@
 ### Diff ###
 [diff]
 	indentHeuristic = true
-
-[core]
-	pager = delta
-	;pager = diff-so-fancy | less --tabs=4 -RFX
-	;pager=most
-	;pager = /usr/local/share/git-core/contrib/diff-highlight/diff-highlight | less
-	;pager = perl /usr/share/doc/git/contrib/diff-highlight/diff-highlight | less
-
+[diff "nodiff"]
+	# .gitattributes assigns diff=nodiff to binary types; print nothing
+	command = true
 [interactive]
 	diffFilter = delta --color-only
-
 [delta]
 	navigate = true  # use n and N to move between diff sections
 	dark = true      # or light = true, or omit for auto-detection
-
 [merge]
 	conflictStyle = zdiff3
-
-[color]
-	ui = always
-[color "diff-highlight"]
-	oldNormal = red bold
-	oldHighlight = red bold 52
-	newNormal = green bold
-	newHighlight = green bold 22
-[color "diff"]
-	;commit = green
-	meta = yellow
-	;frag = cyan
-	old = red bold
-	new = green bold
-	whitespace = red reverse
-	frag = magenta bold
-	commit = yellow bold
 
 
 [alias]
@@ -133,7 +112,7 @@
 	huh = diff
 	in = add
 	lost = stash
-	m = checkout master
+	m = checkout main
 	meow = status
 	out = rm
 	overit = stash clear
@@ -145,25 +124,15 @@
 	with = merge
 	wtf = status
 	yolo = !git commit -m \"$(curl -s whatthecommit.com/index.txt)\"
-[filter "media"]
-	clean = git media clean %f
-	smudge = git media smudge %f
-	required = true
 [filter "lfs"]
 	clean = git-lfs clean %f
 	smudge = git-lfs smudge %f
 	required = true
-#[https]
-#	proxy = https://ishubhamch:chaudhary@192.168.60.10:3128
-#[http]
-#	proxy = http://ishubhamch:chaudhary@192.168.60.10:3128
 [merge]
 {{- if lookPath "nvim" }}
 	tool = nvimdiff
 {{- else }}
 	tool = vimdiff
 {{- end }}
-;[mergetool "vimdiff"]
-	;cmd = vimdiff -c 'set diffopt+=iwhite'
 [init]
 	defaultBranch = main
