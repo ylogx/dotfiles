@@ -3,8 +3,9 @@
 # Function to get container info
 get_restart_policy() {
     local container_id=$1
-    local container_name=$(docker inspect --format '{{ .Name }}' "$container_id" | sed 's/^\///')
-    local restart_policy=$(docker inspect --format '{{ .HostConfig.RestartPolicy.Name }}' "$container_id")
+    local container_name restart_policy
+    container_name=$(docker inspect --format '{{ .Name }}' "$container_id" | sed 's/^\///')
+    restart_policy=$(docker inspect --format '{{ .HostConfig.RestartPolicy.Name }}' "$container_id")
 
     printf "%-15s | %-25s | %-15s\n" "$container_id" "$container_name" "$restart_policy"
 }

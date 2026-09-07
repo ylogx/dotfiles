@@ -3,7 +3,7 @@ set -eu
 
 install_git_if_needed() {
     if ! command -v git >/dev/null 2>&1; then
-        if [[ $EUID > 0 ]]; then
+        if (( EUID > 0 )); then
             sudo apt-get install --yes git
         else
             apt-get install --yes git

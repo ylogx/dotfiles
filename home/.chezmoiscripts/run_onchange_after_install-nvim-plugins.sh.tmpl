@@ -1,0 +1,16 @@
+#!/bin/bash
+# Re-runs when any nvim config file changes (hash of all files below)
+# init.lua: {{ include "dot_config/nvim/init.lua" | sha256sum }}
+# colorscheme: {{ include "dot_config/nvim/lua/plugins/colorscheme.lua" | sha256sum }}
+# editor: {{ include "dot_config/nvim/lua/plugins/editor.lua" | sha256sum }}
+# git: {{ include "dot_config/nvim/lua/plugins/git.lua" | sha256sum }}
+# lsp: {{ include "dot_config/nvim/lua/plugins/lsp.lua" | sha256sum }}
+# misc: {{ include "dot_config/nvim/lua/plugins/misc.lua" | sha256sum }}
+# navigation: {{ include "dot_config/nvim/lua/plugins/navigation.lua" | sha256sum }}
+# tmux: {{ include "dot_config/nvim/lua/plugins/tmux.lua" | sha256sum }}
+# treesitter: {{ include "dot_config/nvim/lua/plugins/treesitter.lua" | sha256sum }}
+# ui: {{ include "dot_config/nvim/lua/plugins/ui.lua" | sha256sum }}
+if command -v nvim &>/dev/null; then
+    echo "Syncing Neovim plugins (lazy.nvim)..."
+    nvim --headless "+Lazy! sync" +qa
+fi

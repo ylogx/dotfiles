@@ -13,7 +13,6 @@ fi
 
 # Get the base filename without extension
 filename=$(basename -- "$input_file")
-extension="${filename##*.}"
 filename="${filename%.*}"
 
 # Compression options

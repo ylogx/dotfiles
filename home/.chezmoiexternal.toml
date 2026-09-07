@@ -1,21 +1,24 @@
 # Bass: source bash scripts from fish (for shared aliases/env)
+# Pinned to a commit so fresh machines get exactly what was tested
+# (refreshPeriod only matters for the URL, which is immutable at a SHA)
 [".config/fish/functions/bass.fish"]
     type = "file"
-    url = "https://raw.githubusercontent.com/edc/bass/master/functions/bass.fish"
+    url = "https://raw.githubusercontent.com/edc/bass/79b62958ecf4e87334f24d6743e5766475bcf4d0/functions/bass.fish"
     refreshPeriod = "672h"
 
 [".config/fish/functions/__bass.py"]
     type = "file"
-    url = "https://raw.githubusercontent.com/edc/bass/master/functions/__bass.py"
+    url = "https://raw.githubusercontent.com/edc/bass/79b62958ecf4e87334f24d6743e5766475bcf4d0/functions/__bass.py"
     refreshPeriod = "672h"
 
-# Vim plugin manager
+# Vim plugin manager (junegunn/vim-plug @ master, pinned)
 [".vim/autoload/plug.vim"]
     type = "file"
-    url = "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
+    url = "https://raw.githubusercontent.com/junegunn/vim-plug/88e31471818e9a29a8a20a0ee61360cfd7bdc1cd/plug.vim"
     refreshPeriod = "168h"
 
-# Tmux plugin manager
+# Tmux plugin manager (not pinned to a tag: tpm doesn't release tags;
+# plugins it installs come from their own repos)
 [".tmux/plugins/tpm"]
     type = "git-repo"
     url = "https://github.com/tmux-plugins/tpm.git"

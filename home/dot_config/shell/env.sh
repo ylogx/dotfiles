@@ -1,6 +1,15 @@
 # Shared environment variables — POSIX sh compatible
 # Sourced by: .zshenv, .bashrc, .profile, fish (via bass)
 
+# Idempotence guard: several shells source this file more than once per
+# session (.zshenv + 03-path.zsh, .profile + .bashrc) — nested shells only
+# run the innermost source, so make re-sourcing a no-op instead of
+# duplicating every PATH entry.
+if [ -n "${_SHELL_ENV_SOURCED:-}" ]; then
+    return 0 2>/dev/null || exit 0
+fi
+_SHELL_ENV_SOURCED=1
+
 # XDG Base Directories
 export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
 export XDG_DATA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"
@@ -29,12 +38,16 @@ export GPG_TTY
 # Go
 export GOPATH="$HOME/.cache/go"
 
-# FZF
-export FZF_DEFAULT_COMMAND='(rg --files || find . -path "*/\.*" -prune -o -type f -print -o -type l -print | sed s/^..//) 2> /dev/null'
+# FZF (hidden files included to match the interactive `rg --hidden` alias)
+export FZF_DEFAULT_COMMAND='(rg --files --hidden --glob "!.git" || find . -path "*/\.*" -prune -o -type f -print -o -type l -print | sed s/^..//) 2> /dev/null'
 
-# Android SDK
-export ANDROID_HOME="/opt/homebrew/share/android-commandlinetools"
-export ANDROID_SDK_ROOT="$ANDROID_HOME"
+# Android SDK (Homebrew layout; Apple Silicon path first, Intel fallback)
+if [ -d "/opt/homebrew/share/android-commandlinetools" ]; then
+    export ANDROID_HOME="/opt/homebrew/share/android-commandlinetools"
+elif [ -d "/usr/local/share/android-commandlinetools" ]; then
+    export ANDROID_HOME="/usr/local/share/android-commandlinetools"
+fi
+[ -n "${ANDROID_HOME:-}" ] && export ANDROID_SDK_ROOT="$ANDROID_HOME"
 [ -d "$ANDROID_HOME/cmdline-tools/latest/bin" ] && PATH="$PATH:$ANDROID_HOME/cmdline-tools/latest/bin"
 [ -d "$ANDROID_HOME/platform-tools" ] && PATH="$PATH:$ANDROID_HOME/platform-tools"
 

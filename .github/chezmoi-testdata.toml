@@ -1,0 +1,8 @@
+# Template-data fixture for CI: promptStringOnce resolves from this data
+# instead of prompting, so `chezmoi execute-template` works headless.
+# Keep every key from home/.chezmoi.toml.tmpl's [data] block.
+[data]
+    name = "CI Test"
+    email = "ci@example.com"
+    signingkey = ""
+    headless = false

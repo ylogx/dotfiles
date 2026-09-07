@@ -1,37 +1,26 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " vim-plug {
-    " This must be first, because it changes other options as a side effect.
-    set nocompatible               " be iMproved
-    filetype off                   " required!
-
+    " Terminal-vim config. Neovim has its own Lua config: ~/.config/nvim
     call plug#begin('~/.vim/plugged')
 
-    " My Bundles here:
-    " Original repos on github
-    "
     " Git wrapper
     Plug 'tpope/vim-fugitive'
-    Plug 'Lokaltog/vim-easymotion'
+    " Jump to any location (s{char}{label})
+    Plug 'easymotion/vim-easymotion'
     " Tree mapped below at <F9>
-    Plug 'scrooloose/nerdtree'
+    Plug 'preservim/nerdtree'
     " Surround with brackets etc: Add cst", Remove ds", Change cs"', Full line yss(, Current word ysiw{, Visual V select S<p>
     Plug 'tpope/vim-surround'
-    " Read tags and highlighten them
-    " Plugin 'skroll/vim-taghighlight'
-    " Plugin 'vim-scripts/TagHighlight'
-    Plug 'abudden/taghighlight-automirror'
     " Abreviate :Abolish {despa,sepe}rat{e,es,ed,ing,ely,ion,ions,or} {despe,sepa}rat{},
     " Substitute :%Subvert/child{,ren}/adult{,s}/g,
     " Coercion crs, crm
     Plug 'tpope/vim-abolish'
     " <Leader>cc <Leader>c<space>
-    Plug 'scrooloose/nerdcommenter'
-    " gcc, gc, gcmotion, gcvisual, :g/TODO/Commentary
-    " Plugin 'tpope/vim-commentary'
-    " <F5> to show undo/redo tree
-    Plug 'sjl/gundo.vim'
-    " <F9> to show tagbar C-], C-t
-    Plug 'majutsushi/tagbar'
+    Plug 'preservim/nerdcommenter'
+    " <F5> to show undo/redo tree (maintained gundo fork)
+    Plug 'simnalamburt/vim-mundo'
+    " <F8> to show tagbar C-], C-t (preservim fork of majutsushi/tagbar)
+    Plug 'preservim/tagbar'
     " Better Status line
     Plug 'vim-airline/vim-airline'
     " Ruby on Rails plugin
@@ -40,10 +29,6 @@
     Plug 'fatih/vim-go'
     " sleuth.vim: Heuristically set buffer options like shiftwidth, expandtab...
     Plug 'tpope/vim-sleuth'
-    " Show python code coverage
-    Plug 'alfredodeza/coveragepy.vim'
-    " WakaTime programming time calculator
-    "Plug 'wakatime/vim-wakatime'
     " Vim - TMux Navigation using Ctrl-h,j,k,l,\
     Plug 'christoomey/vim-tmux-navigator'
     " Android in Vim
@@ -52,12 +37,8 @@
     Plug 'jamessan/vim-gnupg'
     " Async Linting
     if v:version >= 800 || has('nvim')
-      Plug 'w0rp/ale'
+      Plug 'dense-analysis/ale'
     endif
-    " Semantic Highlight
-    Plug 'jaxbot/semantic-highlight.vim'
-    " EditorConfig support
-    Plug 'editorconfig/editorconfig-vim'
     " Fuzzy Finder : set rtp+=/usr/local/opt/fzf
     Plug 'junegunn/fzf'
     Plug 'junegunn/fzf.vim'
@@ -69,24 +50,13 @@
     Plug 'luochen1990/rainbow'
     " Monokai Theme (colorscheme actually set below: vim-monokai-tasty)
     Plug 'patstockwell/vim-monokai-tasty'
-    Plug 'rudes/vim-java'
-    " Auto read files when they change outside and are unchanged in vim
-    Plug 'djoshea/vim-autoread'
 
     call plug#end()
     " Enable file type detection. Do this after plug#end() calls.
 " }
 
-" Pathogen {
-    " call pathogen#runtime_append_all_bundles()
-    " call pathogen#incubate()
-    " call pathogen#helptags()
-" }
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Formatting {
-    set backspace=2 " To make backspace work like all other apps
-    "set backspace=indent,eol,start
     set number " Alternative: set nu!
     set relativenumber " Show line numbers relative to cursor line
     set hlsearch " Highlight searched item
@@ -119,10 +89,6 @@
 
     " Reformatt the entire file and return back to mark (z) here
     map <F7> mzgg=G`z<CR>
-    " use 256 colors in Console mode if we think the terminal supports it
-    if &term =~? 'mlterm\|xterm'
-        set t_Co=256
-    endif
     "set diffopt+=iwhite
 " }
 
@@ -131,7 +97,9 @@
 " General {
 " Automatic reloading of .vimrc file
     autocmd! BufWritePost .vimrc source %
-    "set autoread " Using plugin instead: djoshea/vim-autoread
+    " Reload files changed outside vim (replaces djoshea/vim-autoread)
+    set autoread
+    autocmd FocusGained,BufEnter,CursorHold,CursorHoldI * checktime
     " allow saving as sudo if opened not as sudo
     cmap w!! w !sudo tee > /dev/null %
 
@@ -155,7 +123,8 @@
     " If you use command-t plugin, it conflicts with this, comment it out.
      "autocmd BufEnter * if bufname("") !~ ^\[A-Za-z0-9\]*://" | lcd %:p:h | endif
     "scriptencoding utf-8
-    set ic " Ignore case in search
+    set ignorecase " Ignore case in search
+    set smartcase " ...unless the pattern contains uppercase
 
     "set autowrite                  " automatically write a file when leaving a modified buffer
     "set shortmess+=filmnrxoOtT      " abbrev. of messages (avoids 'hit enter')
@@ -177,10 +146,13 @@
         set directory=~/.vimswap,~/.tmp,~/tmp,/var/tmp,/tmp
         set writebackup
 
-        "" Creating directories if they don't exist
-        "silent execute '!mkdir -p $HVOME/.vimbackup'
-        "silent execute '!mkdir -p $HOME/.vimswap'
-        "silent execute '!mkdir -p $HOME/.vimviews'
+        "" Creating directories if they don't exist (backups/swap/undo otherwise
+        "" fall back to /var/tmp or the current directory)
+        for s:dir in ['$HOME/.vimbackup', '$HOME/.vimswap', '$HOME/.vimundo']
+            if !isdirectory(expand(s:dir))
+                call mkdir(expand(s:dir), 'p')
+            endif
+        endfor
         "au BufWinLeave * silent! mkview  "make vim save view (state) (folds, cursor, etc)
         "au BufWinEnter * silent! loadview "make vim load view (state) (folds, cursor, etc)
     " }
@@ -237,11 +209,8 @@
     "nnoremap ; :
 
 
-    " Easier moving in tabs and windows
-    map <C-J> <C-W>j<C-W>_
-    map <C-K> <C-W>k<C-W>_
-    map <C-L> <C-W>l<C-W>_
-    map <C-H> <C-W>h<C-W>_
+    " Splits are navigated with Ctrl-h/j/k/l via vim-tmux-navigator
+    " (do NOT map plain <C-h/j/k/l> to <C-w>h/j/k/l here — it clobbers the plugin)
 
     " Wrapped lines goes down/up to next row, rather than next line in file.
     "nnoremap j gj
@@ -271,7 +240,6 @@
     " solves formatting problems a lot quicker. Also, we're using modern shells
     " (right?) so using UTF-8 characters for symbols should be a given.
     set fillchars=diff:⣿,vert:│
-    set guifont=monoOne\ 9
 
     " A visual cue for line-wrapping.
     set showbreak=↪
@@ -282,12 +250,6 @@
 
     " Show me these markings.
     set list
-
-    " Update by redraw and not INS/DEL
-    if !has('nvim')
-        set ttyscroll=3
-        set nottyfast
-    endif
 
     " Show me what I was doing.
     set showcmd
@@ -326,9 +288,9 @@
 "}
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Gundo Plugin {
-    nnoremap <F5> :GundoToggle<CR>
-    map <Leader>u :GundoToggle<CR>
+" Gundo Plugin (vim-mundo) {
+    nnoremap <F5> :MundoToggle<CR>
+    map <Leader>u :MundoToggle<CR>
 "}
 
 
@@ -474,41 +436,14 @@ let g:ale_emit_conflict_warnings = 0
 let g:slime_target = "tmux"
 
 " Git Gutter
-"set signcolumn=yes
+set signcolumn=yes
 
 " Rainbow Parens
 let g:rainbow_active = 1 "set to 0 if you want to enable it later via :RainbowToggle
 
 " Monokai Theme
-
-""if v:version >= 800 || has('nvim')
-if has('nvim')
-    let g:vim_monokai_tasty_italic = 1
-    colorscheme vim-monokai-tasty
-    let g:airline_theme='monokai_tasty'
-"
-"    "   Java
-"    let java_comment_strings=1
-"    let java_highlight_functions=1
-"    let java_highlight_java_lang_ids=1
-"    "    Go
-"    let g:go_highlight_format_strings = 1
-"    let g:go_highlight_function_arguments = 1
-"    let g:go_highlight_function_calls = 1
-"    let g:go_highlight_functions = 1
-"    let g:go_highlight_operators = 1
-"    let g:go_highlight_types = 1
-"    "      Extras
-"    let g:go_highlight_extra_types = 1
-"    let g:go_highlight_fields = 1
-"    let g:go_highlight_generate_tags = 1
-"    let g:go_highlight_variable_assignments = 1
-"    let g:go_highlight_variable_declarations = 1
-"
-"    set termguicolors "set t_Co=256
-else
-    colorscheme vim-monokai-tasty
-    let g:airline_theme='monokai_tasty'
+if has('termguicolors')
+    set termguicolors
 endif
-" Black Background Color
-"hi Normal ctermfg=231 ctermbg=016 cterm=NONE guifg=#f8f8f2 guibg=#272822 gui=NONE
+colorscheme vim-monokai-tasty
+let g:airline_theme='monokai_tasty'

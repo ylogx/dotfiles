@@ -7,7 +7,8 @@ echo "------------------------------------------------------------"
 # Function to extract source information for each container
 get_container_source_info() {
     local container_id=$1
-    local container_name=$(docker inspect --format '{{ .Name }}' "$container_id" | sed 's/^\///')
+    local container_name
+    container_name=$(docker inspect --format '{{ .Name }}' "$container_id" | sed 's/^\///')
     local compose_file=""
     local dockerfile=""
 
