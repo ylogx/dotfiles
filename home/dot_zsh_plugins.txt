@@ -21,10 +21,12 @@ ohmyzsh/ohmyzsh path:lib/history.zsh
 ohmyzsh/ohmyzsh path:plugins/git
 ohmyzsh/ohmyzsh path:plugins/git-extras
 ohmyzsh/ohmyzsh path:plugins/gnu-utils
-ohmyzsh/ohmyzsh path:plugins/history-substring-search
 ohmyzsh/ohmyzsh path:plugins/last-working-dir
 ohmyzsh/ohmyzsh path:plugins/sudo
 ohmyzsh/ohmyzsh path:plugins/web-search
+
+# zsh-defer: function used by ~/.zsh/04-tools.zsh to defer slow tool inits
+romkatv/zsh-defer
 
 # Tool-specific plugins (lightweight — safe to load even if tool not installed)
 ohmyzsh/ohmyzsh path:plugins/ansible
@@ -44,7 +46,6 @@ ohmyzsh/ohmyzsh path:plugins/ruby
 ohmyzsh/ohmyzsh path:plugins/rust
 ohmyzsh/ohmyzsh path:plugins/uv
 ohmyzsh/ohmyzsh path:plugins/macos
-ohmyzsh/ohmyzsh path:plugins/chucknorris
 
 # Prompt (guards on `starship` being installed — apt-get doesn't install it
 # on Linux, only the darwin brew bundle does, so this avoids a raw
