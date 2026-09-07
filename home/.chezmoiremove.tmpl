@@ -29,6 +29,10 @@
 # Byte-identical duplicate of ~/bin/print_files
 bin/fprint
 
+# Old fzf key-binding shim — fzf --fish in config.fish registers the same
+# bindings; having both double-binds every key
+.config/fish/functions/fish_user_key_bindings.fish
+
 # Travis CI local artifacts
 .travis
 
